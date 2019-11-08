@@ -8,7 +8,7 @@ using TMPro;
 
 public class Player : MonoBehaviour
 {
-     
+    
     public Tilemap groundTilemap;
     public Tilemap obstaclesTilemap;
 
