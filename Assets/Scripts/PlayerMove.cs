@@ -6,9 +6,9 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using TMPro;
 
-public class Player : MonoBehaviour
+public class PlayerMove : MonoBehaviour
 {
-    
+
     public Tilemap groundTilemap;
     public Tilemap obstaclesTilemap;
 
