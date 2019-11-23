@@ -14,6 +14,8 @@ public class PlayerMove : MonoBehaviour
 
     public bool isMoving = false;
 
+    public bool canMove = true;
+
     public bool onCooldown = false;
     public bool onExit = false;
     private float moveTime = 0.1f;
@@ -41,7 +43,7 @@ public class PlayerMove : MonoBehaviour
             vertical = 0;
 
         //If there's a direction, we are trying to move.
-        if (horizontal != 0 || vertical != 0)
+        if ((horizontal != 0 || vertical != 0) && canMove)
         {
             StartCoroutine(actionCooldown(0.2f));
             Move(horizontal, vertical);
@@ -51,7 +53,6 @@ public class PlayerMove : MonoBehaviour
 
     private void Move(int xDir, int yDir)
     {
-
         Vector2 startCell = transform.position;
         Vector2 targetCell = startCell + new Vector2(xDir, yDir);
 
