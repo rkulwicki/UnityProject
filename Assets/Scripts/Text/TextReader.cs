@@ -6,22 +6,18 @@ using UnityEngine;
 public class TextReader : MonoBehaviour
 {
     public TextAsset textFile;
-    // Start is called before the first frame update
-    void Start()
+    public string[] lines;
+    private void Start()
     {
-        
-    }
+        if (textFile == null) //error handling
+            return;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        lines = ParseTextFileByNewline(textFile);
     }
-
     //return text from textFile
     public string[] ParseTextFileByNewline(TextAsset textFile)
     {
-        var lines = textFile.text.Split(new string[] { "\\n" }, StringSplitOptions.None);
+        string[] lines = textFile.text.Split(new string[] { "\n" }, StringSplitOptions.None);
         return lines;
     }
 }
