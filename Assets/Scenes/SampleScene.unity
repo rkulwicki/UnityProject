@@ -1850,10 +1850,25 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tileLocation: {x: 0, y: 0}
+  tileLocations:
+  - {x: 0, y: 0}
+  - {x: 1, y: 1}
+  - {x: -1, y: -1}
   grid: {fileID: 0}
   tile: {fileID: 11400000, guid: 832b18b83d3d62b4a849d823472e8039, type: 2}
+  tiles:
+  - {fileID: 11400000, guid: 832b18b83d3d62b4a849d823472e8039, type: 2}
+  - {fileID: 11400000, guid: 832b18b83d3d62b4a849d823472e8039, type: 2}
+  - {fileID: 11400000, guid: 832b18b83d3d62b4a849d823472e8039, type: 2}
+  - {fileID: 11400000, guid: 832b18b83d3d62b4a849d823472e8039, type: 2}
+  - {fileID: 11400000, guid: 832b18b83d3d62b4a849d823472e8039, type: 2}
+  - {fileID: 11400000, guid: 832b18b83d3d62b4a849d823472e8039, type: 2}
+  - {fileID: 11400000, guid: 832b18b83d3d62b4a849d823472e8039, type: 2}
+  - {fileID: 11400000, guid: 832b18b83d3d62b4a849d823472e8039, type: 2}
   tilemapFloor: {fileID: 0}
   tilemapObstacles: {fileID: 0}
+  center: {x: 0, y: 0}
+  size: 1
 --- !u!4 &1049200886
 Transform:
   m_ObjectHideFlags: 0
