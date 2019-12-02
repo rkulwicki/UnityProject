@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -15,6 +16,7 @@ public class TextBoxManager : MonoBehaviour
 
     public int lineInText;
 
+    private string inputKey = "space";
     private GameObject _playerObject;
     private TextReader _textReader;
 
@@ -39,7 +41,7 @@ public class TextBoxManager : MonoBehaviour
         {
             _playerObject.GetComponent<PlayerMove>().canMove = false;
 
-            if (Input.GetKeyUp("space"))
+            if (Input.GetKeyUp(inputKey))
             {
                 if (lineInText < _textReader.lines.Length - 1)
                 {
@@ -68,6 +70,10 @@ public class TextBoxManager : MonoBehaviour
             SpawnTextBox(textBoxPrefab);
         }
     }
+
+    #region UI
+
+    #endregion
 
     #region CreateAndDestroy - SpawnTextBox, DestroyTextBox
 

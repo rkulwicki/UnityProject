@@ -12,8 +12,10 @@ public class TextHolder : MonoBehaviour
         Transform trans = gameObject.transform;
         var childTrans = trans.Find("TextBox"); //access text
         var grandchildTrans = childTrans.Find("Text");
-        grandchildTrans.GetComponent<UnityEngine.UI.Text>().text = text;
-        
+        grandchildTrans.GetComponent<UnityEngine.UI.Text>().text = "";
+        grandchildTrans.GetComponent<UITextTypeWriter>().ChangeText(text);
+        //grandchildTrans.GetComponent<UnityEngine.UI.Text>().text = text;
+
     }
 
     private void Update()
@@ -24,7 +26,10 @@ public class TextHolder : MonoBehaviour
             Transform trans = gameObject.transform;
             var childTrans = trans.Find("TextBox"); //access text
             var grandchildTrans = childTrans.Find("Text");
-            grandchildTrans.GetComponent<UnityEngine.UI.Text>().text = text;
+            
+            grandchildTrans.GetComponent<UnityEngine.UI.Text>().text = ""; //clear text
+            grandchildTrans.GetComponent<UITextTypeWriter>().ChangeText(text);
+            //grandchildTrans.GetComponent<UnityEngine.UI.Text>().text = text;
             isTextDifferent = false;
         }
     }
