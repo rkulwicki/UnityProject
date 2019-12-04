@@ -11,6 +11,8 @@ public class UITextTypeWriter : MonoBehaviour
     public float delayToStart;
     public float delayBetweenChars = 0.125f;
     public float delayAfterPunctuation = 0.5f;
+    public bool isTyping;
+    public bool isStopTyping;
 
     private string story;
     private float originDelayBetweenChars;
@@ -26,6 +28,8 @@ public class UITextTypeWriter : MonoBehaviour
         charComma = Convert.ToChar(44);
         charPeriod = Convert.ToChar(46);
 
+        isStopTyping = false;
+
         if (playOnAwake)
         {
             ChangeText(text.text, delayToStart);
@@ -35,6 +39,7 @@ public class UITextTypeWriter : MonoBehaviour
     //Update text and start typewriter effect
     public void ChangeText(string textContent, float delayBetweenChars = 0f)
     {
+        isTyping = true;
         if (lastRoutine != null)
         {
             StopCoroutine(lastRoutine); //stop Coroutime if exist
@@ -58,7 +63,10 @@ public class UITextTypeWriter : MonoBehaviour
 
             if (lastCharPunctuation)  //If previous character was a comma/period, pause typing
             {
-                yield return new WaitForSeconds(delayBetweenChars = delayAfterPunctuation);
+                if (!isStopTyping)
+                {
+                    yield return new WaitForSeconds(delayBetweenChars = delayAfterPunctuation);
+                }
                 lastCharPunctuation = false;
             }
 
@@ -68,7 +76,14 @@ public class UITextTypeWriter : MonoBehaviour
             }
 
             text.text += c;
-            yield return new WaitForSeconds(delayBetweenChars);
+            if (!isStopTyping)
+            {
+                yield return new WaitForSeconds(delayBetweenChars);
+            }
         }
+
+        isTyping = false; //this could be implemented better. Because WaitForSeconds above
+                          // will still wait even if it is at the end of the text but whateves.
+        isStopTyping = false;
     }
 }

@@ -7,6 +7,7 @@ TagManager:
   - Enemy
   - DBox
   - Grid
+  - BattleManager
   layers:
   - Default
   - TransparentFX

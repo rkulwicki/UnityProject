@@ -3,18 +3,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+//this script gets put onto a trigger and I guess really isn't a manager but
+// shhhh don't tell anybody!
+
 public class TextBoxManager : MonoBehaviour
 {
-    public float textTime;
-
     public GameObject textBoxObject;
 
     public string text;
 
     public GameObject textBoxPrefab; //using the textbox prefab
-    public int waitSeconds;
 
     public int lineInText;
+
+    public bool stillTyping; //this comes from UITextTypeWriter. Probably
 
     private string inputKey = "space";
     private GameObject _playerObject;
@@ -26,10 +28,8 @@ public class TextBoxManager : MonoBehaviour
     {
         _playerObject = GameObject.Find("Player");
         _textReader = gameObject.GetComponent<TextReader>();
-        if(_textReader.lines.Length > 0)
+        if (_textReader.lines.Length > 0)
         {
-            //we will be doing some logic here to read line by line but for now
-            //we will just read the first line
             text = _textReader.lines[lineInText];
         }
     }
@@ -43,19 +43,29 @@ public class TextBoxManager : MonoBehaviour
 
             if (Input.GetKeyUp(inputKey))
             {
-                if (lineInText < _textReader.lines.Length - 1)
+
+                //check if we are still typing. If we can just 
+                if (textBoxObject.transform.Find("TextBox").Find("Text").GetComponent<UITextTypeWriter>().isTyping)
                 {
-                    lineInText++;
+                    textBoxObject.transform.Find("TextBox").Find("Text").GetComponent<UITextTypeWriter>().isStopTyping = true;
                 }
-                else if (lineInText == _textReader.lines.Length - 1)
+                else
                 {
-                    DestroyTextBox();
-                    _inTextBox = false;
-                    _playerObject.GetComponent<PlayerMove>().canMove = true;
+                    if (lineInText < _textReader.lines.Length - 1)
+                    {
+                        lineInText++;
+                    }
+                    else if (lineInText == _textReader.lines.Length - 1)
+                    {
+                        DestroyTextBox();
+                        _inTextBox = false;
+                        _playerObject.GetComponent<PlayerMove>().canMove = true;
+                        lineInText = 0; //this is where we start over.
+                    }
+                    text = _textReader.lines[lineInText];
+                    textBoxObject.GetComponent<TextHolder>().text = text; //text changed
+                    textBoxObject.GetComponent<TextHolder>().isTextDifferent = true; //alert that text changed.
                 }
-                text = _textReader.lines[lineInText];
-                textBoxObject.GetComponent<TextHolder>().text = text; //text changed
-                textBoxObject.GetComponent<TextHolder>().isTextDifferent = true; //alert that text changed.
             }
         }
 
@@ -70,11 +80,7 @@ public class TextBoxManager : MonoBehaviour
             SpawnTextBox(textBoxPrefab);
         }
     }
-
-    #region UI
-
-    #endregion
-
+    
     #region CreateAndDestroy - SpawnTextBox, DestroyTextBox
 
     public void SpawnTextBox(GameObject textBoxPrefab)

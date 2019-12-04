@@ -3,12 +3,13 @@ using System.ComponentModel;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
-public class testGetTile : MonoBehaviour
+public class TileSetter : MonoBehaviour
 {
     //List<Tuple<int,int>> tiles
     public Vector2Int tileLocation;
     public Vector2Int[] tileLocations;
     public GameObject grid;
+    public bool debug;
 
     public Tile tile;
     public Tile[] tiles;
@@ -27,21 +28,22 @@ public class testGetTile : MonoBehaviour
 
     private void LateUpdate()
     {
-        //DEBUG vvvvvvvvvvvvvvvvvvvvvvv
-        if (Input.GetKey("p"))
+        if (debug)
         {
-            GenerateTile(tileLocation, tile);
-        }
+            if (Input.GetKey("p"))
+            {
+                GenerateTile(tileLocation, tile);
+            }
 
-        if (Input.GetKey("o"))
-        {
-            GenerateTiles(tileLocations, tiles);
+            if (Input.GetKey("o"))
+            {
+                GenerateTiles(tileLocations, tiles);
+            }
+            if (Input.GetKey("i"))
+            {
+                GenerateSquareTilesWithCenter(center, size, tiles);
+            }
         }
-        if (Input.GetKey("i"))
-        {
-            GenerateSquareTilesWithCenter(center, size, tiles);
-        }
-        // ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
     }
 
     private void GenerateTile(Vector2Int tileLocation, Tile tile)
@@ -58,8 +60,7 @@ public class testGetTile : MonoBehaviour
         tilemapObstacles.SetTiles(ConvertV2ArrayToV3(tileLocations), tiles);
     }
 
-    //creates an open square around a specified center tile using the first
-    //
+
     [Description("Creates an open square around a specified center tile using the first tile in 'Tiles'. ")]
     private void GenerateSquareTilesWithCenter(Vector2Int center, int size, Tile[] tiles)
     {
@@ -104,6 +105,8 @@ public class testGetTile : MonoBehaviour
         tilemapObstacles.SetTiles(ConvertV2ArrayToV3(tileLocations), firstTileCopied);
     }
 
+    #region Helper Methods
+
     private Vector3Int[] ConvertV2ArrayToV3(Vector2Int[] v2)
     {
         Vector3Int[] v3 = new Vector3Int[v2.Length];
@@ -114,4 +117,6 @@ public class testGetTile : MonoBehaviour
         }
         return v3;
     }
+
+    #endregion
 }
