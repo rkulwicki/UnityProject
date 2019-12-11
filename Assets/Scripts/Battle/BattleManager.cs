@@ -2,40 +2,56 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum BattleState {INACTIVE, START, PLAYERTURN, ENEMYTURN, WON, LOST}
 public class BattleManager : MonoBehaviour
 {
-    public enum turnEnum
-    {
-        player,
-        enemy
-    }
     public GameObject grid;
     public GameObject tilemapFloor;
     public GameObject tilemapObstacles;
-    public turnEnum turn;
-    public bool isBattle;
 
-    // Start is called before the first frame update
+    public GameObject[] playersInvolved; //todo: many -> GameObject[]
+    public GameObject[] enemiesInvolved; //todo: many -> GameObject[]
+
+    public BattleState state;
+
     void Start()
     {
-        
+        state = BattleState.INACTIVE;
+    }
+
+    private void Update()
+    {
+        if (state != BattleState.INACTIVE)
+        {
+            if (state == BattleState.START)
+            {
+
+            } else if (state == BattleState.PLAYERTURN)
+            {
+
+            }
+            else if (state == BattleState.ENEMYTURN)
+            {
+
+            }
+            else if (state == BattleState.WON)
+            {
+
+            }
+            else if (state == BattleState.LOST)
+            {
+
+            }
+        }
+    }
+
+    void SetupBattle()
+    {
+        //BattleSystem is given
         //get gid, floor, and obstacles
         grid = GameObject.FindGameObjectWithTag("Grid");
         tilemapFloor = grid.transform.Find("Floor").gameObject;
         tilemapObstacles = grid.transform.Find("Obstacles").gameObject;
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        if (isBattle)
-        {
-            //DO A LOT OF SHIT
-            //todo
-            //1. get player(s), get enemies
-            //2. Set battle field.
-            //3. take turns fighting each other like animals
-        }
     }
 
     public void SetBattleField(GameObject[] fighers, GameObject tilemapFloor, GameObject tilemapObstacles)
@@ -44,6 +60,5 @@ public class BattleManager : MonoBehaviour
         //call testGetTile to build a boundary
         //anything else? Maybe set locations of player and enemy but probably not?
     }
-
 
 }
