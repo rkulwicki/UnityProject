@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class BattleManagerTrigger : MonoBehaviour
 {
-    private GameObject _battleManager;
+    public GameObject _battleManager;
     private GameObject _player;
 
     public GameObject[] enemiesInvolved;
