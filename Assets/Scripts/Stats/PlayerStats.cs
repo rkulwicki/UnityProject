@@ -2,16 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerStats : MonoBehaviour
+public class PlayerStats : ActorStats
 {
-    public string playerName;
     public int playerLevel;
-
-    public int playerBaseDamage;
-    public int playerBaseDefense;
-
-    public int maxHP;
-    public int currentHP;
 
     public int maxFP;
     public int currentFP;
@@ -20,5 +13,4 @@ public class PlayerStats : MonoBehaviour
 
     public int playerCoins;
     public int playerExperience;
-
 }

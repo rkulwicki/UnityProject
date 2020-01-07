@@ -3,21 +3,21 @@ using System.ComponentModel;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
-public class TileSetter : MonoBehaviour
+public class TileManager : MonoBehaviour
 {
-    //List<Tuple<int,int>> tiles
-    public Vector2Int tileLocation;
-    public Vector2Int[] tileLocations;
+    ////List<Tuple<int,int>> tiles
+    //public Vector2Int tileLocation;
+    //public Vector2Int[] tileLocations;
     public GameObject grid;
-    public bool debug;
+    //public bool debug;
 
     public Tile tile;
     public Tile[] tiles;
     public Tilemap tilemapFloor;
     public Tilemap tilemapObstacles;
 
-    public Vector2Int center;
-    public int size;
+    //public Vector2Int center;
+    //public int size;
     private void Start()
     {
         //get gid, floor, and obstacles
@@ -26,25 +26,25 @@ public class TileSetter : MonoBehaviour
         tilemapObstacles = grid.transform.Find("Obstacles").gameObject.GetComponent<Tilemap>();
     }
 
-    private void LateUpdate()
-    {
-        if (debug)
-        {
-            if (Input.GetKey("p"))
-            {
-                GenerateTile(tileLocation, tile);
-            }
+    //private void LateUpdate()
+    //{
+    //    if (debug)
+    //    {
+    //        if (Input.GetKey("p"))
+    //        {
+    //            GenerateTile(tileLocation, tile);
+    //        }
 
-            if (Input.GetKey("o"))
-            {
-                GenerateTiles(tileLocations, tiles);
-            }
-            if (Input.GetKey("i"))
-            {
-                GenerateSquareTilesWithCenter(center, size, tiles);
-            }
-        }
-    }
+    //        if (Input.GetKey("o"))
+    //        {
+    //            GenerateTiles(tileLocations, tiles);
+    //        }
+    //        if (Input.GetKey("i"))
+    //        {
+    //            GenerateSquareTilesWithCenter(center, size, tiles);
+    //        }
+    //    }
+    //}
 
     private void GenerateTile(Vector2Int tileLocation, Tile tile)
     {
@@ -62,7 +62,7 @@ public class TileSetter : MonoBehaviour
 
 
     [Description("Creates an open square around a specified center tile using the first tile in 'Tiles'. ")]
-    private void GenerateSquareTilesWithCenter(Vector2Int center, int size, Tile[] tiles)
+    public Vector3Int[] GenerateSquareTilesWithCenter(Vector2Int center, int size, Tile[] tiles)
     {
         //ex. 
         //size = 1, 
@@ -102,7 +102,19 @@ public class TileSetter : MonoBehaviour
         {
             firstTileCopied[i] = tiles[0];
         }
-        tilemapObstacles.SetTiles(ConvertV2ArrayToV3(tileLocations), firstTileCopied);
+        var v3TileLocations = ConvertV2ArrayToV3(tileLocations);
+        tilemapObstacles.SetTiles(v3TileLocations, firstTileCopied);
+        return v3TileLocations;
+
+    }
+
+    [Description("Removes tiles under the obstacles tilemap. ")]
+    public void RemoveTiles(Vector3Int[] tileLocations)
+    {
+        foreach (var tileLocation in tileLocations)
+        {
+            tilemapObstacles.SetTile(tileLocation, null);
+        }
     }
 
     #region Helper Methods

@@ -10,6 +10,8 @@ TagManager:
   - Hud
   - HudsManager
   - BattleManager
+  - Partner
+  - TileManager
   layers:
   - Default
   - TransparentFX

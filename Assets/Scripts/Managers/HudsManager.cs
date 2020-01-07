@@ -9,6 +9,7 @@ public class HudsManager : MonoBehaviour
     //only thing to interact with vvvv
     public bool playerMiniStatsHudActive;
     public bool battleHudActive;
+    //todo: public bool battleActionsActive; etc...
 
     //prefabs
     public GameObject playerMiniStatsHudPrefab;
