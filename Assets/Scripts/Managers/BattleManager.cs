@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 public enum BattleState {INACTIVE, START, PLAYERTURN, ENEMYTURN, WON, LOST}
 public class BattleManager : MonoBehaviour
@@ -9,64 +10,130 @@ public class BattleManager : MonoBehaviour
     public GameObject tilemapFloor;
     public GameObject tilemapObstacles;
 
-    public GameObject[] playersInvolved; //todo: many -> GameObject[]
-    public GameObject[] enemiesInvolved; //todo: many -> GameObject[]
+    public GameObject[] playersInvolved; 
+    public GameObject[] enemiesInvolved; 
 
     public BattleState state;
 
     private GameObject _hudsManager;
+    private GameObject _tileManager;
 
     void Start()
     {
         state = BattleState.INACTIVE;
         _hudsManager = GameObject.FindGameObjectWithTag("HudsManager");
+        _tileManager = GameObject.FindGameObjectWithTag("TileManager");
+
     }
 
     private void Update()
     {
         if (state != BattleState.INACTIVE)
         {
+            var battleBoundaryTilesLocations = BeforeStart();
+
             if (state == BattleState.START)
             {
-                //instantiate battle hud
-                _hudsManager.GetComponent<HudsManager>().playerMiniStatsHudActive = true;
+                StartBattle();
 
             } else if (state == BattleState.PLAYERTURN)
             {
-
+                PlayerTurn();
             }
             else if (state == BattleState.ENEMYTURN)
             {
-
+                EnemyTurn();
             }
             else if (state == BattleState.WON)
             {
-                
+                Won(battleBoundaryTilesLocations);
             }
             else if (state == BattleState.LOST)
             {
-                //you die
-                _hudsManager.GetComponent<HudsManager>().playerMiniStatsHudActive = false;
-                _hudsManager.GetComponent<HudsManager>().battleHudActive = true;
-                //set battle hud text.
+                Lost(battleBoundaryTilesLocations);
             }
         }
     }
 
+    #region Battle States
+
+    private Vector3Int[] BeforeStart()
+    {
+        var battleBoundaryTilesLocationsList = new List<Vector3Int>();
+
+        var initiatedEnemy = enemiesInvolved[0]; //todo: this will need to be handled
+
+        Vector2Int center = new Vector2Int((int)initiatedEnemy.transform.position.x, (int)initiatedEnemy.transform.position.y);
+        int size = initiatedEnemy.GetComponent<EnemyStats>().enemyBattleRadius;
+        Tile tile = initiatedEnemy.GetComponent<EnemyStats>().battleBoundaryTile;
+
+        var battleBoundaryTilesLocations = _tileManager.GetComponent<TileManager>().GenerateSquareTilesWithCenter(center, size, new Tile[1] { tile });
+        return battleBoundaryTilesLocations;
+    }
+
+    private void StartBattle()
+    {
+        _hudsManager.GetComponent<HudsManager>().playerMiniStatsHudActive = true; //instantiate battle hud
+        DecideWhoGoesFirst();
+
+    }
+
+    private void PlayerTurn()
+    {
+        //pull up a new hud for choosing an action. See hud manager
+        //for now, let's just make the back-end commands
+        
+        //todo: wait until player chooses button
+
+
+    }
+
+    private void EnemyTurn()
+    {
+
+    }
+
+    private void Won(Vector3Int[] battleBoundaryTilesLocations)
+    {
+        BattleEnd(battleBoundaryTilesLocations);
+    }
+
+    private void Lost(Vector3Int[] battleBoundaryTilesLocations)
+    {
+        BattleEnd(battleBoundaryTilesLocations);
+    }
+
+    #endregion
+
+    #region Helper Functions
+
     void SetupBattle()
     {
-        //BattleSystem is given
         //get gid, floor, and obstacles
         grid = GameObject.FindGameObjectWithTag("Grid");
         tilemapFloor = grid.transform.Find("Floor").gameObject;
         tilemapObstacles = grid.transform.Find("Obstacles").gameObject;
     }
 
-    public void SetBattleField(GameObject[] fighers, GameObject tilemapFloor, GameObject tilemapObstacles)
+    private void DecideWhoGoesFirst()
     {
         //todo
-        //call testGetTile to build a boundary
-        //anything else? Maybe set locations of player and enemy but probably not?
+        state = BattleState.PLAYERTURN; //default player goes first
     }
+
+    public void SetBattleArea()
+    {
+        //todo
+    }
+
+    public void BattleEnd(Vector3Int[] boundaryTileLocations)
+    {
+        _hudsManager.GetComponent<HudsManager>().playerMiniStatsHudActive = false;
+        _hudsManager.GetComponent<HudsManager>().battleHudActive = false;
+
+        _tileManager.GetComponent<TileManager>().RemoveTiles(boundaryTileLocations); //delete boundary tiles
+    }
+
+    #endregion
 
 }
