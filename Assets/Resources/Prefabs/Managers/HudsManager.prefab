@@ -45,7 +45,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerMiniStatsHudActive: 0
   battleHudActive: 0
+  playerBattleActionHudActive: 0
   playerMiniStatsHudPrefab: {fileID: 3956238273346145901, guid: fcd2538df0cdd1446bc4b9109a182387,
     type: 3}
   battleHudPrefab: {fileID: 3603423167365023997, guid: 7ca7dc3ac52f7ce42954fb307ae37a28,
     type: 3}
+  playerBattleActionHudPrefab: {fileID: 9167388666651613506, guid: fcd9b2d30e66f4f42b3d90ab3b22df31,
+    type: 3}
+  playerMiniStatsHud: {fileID: 0}
+  battleHud: {fileID: 0}
+  playerBattleActionHud: {fileID: 0}
