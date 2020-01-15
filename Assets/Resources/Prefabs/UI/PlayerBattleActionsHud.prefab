@@ -165,7 +165,7 @@ GameObject:
   - component: {fileID: 1592907988730308148}
   - component: {fileID: 6820714375450243693}
   m_Layer: 5
-  m_Name: Button
+  m_Name: MoveButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -283,7 +283,7 @@ GameObject:
   - component: {fileID: 3620784484894875941}
   - component: {fileID: 3735613346571141006}
   m_Layer: 5
-  m_Name: Button
+  m_Name: AttackButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -477,6 +477,7 @@ GameObject:
   - component: {fileID: 3352897961572602485}
   - component: {fileID: 861419875215246562}
   - component: {fileID: 1237230455178758113}
+  - component: {fileID: 1144895175094379837}
   m_Layer: 5
   m_Name: PlayerBattleActionsHud
   m_TagString: Hud
@@ -564,3 +565,17 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!114 &1144895175094379837
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9167388666651613506}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b82b54f2959a7ba4fb84dfdbd7762361, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  AttackButton: {fileID: 3735613346571141006}
+  MoveButton: {fileID: 6820714375450243693}

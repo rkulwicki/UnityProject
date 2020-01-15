@@ -85,7 +85,12 @@ public class BattleManager : MonoBehaviour
 
         //todo: wait until player chooses button
         _hudsManager.GetComponent<HudsManager>().playerBattleActionHudActive = true; //actions hud on
-        //_hudsManager.GetComponent<HudsManager>().playerBattleActionHud. [GET BUTTONS]
+        var playerBattleActionHud =_hudsManager.GetComponent<HudsManager>().playerBattleActionHud.GetComponent<PlayerBattleActionHudScript>();
+
+        //TODO: call the PlayerBattleActionHudScript instead of the local task
+        playerBattleActionHud.AttackButton.onClick.AddListener(TaskOnClickTEST); //if battle button click
+
+        playerBattleActionHud.MoveButton.onClick.AddListener(TaskOnClickTEST); //if move
 
     }
 
@@ -155,4 +160,14 @@ public class BattleManager : MonoBehaviour
 
     #endregion
 
+    #region Button Click Helper Functions
+
+    //TODO: this logic will be moved to PlayerBattleActionHudScript
+    void TaskOnClickTEST()//BattleState battleState)
+    {
+        state = BattleState.ENEMYTURN;
+        _hudsManager.GetComponent<HudsManager>().playerBattleActionHudActive = false;
+    }
+
+    #endregion
 }
