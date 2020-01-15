@@ -73,7 +73,7 @@ public class BattleManager : MonoBehaviour
 
     private void StartBattle()
     {
-        _hudsManager.GetComponent<HudsManager>().playerMiniStatsHudActive = true; //instantiate battle hud
+        _hudsManager.GetComponent<HudsManager>().playerMiniStatsHudActive = true; //battle hud on
         DecideWhoGoesFirst();
 
     }
@@ -82,9 +82,15 @@ public class BattleManager : MonoBehaviour
     {
         //pull up a new hud for choosing an action. See hud manager
         //for now, let's just make the back-end commands
-        
-        //todo: wait until player chooses button
 
+        //todo: wait until player chooses button
+        _hudsManager.GetComponent<HudsManager>().playerBattleActionHudActive = true; //actions hud on
+        var playerBattleActionHud =_hudsManager.GetComponent<HudsManager>().playerBattleActionHud.GetComponent<PlayerBattleActionHudScript>();
+
+        //TODO: call the PlayerBattleActionHudScript instead of the local task
+        playerBattleActionHud.AttackButton.onClick.AddListener(TaskOnClickTEST); //if battle button click
+
+        playerBattleActionHud.MoveButton.onClick.AddListener(TaskOnClickTEST); //if move
 
     }
 
@@ -134,6 +140,34 @@ public class BattleManager : MonoBehaviour
         _tileManager.GetComponent<TileManager>().RemoveTiles(boundaryTileLocations); //delete boundary tiles
     }
 
+    public void FreezeRigidBodies(GameObject[] gameObjects)
+    {
+        foreach(var gameObject in gameObjects)
+        {
+            if (gameObject.GetComponent<Rigidbody2D>() != null)
+                gameObject.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;
+        }
+    }
+
+    public void UnfreezeRigidBodies(GameObject[] gameObjects)
+    {
+        foreach (var gameObject in gameObjects)
+        {
+            if (gameObject.GetComponent<Rigidbody2D>() != null)
+                gameObject.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.None;
+        }
+    }
+
     #endregion
 
+    #region Button Click Helper Functions
+
+    //TODO: this logic will be moved to PlayerBattleActionHudScript
+    void TaskOnClickTEST()//BattleState battleState)
+    {
+        state = BattleState.ENEMYTURN;
+        _hudsManager.GetComponent<HudsManager>().playerBattleActionHudActive = false;
+    }
+
+    #endregion
 }

@@ -71,6 +71,7 @@
     <Compile Include="Assets\Scripts\Managers\ManagerManager.cs" />
     <Compile Include="Assets\Scripts\Managers\TextManager.cs" />
     <Compile Include="Assets\Scripts\Managers\TileManager.cs" />
+    <Compile Include="Assets\Scripts\PlayerBattleActionHudScript.cs" />
     <Compile Include="Assets\Scripts\PlayerMove.cs" />
     <Compile Include="Assets\Scripts\ScaleCanvas.cs" />
     <Compile Include="Assets\Scripts\Stats\ActorStats.cs" />
