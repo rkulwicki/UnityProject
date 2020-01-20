@@ -5,30 +5,36 @@ using UnityEngine;
 public class BattleActions : MonoBehaviour
 {
 
-    public ActorStats Heal(int toHealBy, ActorStats actorStats)
+    public ActorStats Heal(int toHealBy, ActorStats targetStats)
     {
-        actorStats.currentHP = actorStats.currentHP + toHealBy;
-        if (actorStats.currentHP > actorStats.maxHP)
+        targetStats.currentHP = targetStats.currentHP + toHealBy;
+        if (targetStats.currentHP > targetStats.maxHP)
         {
-            actorStats.currentHP = actorStats.maxHP;
+            targetStats.currentHP = targetStats.maxHP;
         }
 
-        return actorStats;
+        return targetStats;
     }
 
-    public ActorStats Attack(int toAttackBy, ActorStats actorStats)
+    public ActorStats Attack(int toAttackBy, ActorStats targetStats)
     {
-        int attackByWithDefense = toAttackBy - actorStats.baseDefense;
+        int attackByWithDefense = toAttackBy - targetStats.baseDefense;
         if (attackByWithDefense < 0)
         {
             attackByWithDefense = 0;
         }
-        actorStats.currentHP = actorStats.currentHP - attackByWithDefense;
-        if (actorStats.currentHP < 0)
+        targetStats.currentHP = targetStats.currentHP - attackByWithDefense;
+        if (targetStats.currentHP < 0)
         {
-            actorStats.currentHP = 0;
+            targetStats.currentHP = 0;
         }
 
-        return actorStats;
+        return targetStats;
+    }
+
+    public ActorStats Move(int toMoveBy, ActorStats targetStats)
+    {
+        //TODO
+        return targetStats;
     }
 }

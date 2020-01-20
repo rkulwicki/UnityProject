@@ -6,7 +6,7 @@ using UnityEngine;
 public class ActorStats : MonoBehaviour
 {
 
-    public int actorName;
+    public string actorName;
     public int maxHP;
     public int currentHP;
     public int baseDamage;

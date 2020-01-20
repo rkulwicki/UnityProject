@@ -1404,10 +1404,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c6d36998c19b59a4090b948788cd0945, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  actorName: 0
+  actorName: RyanKul
   maxHP: 10
   currentHP: 10
-  baseDamage: 0
+  baseDamage: 1
   baseDefense: 0
   playerLevel: 1
   maxFP: 5
@@ -1824,7 +1824,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 160f37268e8be064090dfb66f6561949, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  actorName: 0
+  actorName: 
   maxHP: 0
   currentHP: 0
   baseDamage: 0
@@ -1867,7 +1867,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 160f37268e8be064090dfb66f6561949, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  actorName: 0
+  actorName: 
   maxHP: 0
   currentHP: 0
   baseDamage: 0
