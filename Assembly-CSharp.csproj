@@ -62,16 +62,16 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Scripts\Battle\ActionManager.cs" />
     <Compile Include="Assets\Scripts\Battle\BattleActions.cs" />
+    <Compile Include="Assets\Scripts\Battle\BattleChoices.cs" />
     <Compile Include="Assets\Scripts\Battle\BattleManagerTrigger.cs" />
     <Compile Include="Assets\Scripts\Battle\EnemyBattleActions.cs" />
-    <Compile Include="Assets\Scripts\Battle\PlayerBattleActions.cs" />
     <Compile Include="Assets\Scripts\Managers\BattleManager.cs" />
     <Compile Include="Assets\Scripts\Managers\HudsManager.cs" />
     <Compile Include="Assets\Scripts\Managers\ManagerManager.cs" />
     <Compile Include="Assets\Scripts\Managers\TextManager.cs" />
     <Compile Include="Assets\Scripts\Managers\TileManager.cs" />
-    <Compile Include="Assets\Scripts\PlayerBattleActionHudScript.cs" />
     <Compile Include="Assets\Scripts\PlayerMove.cs" />
     <Compile Include="Assets\Scripts\ScaleCanvas.cs" />
     <Compile Include="Assets\Scripts\Stats\ActorStats.cs" />
@@ -82,6 +82,7 @@
     <Compile Include="Assets\Scripts\Text\TextReader.cs" />
     <Compile Include="Assets\Scripts\Text\UITextTypeWriter.cs" />
     <Compile Include="Assets\Scripts\UI\Huds\BattleHud.cs" />
+    <Compile Include="Assets\Scripts\UI\Huds\PlayerBattleActionHudScript.cs" />
     <Compile Include="Assets\Scripts\UI\Huds\PlayerMiniStatsHud.cs" />
     <None Include="Assets\Scripts\Text\AllText\testDialogue1.txt" />
     <Reference Include="Unity.Timeline.Editor">

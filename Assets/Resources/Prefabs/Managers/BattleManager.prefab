@@ -10,6 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 2844556776101490059}
   - component: {fileID: 2844556776101490058}
+  - component: {fileID: 6990669579256058470}
+  - component: {fileID: 1682664290089753148}
   m_Layer: 0
   m_Name: BattleManager
   m_TagString: BattleManager
@@ -49,3 +51,28 @@ MonoBehaviour:
   playersInvolved: []
   enemiesInvolved: []
   state: 0
+--- !u!114 &6990669579256058470
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2844556776101490057}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 026480bf54b8dc348a8118d477d4e46d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  battleChoice: 0
+--- !u!114 &1682664290089753148
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2844556776101490057}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: de486eb8018354c42a4e415734dac008, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

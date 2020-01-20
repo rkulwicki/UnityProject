@@ -80,17 +80,11 @@ public class BattleManager : MonoBehaviour
 
     private void PlayerTurn()
     {
-        //pull up a new hud for choosing an action. See hud manager
-        //for now, let's just make the back-end commands
-
-        //todo: wait until player chooses button
         _hudsManager.GetComponent<HudsManager>().playerBattleActionHudActive = true; //actions hud on
         var playerBattleActionHud =_hudsManager.GetComponent<HudsManager>().playerBattleActionHud.GetComponent<PlayerBattleActionHudScript>();
 
-        //TODO: call the PlayerBattleActionHudScript instead of the local task
-        playerBattleActionHud.AttackButton.onClick.AddListener(TaskOnClickTEST); //if battle button click
 
-        playerBattleActionHud.MoveButton.onClick.AddListener(TaskOnClickTEST); //if move
+       //Wait until action is chosen, executed and finished.
 
     }
 
@@ -158,13 +152,43 @@ public class BattleManager : MonoBehaviour
         }
     }
 
+    public GameObject FindGameObjectWithTagFromArray(GameObject[] gameObjects, string tag)
+    {
+        var target = new GameObject();
+        foreach(var gameObject in gameObjects)
+        {
+            if (gameObject.CompareTag(tag))
+            {
+                target = gameObject;
+            }
+        }
+        if(target.name == "name") //default game object name
+        {
+            throw new MissingReferenceException("Game Object with tag " + tag + " not found.");
+        }
+        return target;
+    }
+
     #endregion
 
     #region Button Click Helper Functions
 
     //TODO: this logic will be moved to PlayerBattleActionHudScript
-    void TaskOnClickTEST()//BattleState battleState)
+    void TESTAttackButtonLogic()//BattleState battleState)
     {
+        //TODO: WHO are we attacking?
+        var battleActions = new BattleActions();
+        //battleActions.Attack();
+        Debug.Log(FindGameObjectWithTagFromArray(playersInvolved, "Player").GetComponent<PlayerStats>().baseDamage);
+        state = BattleState.ENEMYTURN;
+        _hudsManager.GetComponent<HudsManager>().playerBattleActionHudActive = false;
+    }
+
+    void TESTMoveButtonLogic()//BattleState battleState)
+    {
+        //TODO: WHO are we attacking?
+        var battleActions = new BattleActions();
+        //battleActions.Move();
         state = BattleState.ENEMYTURN;
         _hudsManager.GetComponent<HudsManager>().playerBattleActionHudActive = false;
     }
