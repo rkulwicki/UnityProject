@@ -23,6 +23,8 @@ public class ChooseObject : MonoBehaviour
 
     private bool isChosen = false;
 
+    //REFACTOR SO THAT THE INPUT FOR CHOOSE OBJECT GOES INTO THE METHOD, NOT THE CONSTRUCTOR
+
     [Description("Given a list of game objects, generate a GUI to choose from the list. Starts" +
         " coroutine instantly after instantiation.")]
     public ChooseObject(GameObject selectorPrefab,
@@ -41,7 +43,7 @@ public class ChooseObject : MonoBehaviour
         selector = GenerateUISelector(selectorPrefab, gameObjects[current].transform.position); //generates UI at enemy location
     }
 
-    public GameObject InvokeChoose() //HALP
+    public IEnumerator InvokeChoose() //HALP
     {
         CoroutineWithData cd = new CoroutineWithData(this, Choose());
         yield return cd.coroutine;

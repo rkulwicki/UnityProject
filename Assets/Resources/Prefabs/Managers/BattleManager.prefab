@@ -45,6 +45,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77690b97167a818488a463793212608b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  selectorPrefab: {fileID: 6718451887472953537, guid: d1a1c45da64a2f046bd5ef55959965ca,
+    type: 3}
   grid: {fileID: 0}
   tilemapFloor: {fileID: 0}
   tilemapObstacles: {fileID: 0}
@@ -76,3 +78,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de486eb8018354c42a4e415734dac008, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  battleChoices: 0
