@@ -66,6 +66,7 @@
     <Compile Include="Assets\Scripts\Battle\BattleActions.cs" />
     <Compile Include="Assets\Scripts\Battle\BattleChoices.cs" />
     <Compile Include="Assets\Scripts\Battle\BattleManagerTrigger.cs" />
+    <Compile Include="Assets\Scripts\Battle\ChooseObject.cs" />
     <Compile Include="Assets\Scripts\Battle\EnemyBattleActions.cs" />
     <Compile Include="Assets\Scripts\Managers\BattleManager.cs" />
     <Compile Include="Assets\Scripts\Managers\HudsManager.cs" />
@@ -84,6 +85,7 @@
     <Compile Include="Assets\Scripts\UI\Huds\BattleHud.cs" />
     <Compile Include="Assets\Scripts\UI\Huds\PlayerBattleActionHudScript.cs" />
     <Compile Include="Assets\Scripts\UI\Huds\PlayerMiniStatsHud.cs" />
+    <Compile Include="Assets\Scripts\Utilities\CoroutineWithData.cs" />
     <None Include="Assets\Scripts\Text\AllText\testDialogue1.txt" />
     <Reference Include="Unity.Timeline.Editor">
       <HintPath>C:/Users/Home/Desktop/GitRepos/UnityProject/UnityProject/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>

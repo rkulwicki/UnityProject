@@ -6,6 +6,9 @@ using UnityEngine.Tilemaps;
 public enum BattleState {INACTIVE, START, PLAYERTURN, ENEMYTURN, WON, LOST}
 public class BattleManager : MonoBehaviour
 {
+
+    public GameObject selectorPrefab;
+
     public GameObject grid;
     public GameObject tilemapFloor;
     public GameObject tilemapObstacles;
@@ -84,7 +87,18 @@ public class BattleManager : MonoBehaviour
         var playerBattleActionHud =_hudsManager.GetComponent<HudsManager>().playerBattleActionHud.GetComponent<PlayerBattleActionHudScript>();
 
 
-       //Wait until action is chosen, executed and finished.
+
+        //=====================================
+        //test!!!!
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            Debug.Log("Begin testing.");
+            //LOG: You cannot create a monobehaviour using the 'new' keyword. Monobehaviour can only
+            //  be added using AddComponent(). 
+            var choose = new ChooseObject(selectorPrefab, enemiesInvolved, KeyCode.Alpha1, KeyCode.Alpha2, KeyCode.Alpha3);
+            //choose.InvokeChoose();
+        }
+        //=====================================
 
     }
 
