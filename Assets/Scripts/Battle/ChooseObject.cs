@@ -21,9 +21,7 @@ public class ChooseObject : MonoBehaviour
     private KeyCode keycodeForwardInList;
     private KeyCode keycodeBackwardInList;
 
-    private bool isChosen = false;
-
-    //REFACTOR SO THAT THE INPUT FOR CHOOSE OBJECT GOES INTO THE METHOD, NOT THE CONSTRUCTOR
+    public bool choosing = false;
 
     [Description("Given a list of game objects, generate a GUI to choose from the list. Starts" +
         " coroutine instantly after instantiation.")]
@@ -37,28 +35,45 @@ public class ChooseObject : MonoBehaviour
         this.keycodeChoose = keycodeChoose;
         this.keycodeForwardInList = keycodeForwardInList;
         this.keycodeBackwardInList = keycodeBackwardInList;
+        this.gameObjects = gameObjects;
         current = 0;
         max = gameObjects.Length;
         currentObject = gameObjects[current];
         selector = GenerateUISelector(selectorPrefab, gameObjects[current].transform.position); //generates UI at enemy location
     }
 
-    public IEnumerator InvokeChoose() //HALP
+    //public IEnumerator InvokeChoose() //HALP
+    //{
+    //    Debug.Log("WOAH! ChooseObject, Line 47");
+    //    CoroutineWithData cd = new CoroutineWithData(this, Choose());
+    //    yield return cd.coroutine;
+    //    Debug.Log("result is " + cd.result);
+    //}
+
+    ////contains nested coroutines
+    //public IEnumerator Choose()
+    //{
+    //    while (!isChosen)
+    //    {
+    //        StartCoroutine(MoveThroughList(keycodeForwardInList, keycodeBackwardInList, gameObjects));
+    //        StartCoroutine(WaitForKeyDown(keycodeChoose));
+    //    }
+    //    yield return currentObject;
+    //}
+
+    public void StartChoose()
     {
-        CoroutineWithData cd = new CoroutineWithData(this, Choose());
-        yield return cd.coroutine;
-        Debug.Log("result is " + cd.result);
+        choosing = true;
     }
 
-    //contains nested coroutines
-    private IEnumerator Choose()
+    private void Update()
     {
-        while (!isChosen)
+        while (!choosing)
         {
             StartCoroutine(MoveThroughList(keycodeForwardInList, keycodeBackwardInList, gameObjects));
             StartCoroutine(WaitForKeyDown(keycodeChoose));
         }
-        yield return currentObject;
+        
     }
 
     private GameObject GenerateUISelector(GameObject selectorPrefab, Vector3 position)
@@ -73,7 +88,7 @@ public class ChooseObject : MonoBehaviour
         {
             yield return null;
         }
-        isChosen = true;
+        choosing = false;
     }
 
     private IEnumerator MoveThroughList(KeyCode forwards, KeyCode backwards, GameObject[] gameObjects)
@@ -98,8 +113,8 @@ public class ChooseObject : MonoBehaviour
                 }
                 currentObject = gameObjects[current];
             }
+            yield return null;
         }
-
     }
 }
 

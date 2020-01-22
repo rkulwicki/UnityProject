@@ -14,7 +14,9 @@ public class BattleManager : MonoBehaviour
     public GameObject tilemapObstacles;
 
     public GameObject[] playersInvolved; 
-    public GameObject[] enemiesInvolved; 
+    public GameObject[] enemiesInvolved;
+
+    public GameObject currentEnemy;
 
     public BattleState state;
 
@@ -95,8 +97,16 @@ public class BattleManager : MonoBehaviour
             Debug.Log("Begin testing.");
             //LOG: You cannot create a monobehaviour using the 'new' keyword. Monobehaviour can only
             //  be added using AddComponent(). 
-            var choose = new ChooseObject(selectorPrefab, enemiesInvolved, KeyCode.Alpha1, KeyCode.Alpha2, KeyCode.Alpha3);
+            //gameObject.GetComponent<ChooseObject>().InvokeChoose(selectorPrefab, enemiesInvolved,
+            //    KeyCode.Alpha1, KeyCode.UpArrow, KeyCode.DownArrow);
             //choose.InvokeChoose();
+            var choose = new ChooseObject(selectorPrefab, enemiesInvolved, KeyCode.Alpha1, KeyCode.Alpha2, KeyCode.Alpha3);
+            //StartCoroutine(choose.InvokeChoose());
+            choose.StartChoose();
+            if (!choose.choosing)
+            {
+                currentEnemy = choose.currentObject;
+            }
         }
         //=====================================
 
