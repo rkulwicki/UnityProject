@@ -577,5 +577,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b82b54f2959a7ba4fb84dfdbd7762361, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AttackButton: {fileID: 3735613346571141006}
-  MoveButton: {fileID: 6820714375450243693}
+  attackButton: {fileID: 3735613346571141006}
+  moveButton: {fileID: 6820714375450243693}
+  battleChoice: 0
