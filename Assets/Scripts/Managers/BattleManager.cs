@@ -14,19 +14,22 @@ public class BattleManager : MonoBehaviour
     public GameObject tilemapObstacles;
 
     public GameObject[] playersInvolved; 
-    public GameObject[] enemiesInvolved; 
+    public GameObject[] enemiesInvolved;
+
+    public GameObject currentEnemy;
 
     public BattleState state;
 
     private GameObject _hudsManager;
     private GameObject _tileManager;
+    private ChooseObject _chooseObject;
 
     void Start()
     {
         state = BattleState.INACTIVE;
         _hudsManager = GameObject.FindGameObjectWithTag("HudsManager");
         _tileManager = GameObject.FindGameObjectWithTag("TileManager");
-
+        _chooseObject = gameObject.GetComponent<ChooseObject>();
     }
 
     private void Update()
@@ -85,26 +88,31 @@ public class BattleManager : MonoBehaviour
     {
         _hudsManager.GetComponent<HudsManager>().playerBattleActionHudActive = true; //actions hud on
         var playerBattleActionHud =_hudsManager.GetComponent<HudsManager>().playerBattleActionHud.GetComponent<PlayerBattleActionHudScript>();
-
-
-
-        //=====================================
-        //test!!!!
+        
+        //                      ATTACK
+        // ==================================================
+        //TODO:
+        //This should be activated when you hit the "Attack button" 
+        //  vvvvvv
         if (Input.GetKeyDown(KeyCode.Q))
         {
-            Debug.Log("Begin testing.");
-            //LOG: You cannot create a monobehaviour using the 'new' keyword. Monobehaviour can only
-            //  be added using AddComponent(). 
-            var choose = new ChooseObject(selectorPrefab, enemiesInvolved, KeyCode.Alpha1, KeyCode.Alpha2, KeyCode.Alpha3);
-            //choose.InvokeChoose();
+            _chooseObject.StartChoose(selectorPrefab, enemiesInvolved, KeyCode.I, KeyCode.O, KeyCode.P);
         }
-        //=====================================
+        //  ^^^^^^
 
+        if (_chooseObject.result != null)
+        {
+            currentEnemy = _chooseObject.currentObject;
+            //TODO:
+            //Here. Insert logic for attacking, given the attack and the chosen enemy.
+            _hudsManager.GetComponent<HudsManager>().playerBattleActionHudActive = false;
+        }
+        // ==================================================
     }
 
     private void EnemyTurn()
     {
-
+        //TODO
     }
 
     private void Won(Vector3Int[] battleBoundaryTilesLocations)

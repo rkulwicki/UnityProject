@@ -11,8 +11,7 @@ public class ChooseObject : MonoBehaviour
     public int max;
 
     public Coroutine coroutine { get; private set; }
-    public object result;
-    private IEnumerator target;
+    public GameObject result;
 
     private GameObject selectorPrefab;
     private GameObject selector;
@@ -21,13 +20,11 @@ public class ChooseObject : MonoBehaviour
     private KeyCode keycodeForwardInList;
     private KeyCode keycodeBackwardInList;
 
-    private bool isChosen = false;
-
-    //REFACTOR SO THAT THE INPUT FOR CHOOSE OBJECT GOES INTO THE METHOD, NOT THE CONSTRUCTOR
+    public bool choosing = false;
 
     [Description("Given a list of game objects, generate a GUI to choose from the list. Starts" +
         " coroutine instantly after instantiation.")]
-    public ChooseObject(GameObject selectorPrefab,
+    public void StartChoose(GameObject selectorPrefab,
                         GameObject[] gameObjects,
                         KeyCode keycodeChoose,
                         KeyCode keycodeForwardInList,
@@ -37,28 +34,12 @@ public class ChooseObject : MonoBehaviour
         this.keycodeChoose = keycodeChoose;
         this.keycodeForwardInList = keycodeForwardInList;
         this.keycodeBackwardInList = keycodeBackwardInList;
+        this.gameObjects = gameObjects;
         current = 0;
-        max = gameObjects.Length;
+        max = gameObjects.Length - 1;
         currentObject = gameObjects[current];
         selector = GenerateUISelector(selectorPrefab, gameObjects[current].transform.position); //generates UI at enemy location
-    }
-
-    public IEnumerator InvokeChoose() //HALP
-    {
-        CoroutineWithData cd = new CoroutineWithData(this, Choose());
-        yield return cd.coroutine;
-        Debug.Log("result is " + cd.result);
-    }
-
-    //contains nested coroutines
-    private IEnumerator Choose()
-    {
-        while (!isChosen)
-        {
-            StartCoroutine(MoveThroughList(keycodeForwardInList, keycodeBackwardInList, gameObjects));
-            StartCoroutine(WaitForKeyDown(keycodeChoose));
-        }
-        yield return currentObject;
+        choosing = true;
     }
 
     private GameObject GenerateUISelector(GameObject selectorPrefab, Vector3 position)
@@ -67,39 +48,51 @@ public class ChooseObject : MonoBehaviour
         return selector;
     }
 
+    private void Update()
+    {
+        if (choosing)
+        {
+            StartCoroutine(MoveThroughList(keycodeForwardInList, keycodeBackwardInList, gameObjects));
+            StartCoroutine(WaitForKeyDown(keycodeChoose));
+        }
+    }
+
     private IEnumerator WaitForKeyDown(KeyCode keyCode)
     {
         while (!Input.GetKeyDown(keyCode))
         {
             yield return null;
         }
-        isChosen = true;
+        //Executes when you choose
+        choosing = false;
+        result = currentObject;
+        Destroy(selector);
+        StopAllCoroutines();
     }
 
     private IEnumerator MoveThroughList(KeyCode forwards, KeyCode backwards, GameObject[] gameObjects)
     {
-        while (true)
+        if (Input.GetKeyDown(forwards))
         {
-            if (Input.GetKeyDown(forwards))
+            current++;
+            if (current > max) //reached end of list
             {
-                current++;
-                if (current > max) //reached end of list
-                {
-                    current = 0;
-                }
-                currentObject = gameObjects[current];
+                current = 0;
             }
-            else if (Input.GetKeyDown(backwards))
-            {
-                current--;
-                if (current < 0)
-                {
-                    current = max;
-                }
-                currentObject = gameObjects[current];
-            }
+            currentObject = gameObjects[current];
+            selector.transform.position = currentObject.transform.position;
         }
-
+        else if (Input.GetKeyDown(backwards))
+        {
+            current--;
+            if (current < 0)
+            {
+                current = max;
+            }
+            currentObject = gameObjects[current];
+            selector.transform.position = currentObject.transform.position;
+        }
+        yield return null;
     }
 }
 
