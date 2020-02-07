@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 
-public class HudsManager : MonoBehaviour
+public class HudsManager : MonoBehaviour, IManager
 {
     //TODO: find and instantiate all prefabs with the "hud" tag
     //public GameObject[] hudPrefabs;
@@ -15,17 +15,20 @@ public class HudsManager : MonoBehaviour
     public bool playerMiniStatsHudActive;
     public bool battleHudActive;
     public bool playerBattleActionHudActive;
+    public bool dPadHudActive;
     //todo: public bool battleActionsActive; etc...
 
     //prefabs
     public GameObject playerMiniStatsHudPrefab;
     public GameObject battleHudPrefab;
     public GameObject playerBattleActionHudPrefab;
+    public GameObject dPadHudPrefab;
 
     //actualy intantiations of the objects
     public GameObject playerMiniStatsHud;
     public GameObject battleHud;
     public GameObject playerBattleActionHud;
+    public GameObject dPadHud;
 
     private void Awake()
     {
@@ -42,6 +45,13 @@ public class HudsManager : MonoBehaviour
         
         InstatiateAllHuds();
         SetAllHudsToInactive();
+        
+    }
+
+    //start may need to be altered.
+    private void Start()
+    {
+        dPadHudActive = true;
     }
 
     private void Update()
@@ -72,6 +82,16 @@ public class HudsManager : MonoBehaviour
             playerBattleActionHud.SetActive(false);
         }
 
+        //dpad hud
+        if (dPadHudActive)
+        {
+            dPadHud.SetActive(true);
+        }
+        else
+        {
+            dPadHud.SetActive(false);
+        }
+
     }
 
     private void InstatiateAllHuds()
@@ -79,6 +99,7 @@ public class HudsManager : MonoBehaviour
         playerMiniStatsHud = Instantiate(playerMiniStatsHudPrefab);
         battleHud = Instantiate(battleHudPrefab);
         playerBattleActionHud = Instantiate(playerBattleActionHudPrefab);
+        dPadHud = Instantiate(dPadHudPrefab);
     }
 
     private void SetAllHudsToInactive()
@@ -86,5 +107,6 @@ public class HudsManager : MonoBehaviour
         playerMiniStatsHud.SetActive(false);
         battleHud.SetActive(false);
         playerBattleActionHud.SetActive(false);
+        dPadHud.SetActive(false);
     }
 }

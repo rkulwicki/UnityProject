@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TextManager : MonoBehaviour
+public class TextManager : MonoBehaviour, IManager
 {
     // Start is called before the first frame update
     void Start()

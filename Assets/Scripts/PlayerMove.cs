@@ -29,6 +29,11 @@ public class PlayerMove : MonoBehaviour
     void Update()
     {
 
+
+        //TODO!!!!
+        //REFACTOR SO THAT WAY THIS UTILIZES THE D-PAD
+
+
         //We do nothing if the player is still moving.
         if (isMoving || onCooldown || onExit) return;
 

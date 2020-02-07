@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.Tilemaps;
 
 public enum BattleState {INACTIVE, START, PLAYERTURN, ENEMYTURN, WON, LOST}
-public class BattleManager : MonoBehaviour
+public class BattleManager : MonoBehaviour, IManager
 {
 
     public GameObject selectorPrefab;

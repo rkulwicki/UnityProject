@@ -3,7 +3,7 @@ using System.ComponentModel;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
-public class TileManager : MonoBehaviour
+public class TileManager : MonoBehaviour, IManager
 {
     ////List<Tuple<int,int>> tiles
     //public Vector2Int tileLocation;

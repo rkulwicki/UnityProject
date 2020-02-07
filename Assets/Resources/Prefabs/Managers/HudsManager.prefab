@@ -46,12 +46,16 @@ MonoBehaviour:
   playerMiniStatsHudActive: 0
   battleHudActive: 0
   playerBattleActionHudActive: 0
+  dPadHudActive: 0
   playerMiniStatsHudPrefab: {fileID: 3956238273346145901, guid: fcd2538df0cdd1446bc4b9109a182387,
     type: 3}
   battleHudPrefab: {fileID: 3603423167365023997, guid: 7ca7dc3ac52f7ce42954fb307ae37a28,
     type: 3}
   playerBattleActionHudPrefab: {fileID: 9167388666651613506, guid: fcd9b2d30e66f4f42b3d90ab3b22df31,
     type: 3}
+  dPadHudPrefab: {fileID: 8274872769780053825, guid: a38a33522b901a14c94cb1d121a05cea,
+    type: 3}
   playerMiniStatsHud: {fileID: 0}
   battleHud: {fileID: 0}
   playerBattleActionHud: {fileID: 0}
+  dPadHud: {fileID: 0}
