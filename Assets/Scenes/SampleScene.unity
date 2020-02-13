@@ -196,6 +196,53 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!1 &114265266
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 114265268}
+  - component: {fileID: 114265267}
+  m_Layer: 0
+  m_Name: MainGame
+  m_TagString: MainGame
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &114265267
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 114265266}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2772e78c7c6d401419ccc7bf2f77b2a4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  DPadUp: 0
+  DPadDown: 0
+  DPadRight: 0
+  DPadLeft: 0
+--- !u!4 &114265268
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 114265266}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -1.1001579, y: -0.37546027, z: -655.2456}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 9
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &137850639
 GameObject:
   m_ObjectHideFlags: 0
@@ -1279,6 +1326,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5b28faaa1d5ccc4faa3728c69195fcd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isKeyboardMovement: 0
   groundTilemap: {fileID: 1913425529}
   obstaclesTilemap: {fileID: 282895600}
   isMoving: 0

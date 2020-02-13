@@ -69,6 +69,8 @@
     <Compile Include="Assets\Scripts\Battle\BattleManagerTrigger.cs" />
     <Compile Include="Assets\Scripts\Battle\EnemyBattleActions.cs" />
     <Compile Include="Assets\Scripts\ChooseObject.cs" />
+    <Compile Include="Assets\Scripts\DPad.cs" />
+    <Compile Include="Assets\Scripts\Global\DPadGlobal.cs" />
     <Compile Include="Assets\Scripts\Global\GlobalInputs.cs" />
     <Compile Include="Assets\Scripts\Managers\BattleManager.cs" />
     <Compile Include="Assets\Scripts\Managers\HudsManager.cs" />
@@ -86,9 +88,9 @@
     <Compile Include="Assets\Scripts\Text\TextReader.cs" />
     <Compile Include="Assets\Scripts\Text\UITextTypeWriter.cs" />
     <Compile Include="Assets\Scripts\UI\Huds\BattleHud.cs" />
-    <Compile Include="Assets\Scripts\UI\Huds\DPadHud.cs" />
     <Compile Include="Assets\Scripts\UI\Huds\PlayerBattleActionHudScript.cs" />
     <Compile Include="Assets\Scripts\UI\Huds\PlayerMiniStatsHud.cs" />
+    <Compile Include="Assets\Scripts\UI\MyButton.cs" />
     <Compile Include="Assets\Scripts\Utilities\CoroutineWithData.cs" />
     <Compile Include="Assets\Scripts\Utilities\DependencyInjectionSystem\DependencyResolver.cs" />
     <Compile Include="Assets\Scripts\Utilities\DependencyInjectionSystem\InjectFrom.cs" />

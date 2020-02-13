@@ -12,6 +12,7 @@ TagManager:
   - BattleManager
   - Partner
   - TileManager
+  - MainGame
   layers:
   - Default
   - TransparentFX

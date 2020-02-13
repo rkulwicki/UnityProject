@@ -8,6 +8,7 @@ using TMPro;
 
 public class PlayerMove : MonoBehaviour
 {
+    public bool isKeyboardMovement;
 
     public Tilemap groundTilemap;
     public Tilemap obstaclesTilemap;
@@ -19,20 +20,18 @@ public class PlayerMove : MonoBehaviour
     public bool onCooldown = false;
     public bool onExit = false;
     private float moveTime = 0.1f;
-
+    private float moveCoolDown = 0.15f;
+    private DPadGlobal _DPadGlobal;
     // Use this for initialization
     void Start()
     {
+        _DPadGlobal = GameObject.FindGameObjectWithTag("MainGame").GetComponent<DPadGlobal>();
+        isKeyboardMovement = false;
     }
 
     // Update is called once per frame
     void Update()
     {
-
-
-        //TODO!!!!
-        //REFACTOR SO THAT WAY THIS UTILIZES THE D-PAD
-
 
         //We do nothing if the player is still moving.
         if (isMoving || onCooldown || onExit) return;
@@ -41,8 +40,24 @@ public class PlayerMove : MonoBehaviour
         int horizontal = 0;
         int vertical = 0;
         //To get move directions
-        horizontal = (int)(Input.GetAxisRaw("Horizontal"));
-        vertical = (int)(Input.GetAxisRaw("Vertical"));
+        if (_DPadGlobal.DPadUp)
+            vertical = 1;
+        else if (_DPadGlobal.DPadDown)
+            vertical = -1;
+        else
+            vertical = 0;
+        if (_DPadGlobal.DPadRight)
+            horizontal = 1;
+        else if (_DPadGlobal.DPadLeft)
+            horizontal = -1;
+        else
+            horizontal = 0;
+
+        if (isKeyboardMovement)
+        {
+            horizontal = (int)(Input.GetAxisRaw("Horizontal")); //change this to call the 
+            vertical = (int)(Input.GetAxisRaw("Vertical"));
+        }
         //We can't go in both directions at the same time
         if (horizontal != 0)
             vertical = 0;
@@ -50,7 +65,7 @@ public class PlayerMove : MonoBehaviour
         //If there's a direction, we are trying to move.
         if ((horizontal != 0 || vertical != 0) && canMove)
         {
-            StartCoroutine(actionCooldown(0.2f));
+            StartCoroutine(actionCooldown(moveCoolDown));
             Move(horizontal, vertical);
         }
 
