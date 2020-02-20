@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 2844556776101490058}
   - component: {fileID: 6990669579256058470}
   - component: {fileID: 1682664290089753148}
-  - component: {fileID: 3381489610670837433}
+  - component: {fileID: 7286354780226604132}
   m_Layer: 0
   m_Name: BattleManager
   m_TagString: BattleManager
@@ -81,7 +81,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   battleChoices: 0
---- !u!114 &3381489610670837433
+--- !u!114 &7286354780226604132
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -90,10 +90,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 2844556776101490057}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aae95656d81c5bc43839c3e3d4ceed2c, type: 3}
+  m_Script: {fileID: 11500000, guid: 2caa23150d4f20e44abac082f3be7b0e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   currentObject: {fileID: 0}
   current: 0
   max: 0
+  result: {fileID: 0}
   choosing: 0

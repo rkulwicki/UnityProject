@@ -22,14 +22,23 @@ public class BattleManager : MonoBehaviour, IManager
 
     private GameObject _hudsManager;
     private GameObject _tileManager;
-    private ChooseObject _chooseObject;
+    private ChooseObjectWithBools _chooseObjectWithBools;
+    private PlayerBattleGlobal _playerBattleGlobal;
+    private DPadGlobal _dPadGlobal;
+    private GameObject _player;
+
+    private bool setUpState, takeDownState;
 
     void Start()
     {
         state = BattleState.INACTIVE;
         _hudsManager = GameObject.FindGameObjectWithTag("HudsManager");
         _tileManager = GameObject.FindGameObjectWithTag("TileManager");
-        _chooseObject = gameObject.GetComponent<ChooseObject>();
+        //_chooseObjectWithKeys = gameObject.GetComponent<ChooseObjectWithKeys>();
+        _chooseObjectWithBools = gameObject.GetComponent<ChooseObjectWithBools>();
+        _playerBattleGlobal = GameObject.FindGameObjectWithTag("GlobalInputs").GetComponent<PlayerBattleGlobal>();
+        _dPadGlobal = GameObject.FindGameObjectWithTag("GlobalInputs").GetComponent<DPadGlobal>();
+        _player = GameObject.FindGameObjectWithTag("Player");
     }
 
     private void Update()
@@ -80,34 +89,51 @@ public class BattleManager : MonoBehaviour, IManager
     private void StartBattle()
     {
         _hudsManager.GetComponent<HudsManager>().playerMiniStatsHudActive = true; //battle hud on
+        setUpState = true;
         DecideWhoGoesFirst();
-
     }
 
     private void PlayerTurn()
     {
-        _hudsManager.GetComponent<HudsManager>().playerBattleActionHudActive = true; //actions hud on
-        var playerBattleActionHud =_hudsManager.GetComponent<HudsManager>().playerBattleActionHud.GetComponent<PlayerBattleActionHudScript>();
+        if (setUpState)
+        {
+            _hudsManager.GetComponent<HudsManager>().playerBattleActionHudActive = true;
+            var playerBattleButtons = _hudsManager.GetComponent<HudsManager>().playerBattleActionHud.GetComponent<PlayerBattleButtons>();
+            setUpState = false;
+        }
+        
         
         //                      ATTACK
         // ==================================================
-        //TODO:
-        //This should be activated when you hit the "Attack button" 
-        //  vvvvvv
-        if (Input.GetKeyDown(KeyCode.Q))
+        if (_playerBattleGlobal.AttackButton)
         {
-            _chooseObject.StartChoose(selectorPrefab, enemiesInvolved, KeyCode.I, KeyCode.O, KeyCode.P);
-        }
-        //  ^^^^^^
-
-        if (_chooseObject.result != null)
-        {
-            currentEnemy = _chooseObject.currentObject;
-            //TODO:
-            //Here. Insert logic for attacking, given the attack and the chosen enemy.
+            //TODO: first choose type of attack (goes here before StartChoose)
+            _playerBattleGlobal.AttackButton = false;
+            _chooseObjectWithBools.StartChoose(selectorPrefab, enemiesInvolved);
             _hudsManager.GetComponent<HudsManager>().playerBattleActionHudActive = false;
         }
+
+        if (_chooseObjectWithBools.result != null) //after chosen
+        {
+            currentEnemy = _chooseObjectWithBools.currentObject;
+            //TODO:
+            //Here. Insert logic for attacking, given the attack and the chosen enemy.
+            //^^ currently just the enemy. Attack choice will be later.
+            _hudsManager.GetComponent<HudsManager>().playerBattleActionHudActive = false;
+            var baseD = _player.GetComponent<PlayerStats>().baseDamage;
+            var curEnStats = currentEnemy.GetComponent<EnemyStats>();
+            var playerActions = _player.GetComponent<PlayerBattleActions>();
+            playerActions.Attack(baseD, curEnStats);
+            _chooseObjectWithBools.result = null; //reset the choice.
+            takeDownState = true;
+        }
         // ==================================================
+
+        if (takeDownState)
+        {
+            //do ending stuff, probably switch to enemy turn.
+            Debug.Log("End player turn.");
+        }
     }
 
     private void EnemyTurn()

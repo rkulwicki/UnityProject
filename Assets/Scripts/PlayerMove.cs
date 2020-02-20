@@ -25,7 +25,7 @@ public class PlayerMove : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        _DPadGlobal = GameObject.FindGameObjectWithTag("MainGame").GetComponent<DPadGlobal>();
+        _DPadGlobal = GameObject.FindGameObjectWithTag("GlobalInputs").GetComponent<DPadGlobal>();
         isKeyboardMovement = false;
     }
 
