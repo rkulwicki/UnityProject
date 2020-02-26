@@ -51,7 +51,7 @@ public class ChooseObjectWithBools : MonoBehaviour
     {
         if (choosing)
         {
-            if (_dPadGlobal.DPadUp)
+            if (_dPadGlobal.DPadUp || _dPadGlobal.DPadRight)
             {
                 current++;
                 if (current > max) //reached end of list
@@ -61,8 +61,9 @@ public class ChooseObjectWithBools : MonoBehaviour
                 currentObject = gameObjects[current];
                 selector.transform.position = currentObject.transform.position;
                 _dPadGlobal.DPadUp = false;
+                _dPadGlobal.DPadRight = false;
             }
-            else if (_dPadGlobal.DPadDown)
+            else if (_dPadGlobal.DPadDown || _dPadGlobal.DPadLeft)
             {
                 current--;
                 if (current < 0)
@@ -72,9 +73,10 @@ public class ChooseObjectWithBools : MonoBehaviour
                 currentObject = gameObjects[current];
                 selector.transform.position = currentObject.transform.position;
                 _dPadGlobal.DPadDown = false;
+                _dPadGlobal.DPadLeft = false;
             }
 
-            if (_dPadGlobal.DPadRight) //TODO: CHANGE TO CHOOSE BUTTON, NOT RIGHT BUTTON
+            if (_dPadGlobal.AButton) //TODO: CHANGE TO CHOOSE BUTTON, NOT RIGHT BUTTON
             {
                 choosing = false;
                 result = currentObject;

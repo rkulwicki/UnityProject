@@ -16,14 +16,9 @@ public class Move : MonoBehaviour
 
     private bool _isMoving, _onCooldown, _onExit = false;
 
-    // Update is called once per frame
-    void Update()
-    {
-        //if (_isMoving || _onCooldown || _onExit) return;
-    }
-
     public void MoveOneTile(Direction dir)
     {
+        canMove = true;
         int vertical = 0;
         int horizontal = 0;
         if (dir == Direction.UP)
@@ -46,6 +41,7 @@ public class Move : MonoBehaviour
             StartCoroutine(actionCooldown(moveCoolDown));
             MoveOne(horizontal, vertical);
         }
+        canMove = false;
     }
 
     private void MoveOne(int xDir, int yDir)

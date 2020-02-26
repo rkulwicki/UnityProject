@@ -155,6 +155,8 @@ MonoBehaviour:
   DPadDown: 0
   DPadRight: 0
   DPadLeft: 0
+  AButton: 0
+  BButton: 0
 --- !u!4 &114265268
 Transform:
   m_ObjectHideFlags: 0
@@ -1769,7 +1771,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 740518523}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1df6ce37dcc570446828b24edb7818b5, type: 3}
+  m_Script: {fileID: 11500000, guid: f1a9a3f51e4b63245b46a4be52cad511, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   moveTime: 0.1
@@ -1778,6 +1780,8 @@ MonoBehaviour:
   grid: {fileID: 0}
   groundTilemap: {fileID: 0}
   obstaclesTilemap: {fileID: 0}
+  beginLogic: 0
+  beginTurn: 0
 --- !u!1 &811742216
 GameObject:
   m_ObjectHideFlags: 0
@@ -2061,7 +2065,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 986351018}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3, y: 2, z: 0}
+  m_LocalPosition: {x: 3, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 652619140}
@@ -2100,7 +2104,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 986351018}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1df6ce37dcc570446828b24edb7818b5, type: 3}
+  m_Script: {fileID: 11500000, guid: f1a9a3f51e4b63245b46a4be52cad511, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   moveTime: 0.1
@@ -2109,6 +2113,8 @@ MonoBehaviour:
   grid: {fileID: 0}
   groundTilemap: {fileID: 0}
   obstaclesTilemap: {fileID: 0}
+  beginLogic: 0
+  beginTurn: 0
 --- !u!1 &1192089392
 GameObject:
   m_ObjectHideFlags: 0
@@ -2289,7 +2295,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1724087425}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1df6ce37dcc570446828b24edb7818b5, type: 3}
+  m_Script: {fileID: 11500000, guid: f1a9a3f51e4b63245b46a4be52cad511, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   moveTime: 0.1
@@ -2298,6 +2304,8 @@ MonoBehaviour:
   grid: {fileID: 0}
   groundTilemap: {fileID: 0}
   obstaclesTilemap: {fileID: 0}
+  beginLogic: 0
+  beginTurn: 0
 --- !u!114 &1724087427
 MonoBehaviour:
   m_ObjectHideFlags: 0

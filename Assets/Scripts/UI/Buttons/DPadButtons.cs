@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class DPadButtons : MonoBehaviour
 {
-    public Button buttonUp, buttonRight, buttonDown, buttonLeft;
+    public Button buttonUp, buttonRight, buttonDown, buttonLeft, buttonA, buttonB;
 
     //example: buttonUp.onClick.AddListener(TaskOnClickUp);
     //[Injected]
@@ -49,5 +49,22 @@ public class DPadButtons : MonoBehaviour
     public void DPadDownRelease()
     {
         _globalInputs.GetComponent<DPadGlobal>().DPadDown = false;
+    }
+
+    public void APressed()
+    {
+        _globalInputs.GetComponent<DPadGlobal>().AButton = true;
+    }
+    public void ARelease()
+    {
+        _globalInputs.GetComponent<DPadGlobal>().AButton = false;
+    }
+    public void BPressed()
+    {
+        _globalInputs.GetComponent<DPadGlobal>().BButton = true;
+    }
+    public void BRelease()
+    {
+        _globalInputs.GetComponent<DPadGlobal>().BButton = false;
     }
 }

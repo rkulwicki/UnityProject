@@ -10,7 +10,6 @@ public class EnemyLogic : Move
     //(1) Movement Patterns
     //(2) Attack Patterns
 
-
     private EnemyStats _enemyStatsReference;
     private GameObject _player;
 
@@ -21,10 +20,5 @@ public class EnemyLogic : Move
         grid = GameObject.FindGameObjectWithTag("Grid");
         groundTilemap = grid.transform.Find("Floor").gameObject.GetComponent<Tilemap>();
         obstaclesTilemap = grid.transform.Find("Obstacles").gameObject.GetComponent<Tilemap>();
-    }
-
-    void Update()
-    {
-
     }
 }

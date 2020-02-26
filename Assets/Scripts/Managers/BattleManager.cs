@@ -21,12 +21,16 @@ public class BattleManager : MonoBehaviour, IManager
 
     public BattleState state;
 
+    public int secondsBetweenEnemy = 1;
+
     private GameObject _hudsManager;
     private GameObject _tileManager;
     private ChooseObjectWithBools _chooseObjectWithBools;
     private PlayerBattleGlobal _playerBattleGlobal;
     private DPadGlobal _dPadGlobal;
     private GameObject _player;
+
+    private Vector3Int[] _battleBoundaryTilesLocations;
 
     private bool _setUpState, _takeDownState, _isWon, _isLose;
 
@@ -46,8 +50,6 @@ public class BattleManager : MonoBehaviour, IManager
     {
         if (state != BattleState.INACTIVE)
         {
-            var battleBoundaryTilesLocations = BeforeStart();
-
             if (state == BattleState.START)
             {
                 StartBattle();
@@ -62,11 +64,11 @@ public class BattleManager : MonoBehaviour, IManager
             }
             else if (state == BattleState.WON)
             {
-                Won(battleBoundaryTilesLocations);
+                Won();
             }
             else if (state == BattleState.LOST)
             {
-                Lost(battleBoundaryTilesLocations);
+                Lost();
             }
         }
     }
@@ -92,6 +94,12 @@ public class BattleManager : MonoBehaviour, IManager
 
     private void StartBattle()
     {
+        _battleBoundaryTilesLocations = BeforeStart();
+        _player.GetComponent<PlayerMove>().canMove = false;
+        foreach (var enemy in enemiesInvolved) //make them in "BattleMode"
+        {
+            enemy.GetComponent<DemonEnemyLogic>().beginLogic = true; //need to find EnemyLogic subclasses... hmm...
+        }
         _hudsManager.GetComponent<HudsManager>().playerMiniStatsHudActive = true; //battle hud on
         _setUpState = true;
         DecideWhoGoesFirst();
@@ -125,15 +133,14 @@ public class BattleManager : MonoBehaviour, IManager
         {
             currentEnemy = _chooseObjectWithBools.currentObject;
             //TODO:
-            //Here. Insert logic for attacking, given the attack and the chosen enemy.
-            //^^ currently just the enemy and attack is base damage. Attack choice will be later.
-            _hudsManager.GetComponent<HudsManager>().playerBattleActionHudActive = false;
+            //Here. Insert logic for attacking, given the attack and the chosen enemy.    
             var baseD = _player.GetComponent<PlayerStats>().baseDamage;
             var curEnStats = currentEnemy.GetComponent<EnemyStats>();
             var playerActions = _player.GetComponent<PlayerBattleActions>();
             playerActions.Attack(baseD, curEnStats);
-            _chooseObjectWithBools.result = null; //reset the choice.
+            //^^ currently just the enemy and attack is base damage. Attack choice will be later.
 
+            _chooseObjectWithBools.result = null; //reset the choice.
             _takeDownState = true;
         }
         // ==================================================
@@ -141,6 +148,9 @@ public class BattleManager : MonoBehaviour, IManager
         if (_playerBattleGlobal.MoveButton)
         {
             //move
+            //_player.GetComponent<PlayerMove>().canMove = true;
+            //then ---> _player.GetComponent<PlayerMove>().canMove = false;
+            _takeDownState = true;
         }
 
 
@@ -151,6 +161,7 @@ public class BattleManager : MonoBehaviour, IManager
 
         if (_takeDownState)
         {
+            _hudsManager.GetComponent<HudsManager>().playerBattleActionHudActive = false;
             if (_isWon)
                 state = BattleState.WON;
             if (_isLose)
@@ -172,12 +183,12 @@ public class BattleManager : MonoBehaviour, IManager
 
 
         //do enemy logic :)
-        foreach (var enemy in enemiesInvolved)
-        {
-            enemy.GetComponent<EnemyLogic>().MoveOneTile(Direction.UP);
-        }
-        state = BattleState.PLAYERTURN;
 
+        //need to find EnemyLogic subclasses... hmm...
+        StartCoroutine(ForEachEnemyTurn(secondsBetweenEnemy, enemiesInvolved));
+
+        //WAIT UNTIL ENEMIES ARE DONE vvvvv TODO!!!!
+        _takeDownState = true;
 
 
 
@@ -185,12 +196,13 @@ public class BattleManager : MonoBehaviour, IManager
         if (_takeDownState)
         {
             //do stuff
+            state = BattleState.PLAYERTURN;
             _takeDownState = false;
             _setUpState = true;
         }
     }
 
-    private void Won(Vector3Int[] battleBoundaryTilesLocations)
+    private void Won()
     {
         if (_setUpState)
         {
@@ -200,7 +212,7 @@ public class BattleManager : MonoBehaviour, IManager
 
 
 
-        BattleOver(battleBoundaryTilesLocations);
+        BattleOver(_battleBoundaryTilesLocations);
 
 
 
@@ -209,12 +221,13 @@ public class BattleManager : MonoBehaviour, IManager
         if (_takeDownState)
         {
             //do stuff
+            _player.GetComponent<PlayerMove>().canMove = true;
             _takeDownState = false;
             _setUpState = true;
         }
     }
 
-    private void Lost(Vector3Int[] battleBoundaryTilesLocations)
+    private void Lost()
     {
         if (_setUpState)
         {
@@ -226,7 +239,7 @@ public class BattleManager : MonoBehaviour, IManager
 
 
 
-        BattleOver(battleBoundaryTilesLocations);
+        BattleOver(_battleBoundaryTilesLocations);
 
 
 
@@ -235,6 +248,7 @@ public class BattleManager : MonoBehaviour, IManager
         if (_takeDownState)
         {
             //do stuff
+            _player.GetComponent<PlayerMove>().canMove = true;
             _takeDownState = false;
             _setUpState = true;
             turnNumber = 0;
@@ -304,6 +318,16 @@ public class BattleManager : MonoBehaviour, IManager
             return true;
         else
             return false;
+    }
+
+    public IEnumerator ForEachEnemyTurn(int sec, GameObject[] enemies)
+    {
+        foreach (var enemy in enemiesInvolved)
+        {
+            //enemy.GetComponent<DemonEnemyLogic>().beginTurn = true; //need to find EnemyLogic subclasses... hmm...
+            enemy.GetComponent<DemonEnemyLogic>().beginTurn = true;
+            yield return new WaitForSeconds(sec);
+        }
     }
 
     #endregion
