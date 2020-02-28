@@ -10,6 +10,17 @@ public class DemonEnemyLogic : EnemyLogic
     private int logicDictator = 0;
     private void Update()
     {
+        if (gameObject.GetComponent<EnemyStats>().currentHP <= 0) 
+        {
+            gameObject.SetActive(false);
+            //remove from enemiesInvolved array
+            var battleManager = GameObject.FindGameObjectWithTag("BattleManager");
+            var enemiesInvolved = battleManager.GetComponent<BattleManager>().enemiesInvolved;
+            System.Collections.Generic.List<GameObject> list = new System.Collections.Generic.List<GameObject>(enemiesInvolved);
+            list.Remove(gameObject);
+            battleManager.GetComponent<BattleManager>().enemiesInvolved = list.ToArray();
+        }
+            
         if (!beginLogic || !beginTurn)
             return;
         //it's the enemy's turn. What does it do?

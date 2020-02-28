@@ -123,8 +123,8 @@ public class BattleManager : MonoBehaviour, IManager
         // ==================================================
         if (_playerBattleGlobal.AttackButton)
         {
-            //TODO: first choose type of attack (goes here before StartChoose)
             _playerBattleGlobal.AttackButton = false;
+            //TODO: first choose type of attack (goes here before StartChoose)
             _chooseObjectWithBools.StartChoose(selectorPrefab, enemiesInvolved);
             _hudsManager.GetComponent<HudsManager>().playerBattleActionHudActive = false;
         }
@@ -147,6 +147,7 @@ public class BattleManager : MonoBehaviour, IManager
 
         if (_playerBattleGlobal.MoveButton)
         {
+            _playerBattleGlobal.MoveButton = false;
             //move
             //_player.GetComponent<PlayerMove>().canMove = true;
             //then ---> _player.GetComponent<PlayerMove>().canMove = false;
@@ -155,7 +156,18 @@ public class BattleManager : MonoBehaviour, IManager
 
 
 
-
+        //Have we won or lost?
+        if (ActorsHPZero(playersInvolved) || enemiesInvolved.Length == 0)
+        {
+            _isLose = true;
+            _takeDownState = true;
+        }
+        if (ActorsHPZero(enemiesInvolved) || enemiesInvolved.Length == 0)
+        {
+            _isWon = true;
+            _takeDownState = true;
+        }
+            
 
 
 
@@ -164,10 +176,12 @@ public class BattleManager : MonoBehaviour, IManager
             _hudsManager.GetComponent<HudsManager>().playerBattleActionHudActive = false;
             if (_isWon)
                 state = BattleState.WON;
-            if (_isLose)
+            else if (_isLose)
                 state = BattleState.LOST;
-            //if not battle over vvvvvvv
-            state = BattleState.ENEMYTURN;
+            else
+            {
+                state = BattleState.ENEMYTURN;
+            }
             _takeDownState = false;
             _setUpState = true;
         }
@@ -212,7 +226,7 @@ public class BattleManager : MonoBehaviour, IManager
 
 
 
-        BattleOver(_battleBoundaryTilesLocations);
+        BattleOver();
 
 
 
@@ -239,7 +253,7 @@ public class BattleManager : MonoBehaviour, IManager
 
 
 
-        BattleOver(_battleBoundaryTilesLocations);
+        BattleOver();
 
 
 
@@ -264,12 +278,13 @@ public class BattleManager : MonoBehaviour, IManager
         state = BattleState.PLAYERTURN; //default player goes first
     }
 
-    public void BattleOver(Vector3Int[] boundaryTileLocations)
+    public void BattleOver()
     {
         _hudsManager.GetComponent<HudsManager>().playerMiniStatsHudActive = false;
         _hudsManager.GetComponent<HudsManager>().battleHudActive = false;
 
-        _tileManager.GetComponent<TileManager>().RemoveTiles(boundaryTileLocations); //delete boundary tiles
+        _tileManager.GetComponent<TileManager>().RemoveTiles(_battleBoundaryTilesLocations); //delete boundary tiles
+        _player.GetComponent<PlayerMove>().canMove = true;
     }
 
     public void FreezeRigidBodies(GameObject[] gameObjects)
@@ -290,44 +305,28 @@ public class BattleManager : MonoBehaviour, IManager
         }
     }
 
-    // TODO
-    private bool IsWon()
-    {
-        return false;
-    }
-
-    public bool IsLose()
-    {
-        if (_player.GetComponent<PlayerStats>().currentHP <= 0)
-            return true;
-        else
-            return false;
-    }
-
-    public bool AreEnemiesDefeated(GameObject[] enemies)
-    {
-        int totalDefeated = 0;
-        foreach (GameObject enemy in enemies)
-        {
-            if (enemy.GetComponent<EnemyStats>().currentHP <= 0)
-            {
-                totalDefeated = totalDefeated + 1;
-            }
-        }
-        if (totalDefeated == enemies.Length)
-            return true;
-        else
-            return false;
-    }
-
     public IEnumerator ForEachEnemyTurn(int sec, GameObject[] enemies)
     {
         foreach (var enemy in enemiesInvolved)
         {
-            //enemy.GetComponent<DemonEnemyLogic>().beginTurn = true; //need to find EnemyLogic subclasses... hmm...
+            //TODO: enemy.GetComponent<DemonEnemyLogic>().beginTurn = true; //need to find EnemyLogic subclasses... hmm...
             enemy.GetComponent<DemonEnemyLogic>().beginTurn = true;
             yield return new WaitForSeconds(sec);
         }
+    }
+
+    private bool ActorsHPZero(GameObject[] actors)
+    {
+        int c = 0;
+        foreach (var actor in actors)
+        {
+            if (actor.GetComponent<ActorStats>().currentHP <= 0)
+                c++;
+        }
+        if (c == actors.Length)
+            return true;
+        else
+            return false;
     }
 
     #endregion
