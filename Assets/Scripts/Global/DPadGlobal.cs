@@ -12,6 +12,11 @@ public class DPadGlobal : MonoBehaviour
     public bool BButton;
     void Start()
     {
+        AllButtonsFalse();
+    }
+
+    public void AllButtonsFalse()
+    {
         DPadUp = false;
         DPadDown = false;
         DPadLeft = false;

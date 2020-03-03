@@ -22,10 +22,18 @@ public class TextBoxScript: MonoBehaviour
     private GameObject _playerObject;
     private TextReader _textReader;
 
+    private TextBoxGlobal _textBoxGlobal;
+    private DPadGlobal _dPadGlobal;
+
+    private HudsManager _hudsManager;
+
     private bool _inTextBox = false;
 
     private void Start()
     {
+        _textBoxGlobal = GameObject.FindGameObjectWithTag("GlobalInputs").GetComponent<TextBoxGlobal>();
+        _dPadGlobal = GameObject.FindGameObjectWithTag("GlobalInputs").GetComponent<DPadGlobal>();
+        _hudsManager = GameObject.FindGameObjectWithTag("HudsManager").GetComponent<HudsManager>();
         _playerObject = GameObject.Find("Player");
         _textReader = gameObject.GetComponent<TextReader>();
         if (_textReader.lines.Length > 0)
@@ -39,10 +47,13 @@ public class TextBoxScript: MonoBehaviour
 
         if (_inTextBox)
         {
+            _hudsManager.dPadHudActive = false;
+            _dPadGlobal.AllButtonsFalse();
             _playerObject.GetComponent<PlayerMove>().canMove = false;
 
-            if (Input.GetKeyUp(inputKey))
+            if (_textBoxGlobal.textBoxButton)
             {
+                _textBoxGlobal.textBoxButton = false;  //turn dpad off
 
                 //check if we are still typing. If we can just 
                 if (textBoxObject.transform.Find("TextBox").Find("Text").GetComponent<UITextTypeWriter>().isTyping)
@@ -67,6 +78,10 @@ public class TextBoxScript: MonoBehaviour
                     textBoxObject.GetComponent<TextHolder>().isTextDifferent = true; //alert that text changed.
                 }
             }
+        }
+        else
+        {
+            _hudsManager.dPadHudActive = true; //turn dpad on
         }
 
     }

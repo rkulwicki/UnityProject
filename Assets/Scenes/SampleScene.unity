@@ -132,6 +132,7 @@ GameObject:
   - component: {fileID: 114265268}
   - component: {fileID: 114265267}
   - component: {fileID: 114265269}
+  - component: {fileID: 114265270}
   m_Layer: 0
   m_Name: GlobalInputs
   m_TagString: GlobalInputs
@@ -185,6 +186,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   AttackButton: 0
   MoveButton: 0
+--- !u!114 &114265270
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 114265266}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e5ba8c9f161de0340b27972c4caa145e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  textBoxButton: 0
 --- !u!1 &137850639
 GameObject:
   m_ObjectHideFlags: 0
@@ -1755,7 +1769,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 740518523}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1, y: 2, z: 0}
+  m_LocalPosition: {x: 1, y: 2, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1192089393}
