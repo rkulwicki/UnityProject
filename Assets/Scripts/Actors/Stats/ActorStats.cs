@@ -5,10 +5,11 @@ using UnityEngine;
 
 public class ActorStats : MonoBehaviour
 {
-
     public string actorName;
     public int maxHP;
     public int currentHP;
     public int baseDamage;
     public int baseDefense;
+    public int blockSpeed;
+    public Color actorColor;
 }

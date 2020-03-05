@@ -63,3 +63,6 @@ TagManager:
   - name: Obstacles
     uniqueID: 3210658865
     locked: 0
+  - name: Carpet
+    uniqueID: 3300794293
+    locked: 0

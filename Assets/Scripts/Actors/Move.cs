@@ -8,17 +8,22 @@ public class Move : MonoBehaviour
 {
     public float moveTime = 0.1f;
     public float moveCoolDown = 0.15f;
+    public bool canMoveOneTile = true;
     public bool canMove = true;
+
+    public int moved;
 
     public GameObject grid;
     public Tilemap groundTilemap;
     public Tilemap obstaclesTilemap;
 
-    private bool _isMoving, _onCooldown, _onExit = false;
+    protected bool _onCooldown, _onExit = false;
+    public bool isMoving;
 
     public void MoveOneTile(Direction dir)
     {
-        canMove = true;
+        canMoveOneTile = true;
+        moved = moved * -1; //basically a move tracker
         int vertical = 0;
         int horizontal = 0;
         if (dir == Direction.UP)
@@ -36,12 +41,12 @@ public class Move : MonoBehaviour
 
         if (horizontal != 0)
             vertical = 0;
-        if ((horizontal != 0 || vertical != 0) && canMove)
+        if ((horizontal != 0 || vertical != 0) && canMoveOneTile)
         {
             StartCoroutine(actionCooldown(moveCoolDown));
             MoveOne(horizontal, vertical);
         }
-        canMove = false;
+        canMoveOneTile = false;
     }
 
     private void MoveOne(int xDir, int yDir)
@@ -65,7 +70,7 @@ public class Move : MonoBehaviour
 
         }
 
-        if (!_isMoving)
+        if (!isMoving)
             StartCoroutine(BlockedMovement(targetCell));
     }
 
@@ -92,7 +97,7 @@ public class Move : MonoBehaviour
     {
         //while (isMoving) yield return null;
 
-        _isMoving = true;
+        isMoving = true;
 
         Vector3 originalPos = transform.position;
 
@@ -119,14 +124,14 @@ public class Move : MonoBehaviour
             yield return null;
         }
 
-        _isMoving = false;
+        isMoving = false;
     }
 
     private IEnumerator SmoothMovement(Vector3 end)
     {
         //while (isMoving) yield return null;
 
-        _isMoving = true;
+        isMoving = true;
 
         float sqrRemainingDistance = (transform.position - end).sqrMagnitude;
         float inverseMoveTime = 1 / moveTime;
@@ -140,6 +145,6 @@ public class Move : MonoBehaviour
             yield return null;
         }
 
-        _isMoving = false;
+        isMoving = false;
     }
 }

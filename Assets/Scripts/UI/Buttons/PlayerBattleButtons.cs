@@ -34,6 +34,5 @@ public class PlayerBattleButtons : MonoBehaviour
     public void MoveButtonReleased()
     {
         _globalInputs.GetComponent<PlayerBattleGlobal>().MoveButton = false;
-
     }
 }

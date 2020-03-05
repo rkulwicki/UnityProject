@@ -49,3 +49,4 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 832b18b83d3d62b4a849d823472e8039, type: 2}
   tilemapFloor: {fileID: 0}
   tilemapObstacles: {fileID: 0}
+  highlightTile: {fileID: 11400000, guid: b5934e7f52466d64a8602cb580f7cb60, type: 2}

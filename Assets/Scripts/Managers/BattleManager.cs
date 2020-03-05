@@ -6,7 +6,7 @@ using UnityEngine.Tilemaps;
 public enum BattleState { INACTIVE, START, PLAYERTURN, ENEMYTURN, WON, LOST }
 public class BattleManager : MonoBehaviour, IManager
 {
-    public int turnNumber;
+    public int turnNumber, blocksLeftToMove;
 
     public GameObject selectorPrefab;
 
@@ -27,13 +27,14 @@ public class BattleManager : MonoBehaviour, IManager
     private GameObject _tileManager;
     private ChooseObjectWithBools _chooseObjectWithBools;
     private PlayerBattleGlobal _playerBattleGlobal;
-    private DPadGlobal _dPadGlobal;
     private GameObject _player;
 
     private Vector3Int[] _battleBoundaryTilesLocations;
 
-    private bool _setUpState, _takeDownState, _isWon, _isLose;
+    private bool _setUpState, _takeDownState, _isWon, _isLose, _movingAction, _attackActionDone, _moveActionDone;
+    private int _blockSpeed, _moved;
 
+    public bool testMove;
     void Start()
     {
         state = BattleState.INACTIVE;
@@ -42,7 +43,6 @@ public class BattleManager : MonoBehaviour, IManager
         //_chooseObjectWithKeys = gameObject.GetComponent<ChooseObjectWithKeys>();
         _chooseObjectWithBools = gameObject.GetComponent<ChooseObjectWithBools>();
         _playerBattleGlobal = GameObject.FindGameObjectWithTag("GlobalInputs").GetComponent<PlayerBattleGlobal>();
-        _dPadGlobal = GameObject.FindGameObjectWithTag("GlobalInputs").GetComponent<DPadGlobal>();
         _player = GameObject.FindGameObjectWithTag("Player");
     }
     //update is the high level battle state. We break the states down even further down in the code.
@@ -96,9 +96,19 @@ public class BattleManager : MonoBehaviour, IManager
     {
         _battleBoundaryTilesLocations = BeforeStart();
         _player.GetComponent<PlayerMove>().canMove = false;
+
+        //TODO: make some sort of "button pressed" function or something to do this logic
+        _hudsManager.GetComponent<HudsManager>()
+                            .playerBattleActionHud.GetComponent<PlayerBattleButtons>()
+                            .moveButton.image.color = Color.white;
+        _hudsManager.GetComponent<HudsManager>()
+                            .playerBattleActionHud.GetComponent<PlayerBattleButtons>()
+                            .attackButton.image.color = Color.white;
+
         foreach (var enemy in enemiesInvolved) //make them in "BattleMode"
         {
-            enemy.GetComponent<DemonEnemyLogic>().beginLogic = true; //need to find EnemyLogic subclasses... hmm...
+            enemy.transform.Find("BattleTrigger").GetComponent<BoxCollider2D>().enabled = false; //turn off battle triggers for enemies
+            enemy.GetComponent<DemonEnemyBattleAI>().beginLogic = true; //need to find "EnemyLogic" subclasses... hmm...
         }
         _hudsManager.GetComponent<HudsManager>().playerMiniStatsHudActive = true; //battle hud on
         _setUpState = true;
@@ -113,15 +123,14 @@ public class BattleManager : MonoBehaviour, IManager
             _hudsManager.GetComponent<HudsManager>().playerBattleActionHudActive = true;
             var playerBattleButtons = _hudsManager.GetComponent<HudsManager>().playerBattleActionHud.GetComponent<PlayerBattleButtons>();
             _setUpState = false;
+            _movingAction = false;
+            _attackActionDone = false;
+            _moveActionDone = false;
         }
-
-
-
-
 
         //                      ATTACK
         // ==================================================
-        if (_playerBattleGlobal.AttackButton)
+        if (_playerBattleGlobal.AttackButton && !_attackActionDone) //atack false, move true
         {
             _playerBattleGlobal.AttackButton = false;
             //TODO: first choose type of attack (goes here before StartChoose)
@@ -141,22 +150,48 @@ public class BattleManager : MonoBehaviour, IManager
             //^^ currently just the enemy and attack is base damage. Attack choice will be later.
 
             _chooseObjectWithBools.result = null; //reset the choice.
-            _takeDownState = true;
+            _attackActionDone = true;
+            if (!_moveActionDone)
+            {
+                _hudsManager.GetComponent<HudsManager>()
+                            .playerBattleActionHud.GetComponent<PlayerBattleButtons>()
+                            .attackButton.image.color = Color.gray;
+                _hudsManager.GetComponent<HudsManager>().playerBattleActionHudActive = true;
+                //turn button off or something?
+            }
         }
-        // ==================================================
 
-        if (_playerBattleGlobal.MoveButton)
+        //                      MOVE
+        // ==================================================
+        if (_playerBattleGlobal.MoveButton && !_moveActionDone)
         {
             _playerBattleGlobal.MoveButton = false;
-            //move
-            //_player.GetComponent<PlayerMove>().canMove = true;
-            //then ---> _player.GetComponent<PlayerMove>().canMove = false;
-            _takeDownState = true;
+            _hudsManager.GetComponent<HudsManager>().playerBattleActionHudActive = false;
+            _blockSpeed = _player.GetComponent<PlayerStats>().blockSpeed;
+            _player.GetComponent<PlayerMove>().canMove = true;
+            _moved = _player.GetComponent<Move>().moved;
+            _movingAction = true;
+        }
+        if (_movingAction)
+        {
+            MovingAction();
+        }
+        if (_moveActionDone && _movingAction)
+        {
+            _player.GetComponent<PlayerMove>().canMove = false;
+            _movingAction = false;
+            if (!_attackActionDone)
+            {
+                _hudsManager.GetComponent<HudsManager>()
+                            .playerBattleActionHud.GetComponent<PlayerBattleButtons>()
+                            .moveButton.image.color = Color.gray;
+                _hudsManager.GetComponent<HudsManager>().playerBattleActionHudActive = true;
+                //turn button off or something?
+            }
         }
 
-
-
-        //Have we won or lost?
+        //                  BATTLE OVER
+        // ==================================================
         if (ActorsHPZero(playersInvolved) || enemiesInvolved.Length == 0)
         {
             _isLose = true;
@@ -165,11 +200,13 @@ public class BattleManager : MonoBehaviour, IManager
         if (ActorsHPZero(enemiesInvolved) || enemiesInvolved.Length == 0)
         {
             _isWon = true;
-            _takeDownState = true;
+            _moveActionDone = true;
         }
-            
 
-
+        //                  END OF TURN
+        // ==================================================
+        if (_attackActionDone && _moveActionDone)
+            _takeDownState = true;
 
         if (_takeDownState)
         {
@@ -182,6 +219,14 @@ public class BattleManager : MonoBehaviour, IManager
             {
                 state = BattleState.ENEMYTURN;
             }
+            _hudsManager.GetComponent<HudsManager>()
+                            .playerBattleActionHud.GetComponent<PlayerBattleButtons>()
+                            .attackButton.image.color = Color.white;
+            _hudsManager.GetComponent<HudsManager>()
+                            .playerBattleActionHud.GetComponent<PlayerBattleButtons>()
+                            .moveButton.image.color = Color.white;
+            _moveActionDone = false;
+            _attackActionDone = false;
             _takeDownState = false;
             _setUpState = true;
         }
@@ -193,16 +238,8 @@ public class BattleManager : MonoBehaviour, IManager
         {
             //do stuff
             _setUpState = false;
+            StartCoroutine(ForEachEnemyTurn(secondsBetweenEnemy, enemiesInvolved)); //do once
         }
-
-
-        //do enemy logic :)
-
-        //need to find EnemyLogic subclasses... hmm...
-        StartCoroutine(ForEachEnemyTurn(secondsBetweenEnemy, enemiesInvolved));
-
-        //WAIT UNTIL ENEMIES ARE DONE vvvvv TODO!!!!
-        _takeDownState = true;
 
 
 
@@ -310,8 +347,27 @@ public class BattleManager : MonoBehaviour, IManager
         foreach (var enemy in enemiesInvolved)
         {
             //TODO: enemy.GetComponent<DemonEnemyLogic>().beginTurn = true; //need to find EnemyLogic subclasses... hmm...
-            enemy.GetComponent<DemonEnemyLogic>().beginTurn = true;
+            enemy.GetComponent<DemonEnemyBattleAI>().beginTurn = true;
             yield return new WaitForSeconds(sec);
+        }
+        _takeDownState = true;
+    }
+
+    public void MovingAction()
+    {
+        if (_blockSpeed > 0)
+        {
+            if(_moved != _player.GetComponent<PlayerMove>().moved)
+            {
+                //take a movement
+                _moved = _player.GetComponent<PlayerMove>().moved;
+                Debug.Log(_blockSpeed);
+                _blockSpeed -= 1;
+            }
+        }
+        else
+        {
+            _moveActionDone = true;
         }
     }
 

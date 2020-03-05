@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using UnityEngine;
 using UnityEngine.Tilemaps;
@@ -15,7 +16,9 @@ public class TileManager : MonoBehaviour, IManager
     public Tile[] tiles;
     public Tilemap tilemapFloor;
     public Tilemap tilemapObstacles;
+    public Tilemap tilemapCarpet;
 
+    public Tile highlightTile;
     //public Vector2Int center;
     //public int size;
     private void Start()
@@ -24,27 +27,8 @@ public class TileManager : MonoBehaviour, IManager
         grid = GameObject.FindGameObjectWithTag("Grid");
         tilemapFloor = grid.transform.Find("Floor").gameObject.GetComponent<Tilemap>();
         tilemapObstacles = grid.transform.Find("Obstacles").gameObject.GetComponent<Tilemap>();
+        tilemapCarpet = grid.transform.Find("Carpet").gameObject.GetComponent<Tilemap>();
     }
-
-    //private void LateUpdate()
-    //{
-    //    if (debug)
-    //    {
-    //        if (Input.GetKey("p"))
-    //        {
-    //            GenerateTile(tileLocation, tile);
-    //        }
-
-    //        if (Input.GetKey("o"))
-    //        {
-    //            GenerateTiles(tileLocations, tiles);
-    //        }
-    //        if (Input.GetKey("i"))
-    //        {
-    //            GenerateSquareTilesWithCenter(center, size, tiles);
-    //        }
-    //    }
-    //}
 
     private void GenerateTile(Vector2Int tileLocation, Tile tile)
     {
@@ -60,6 +44,12 @@ public class TileManager : MonoBehaviour, IManager
         tilemapObstacles.SetTiles(ConvertV2ArrayToV3(tileLocations), tiles);
     }
 
+    public void HighlightTiles(Vector3Int[] tileLocations)
+    {
+        var tempTiles = new Tile[1];
+        tempTiles[0] = highlightTile;
+        tilemapCarpet.SetTiles(tileLocations, tempTiles);
+    }
 
     [Description("Creates an open square around a specified center tile using the first tile in 'Tiles'. ")]
     public Vector3Int[] GenerateSquareTilesWithCenter(Vector2Int center, int size, Tile[] tiles)
@@ -103,8 +93,16 @@ public class TileManager : MonoBehaviour, IManager
             firstTileCopied[i] = tiles[0];
         }
         var v3TileLocations = ConvertV2ArrayToV3(tileLocations);
-        tilemapObstacles.SetTiles(v3TileLocations, firstTileCopied);
-        return v3TileLocations;
+        List<Vector3Int> list = new List<Vector3Int>();
+        foreach(var tile in v3TileLocations)
+        {
+            if (!tilemapObstacles.HasTile(tile))
+                list.Add(tile);
+        }
+        var locs = list.ToArray();
+       // tilemapObstacles.HasTile
+        tilemapObstacles.SetTiles(locs, firstTileCopied);
+        return locs;
 
     }
 
