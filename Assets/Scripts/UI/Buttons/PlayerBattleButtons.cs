@@ -7,13 +7,14 @@ using UnityEngine.UI;
 
 public class PlayerBattleButtons : MonoBehaviour
 {
-    public Button attackButton, moveButton;
+    public Button attackButton, moveButton, doNothingButton;
 
     private GameObject _globalInputs;
-
+    private GameObject _battleManager;
     void Start()
     {
         _globalInputs = GameObject.FindGameObjectWithTag("GlobalInputs");
+        _battleManager = GameObject.FindGameObjectWithTag("BattleManager");
     }
 
     public void AttackButtonPressed()
@@ -34,5 +35,13 @@ public class PlayerBattleButtons : MonoBehaviour
     public void MoveButtonReleased()
     {
         _globalInputs.GetComponent<PlayerBattleGlobal>().MoveButton = false;
+    }
+    public void DoNothingButtonOnClick()
+    {
+        _battleManager.GetComponent<BattleManager>().EndPlayerTurn();
+    }
+
+    public void ActionsButtonOpenOnClick()
+    {
     }
 }

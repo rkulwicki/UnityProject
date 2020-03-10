@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -13,4 +14,8 @@ public class PlayerStats : ActorStats
 
     public int playerCoins;
     public int playerExperience;
+
+    public string[] attacks;
+
+    public string[] equippedBadges;
 }

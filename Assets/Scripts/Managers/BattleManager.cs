@@ -133,7 +133,19 @@ public class BattleManager : MonoBehaviour, IManager
         if (_playerBattleGlobal.AttackButton && !_attackActionDone) //atack false, move true
         {
             _playerBattleGlobal.AttackButton = false;
+            
+            
+            
+            
             //TODO: first choose type of attack (goes here before StartChoose)
+            //1. display list of attacks. Probably stored in a list related to player stats?
+            //2. cycle through the list, whichever is highlighted, showing the ground highlighted.
+            //2.5 is allowed to choose attack if enemy is in highlighted box.
+            //3. do attack and continue to "_chooseObjectWithBools.result != null"
+
+
+
+
             _chooseObjectWithBools.StartChoose(selectorPrefab, enemiesInvolved);
             _hudsManager.GetComponent<HudsManager>().playerBattleActionHudActive = false;
         }
@@ -272,7 +284,6 @@ public class BattleManager : MonoBehaviour, IManager
         if (_takeDownState)
         {
             //do stuff
-            _player.GetComponent<PlayerMove>().canMove = true;
             _takeDownState = false;
             _setUpState = true;
         }
@@ -299,10 +310,8 @@ public class BattleManager : MonoBehaviour, IManager
         if (_takeDownState)
         {
             //do stuff
-            _player.GetComponent<PlayerMove>().canMove = true;
             _takeDownState = false;
             _setUpState = true;
-            turnNumber = 0;
         }
     }
 
@@ -322,6 +331,8 @@ public class BattleManager : MonoBehaviour, IManager
 
         _tileManager.GetComponent<TileManager>().RemoveTiles(_battleBoundaryTilesLocations); //delete boundary tiles
         _player.GetComponent<PlayerMove>().canMove = true;
+        state = BattleState.INACTIVE;
+        turnNumber = 0;
     }
 
     public void FreezeRigidBodies(GameObject[] gameObjects)
@@ -383,6 +394,12 @@ public class BattleManager : MonoBehaviour, IManager
             return true;
         else
             return false;
+    }
+
+    public void EndPlayerTurn()
+    {
+        state = BattleState.PLAYERTURN;
+        _takeDownState = true;
     }
 
     #endregion

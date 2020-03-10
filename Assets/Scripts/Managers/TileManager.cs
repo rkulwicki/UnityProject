@@ -44,11 +44,14 @@ public class TileManager : MonoBehaviour, IManager
         tilemapObstacles.SetTiles(ConvertV2ArrayToV3(tileLocations), tiles);
     }
 
-    public void HighlightTiles(Vector3Int[] tileLocations)
+    public void HighlightTiles(Vector3Int[] locs)
     {
-        var tempTiles = new Tile[1];
-        tempTiles[0] = highlightTile;
-        tilemapCarpet.SetTiles(tileLocations, tempTiles);
+        var tempTiles = new Tile[locs.Length];
+        for (int i = 0; i < locs.Length ; i++)
+        {
+            tempTiles[i] = highlightTile;
+        }
+        tilemapCarpet.SetTiles(locs, tempTiles);
     }
 
     [Description("Creates an open square around a specified center tile using the first tile in 'Tiles'. ")]
@@ -100,7 +103,6 @@ public class TileManager : MonoBehaviour, IManager
                 list.Add(tile);
         }
         var locs = list.ToArray();
-       // tilemapObstacles.HasTile
         tilemapObstacles.SetTiles(locs, firstTileCopied);
         return locs;
 
