@@ -1665,7 +1665,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 160f37268e8be064090dfb66f6561949, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  actorName: 
+  actorName: Demon Enemy
   maxHP: 2
   currentHP: 2
   baseDamage: 1
@@ -1674,10 +1674,20 @@ MonoBehaviour:
   actorColor: {r: 0.90196085, g: 0.19215688, b: 0.12941177, a: 0}
   enemyDescription: This is a test enemy and he does not do much.
   experienceReward: 5
-  enemyAccompanyRadius: 10
-  enemyBattleRadius: 6
+  enemyAccompanyRadius: 4
   enemySightRadius: 1
   battleBoundaryTile: {fileID: 11400000, guid: 832b18b83d3d62b4a849d823472e8039, type: 2}
+  battleArea:
+  - {x: 0, y: 0, z: 0}
+  - {x: 1, y: 0, z: 0}
+  - {x: 2, y: 0, z: 0}
+  - {x: 0, y: 1, z: 0}
+  - {x: 1, y: 1, z: 0}
+  - {x: 2, y: 1, z: 0}
+  - {x: 0, y: 2, z: 0}
+  - {x: 1, y: 2, z: 0}
+  - {x: 2, y: 2, z: 0}
+  - {x: 0, y: 3, z: 0}
 --- !u!50 &740518525
 Rigidbody2D:
   serializedVersion: 4
@@ -2369,9 +2379,9 @@ MonoBehaviour:
   enemyDescription: This is a test enemy and he does not do much.
   experienceReward: 5
   enemyAccompanyRadius: 10
-  enemyBattleRadius: 6
   enemySightRadius: 1
   battleBoundaryTile: {fileID: 11400000, guid: 832b18b83d3d62b4a849d823472e8039, type: 2}
+  battleArea: []
 --- !u!50 &1430556644
 Rigidbody2D:
   serializedVersion: 4
@@ -2477,7 +2487,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1430556641}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1, y: -3, z: 0}
+  m_LocalPosition: {x: -2, y: 3, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 2112259257}
@@ -2550,9 +2560,9 @@ MonoBehaviour:
   enemyDescription: This is a template enemy.
   experienceReward: 100
   enemyAccompanyRadius: 5
-  enemyBattleRadius: 4
   enemySightRadius: 2
   battleBoundaryTile: {fileID: 11400000, guid: 832b18b83d3d62b4a849d823472e8039, type: 2}
+  battleArea: []
 --- !u!50 &1724087428
 Rigidbody2D:
   serializedVersion: 4

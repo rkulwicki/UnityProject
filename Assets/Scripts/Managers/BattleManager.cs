@@ -23,6 +23,7 @@ public class BattleManager : MonoBehaviour, IManager
 
     public int secondsBetweenEnemy = 1;
 
+    public GameObject initiatedEnemy; //comes from BattleTrigger.cs
     private GameObject _hudsManager;
     private GameObject _tileManager;
     private ChooseObjectWithBools _chooseObjectWithBools;
@@ -82,13 +83,17 @@ public class BattleManager : MonoBehaviour, IManager
 
         var battleBoundaryTilesLocationsList = new List<Vector3Int>();
 
-        var initiatedEnemy = enemiesInvolved[0]; //todo: this will need to be handled
+        if(initiatedEnemy == null)
+            initiatedEnemy = enemiesInvolved[0];
 
         Vector2Int center = new Vector2Int((int)initiatedEnemy.transform.position.x, (int)initiatedEnemy.transform.position.y);
-        int size = initiatedEnemy.GetComponent<EnemyStats>().enemyBattleRadius;
+        //int size = initiatedEnemy.GetComponent<EnemyStats>().enemyBattleRadius;
         Tile tile = initiatedEnemy.GetComponent<EnemyStats>().battleBoundaryTile;
 
-        var battleBoundaryTilesLocations = _tileManager.GetComponent<TileManager>().GenerateSquareTilesWithCenter(center, size, new Tile[1] { tile });
+        var battleArea = initiatedEnemy.GetComponent<EnemyStats>().battleArea;
+        var battleBoundaryTilesLocations = _tileManager.GetComponent<TileManager>().GenerateBoundaryPosFromArea(battleArea); //here is the magic
+        _tileManager.GetComponent<TileManager>().GenerateBoundaryFromArea(battleBoundaryTilesLocations,
+            initiatedEnemy.GetComponent<EnemyStats>().battleBoundaryTile);
         return battleBoundaryTilesLocations;
     }
 

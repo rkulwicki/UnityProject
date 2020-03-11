@@ -30,20 +30,6 @@ public class TileManager : MonoBehaviour, IManager
         tilemapCarpet = grid.transform.Find("Carpet").gameObject.GetComponent<Tilemap>();
     }
 
-    private void GenerateTile(Vector2Int tileLocation, Tile tile)
-    {
-        tilemapObstacles.WorldToCell(new Vector3(tileLocation.x, tileLocation.y, 0));
-        //this could be useful -> tilemapObstacles.SetTiles
-        tilemapObstacles.SetTile(new Vector3Int(tileLocation.x, tileLocation.y, 0), tile);
-        //tilemapFloor.
-    }
-
-    private void GenerateTiles(Vector2Int[] tileLocations, Tile[] tiles)
-    {
-        //tilemapObstacles.WorldToCell(new Vector3(tileLocation.x, tileLocation.y, 0));
-        tilemapObstacles.SetTiles(ConvertV2ArrayToV3(tileLocations), tiles);
-    }
-
     public void HighlightTiles(Vector3Int[] locs)
     {
         var tempTiles = new Tile[locs.Length];
@@ -54,7 +40,13 @@ public class TileManager : MonoBehaviour, IManager
         tilemapCarpet.SetTiles(locs, tempTiles);
     }
 
-    [Description("Creates an open square around a specified center tile using the first tile in 'Tiles'. ")]
+    /// <summary>
+    /// Creates an open square around a specified center tile using the first tile in 'Tiles'.
+    /// </summary>
+    /// <param name="center"></param>
+    /// <param name="size"></param>
+    /// <param name="tiles"></param>
+    /// <returns></returns>
     public Vector3Int[] GenerateSquareTilesWithCenter(Vector2Int center, int size, Tile[] tiles)
     {
         //ex. 
@@ -108,13 +100,93 @@ public class TileManager : MonoBehaviour, IManager
 
     }
 
-    [Description("Removes tiles under the obstacles tilemap. ")]
+
+    /// <summary>
+    /// Removes tiles under the obstacles tilemap. 
+    /// </summary>
+    /// <param name="tileLocations"></param>
     public void RemoveTiles(Vector3Int[] tileLocations)
     {
         foreach (var tileLocation in tileLocations)
         {
             tilemapObstacles.SetTile(tileLocation, null);
         }
+    }
+
+    public Vector3Int[] GenerateBoundaryPosFromArea(Vector3Int[] area)
+    {
+        List<Vector3Int> list = new List<Vector3Int>();
+        var surroundingPositions = new Vector3Int[8]
+        {
+            new Vector3Int(-1,1,0), new Vector3Int(0,1,0), new Vector3Int(1,1,0),
+            new Vector3Int(-1,0,0),                         new Vector3Int(1,0,0),
+            new Vector3Int(-1,-1,0),new Vector3Int(0,-1,0), new Vector3Int(1,-1,0),
+        };
+        foreach(var pos in area)
+        {
+            for(int i = 0; i < 8; i++) //check surrounding tiles
+            {
+                bool canAdd = true;
+                var possibleBoundaryPos = pos + surroundingPositions[i];
+
+                foreach (var otherPos in list)
+                {
+                    if (otherPos == possibleBoundaryPos) { //if found in "list"
+                        canAdd = false;
+                        break;
+                    }
+                }
+
+                if (canAdd)
+                {
+                    foreach (var otherPos in area)
+                    {
+                        if (otherPos == possibleBoundaryPos) //if found "area"
+                        {
+                            canAdd = false;
+                            break;
+                        }
+                    }
+                }
+
+                if (canAdd)
+                    list.Add(possibleBoundaryPos);
+            }
+        }
+        return list.ToArray();
+    }
+
+    public void GenerateBoundaryFromArea(Vector3Int[] positions, Tile tile)
+    {
+        //make sure there isn't anything on the obstacles layer
+        List<Vector3Int> listPos = new List<Vector3Int>();
+        foreach (var pos in positions)
+        {
+            if (!tilemapObstacles.HasTile(pos))
+                listPos.Add(pos);
+        }
+
+        var newPosArray = listPos.ToArray();
+        var tiles = new Tile[newPosArray.Length];
+        for (int i = 0; i < tiles.Length; i++)
+        {
+            tiles[i] = tile;
+        }
+        //TODO!!!
+        tilemapObstacles.SetTiles(newPosArray, tiles);
+
+        /*
+        var v3TileLocations = ConvertV2ArrayToV3(tileLocations);
+        List<Vector3Int> list = new List<Vector3Int>();
+        foreach(var tile in v3TileLocations)
+        {
+            if (!tilemapObstacles.HasTile(tile))
+                list.Add(tile);
+        }
+        var locs = list.ToArray();
+        tilemapObstacles.SetTiles(locs, firstTileCopied);
+        return locs;
+         */
     }
 
     #region Helper Methods

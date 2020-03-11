@@ -94,11 +94,6 @@ public class HudsManager : MonoBehaviour, IManager
 
     }
 
-    public void SetAttackButtonInactive()
-    {
-        //TODO?
-    }
-
     private void InstatiateAllHuds()
     {
         playerMiniStatsHud = Instantiate(playerMiniStatsHudPrefab);

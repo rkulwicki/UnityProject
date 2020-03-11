@@ -7,14 +7,19 @@ using UnityEngine.UI;
 
 public class PlayerBattleButtons : MonoBehaviour
 {
-    public Button attackButton, moveButton, doNothingButton;
+    public Button attackButton, moveButton, doNothingButton, ActionsButton, BackButtonActionsPanel, 
+        OpenAttackListButton;
 
+    private GameObject _actionsPanel;
     private GameObject _globalInputs;
     private GameObject _battleManager;
     void Start()
     {
         _globalInputs = GameObject.FindGameObjectWithTag("GlobalInputs");
         _battleManager = GameObject.FindGameObjectWithTag("BattleManager");
+        _actionsPanel = gameObject.transform.Find("PlayerBattleButtons")
+            .gameObject.transform.Find("ActionsPanel").gameObject;
+        _actionsPanel.SetActive(false);
     }
 
     public void AttackButtonPressed()
@@ -41,7 +46,13 @@ public class PlayerBattleButtons : MonoBehaviour
         _battleManager.GetComponent<BattleManager>().EndPlayerTurn();
     }
 
-    public void ActionsButtonOpenOnClick()
+    public void OpenActionsPanelOnClick()
     {
+        _actionsPanel.SetActive(true);
+    }
+
+    public void CloseActionsPanelOnClick()
+    {
+        _actionsPanel.SetActive(false);
     }
 }
