@@ -113,6 +113,11 @@ public class TileManager : MonoBehaviour, IManager
         }
     }
 
+    /// <summary>
+    /// Places generates an array of vector3int from the outsides of every position given in area.
+    /// </summary>
+    /// <param name="area"></param>
+    /// <returns></returns>
     public Vector3Int[] GenerateBoundaryPosFromArea(Vector3Int[] area)
     {
         List<Vector3Int> list = new List<Vector3Int>();
@@ -156,9 +161,61 @@ public class TileManager : MonoBehaviour, IManager
         return list.ToArray();
     }
 
-    public void GenerateBoundaryFromArea(Vector3Int[] positions, Tile tile)
+    public Vector3Int[] GenerateBoundaryPosFromArea(Vector3Int[] area, Vector3Int reposition)
     {
-        //make sure there isn't anything on the obstacles layer
+        var newArea = Reposition(area, reposition);
+
+        List<Vector3Int> list = new List<Vector3Int>();
+        var surroundingPositions = new Vector3Int[8]
+        {
+            new Vector3Int(-1,1,0), new Vector3Int(0,1,0), new Vector3Int(1,1,0),
+            new Vector3Int(-1,0,0),                         new Vector3Int(1,0,0),
+            new Vector3Int(-1,-1,0),new Vector3Int(0,-1,0), new Vector3Int(1,-1,0),
+        };
+        foreach (var pos in newArea)
+        {
+            for (int i = 0; i < 8; i++) //check surrounding tiles
+            {
+                bool canAdd = true;
+                var possibleBoundaryPos = pos + surroundingPositions[i];
+
+                foreach (var otherPos in list)
+                {
+                    if (otherPos == possibleBoundaryPos)
+                    { //if found in "list"
+                        canAdd = false;
+                        break;
+                    }
+                }
+
+                if (canAdd)
+                {
+                    foreach (var otherPos in newArea)
+                    {
+                        if (otherPos == possibleBoundaryPos) //if found "area"
+                        {
+                            canAdd = false;
+                            break;
+                        }
+                    }
+                }
+
+                if (canAdd)
+                    list.Add(possibleBoundaryPos);
+            }
+        }
+        return list.ToArray();
+    }
+
+    /// <summary>
+    /// Places tiles if there isn't already a tile there. Returns positions where tiles were placed.
+    /// </summary>
+    /// <param name="positions"></param>
+    /// <param name="tile"></param>
+    /// <returns></returns>
+    public Vector3Int[] PlaceTilesIfEmpty(Vector3Int[] positions, Tile tile)
+    {
+        //make sure there isn't anything on the obstacles layer using object's global position
         List<Vector3Int> listPos = new List<Vector3Int>();
         foreach (var pos in positions)
         {
@@ -174,22 +231,19 @@ public class TileManager : MonoBehaviour, IManager
         }
         //TODO!!!
         tilemapObstacles.SetTiles(newPosArray, tiles);
-
-        /*
-        var v3TileLocations = ConvertV2ArrayToV3(tileLocations);
-        List<Vector3Int> list = new List<Vector3Int>();
-        foreach(var tile in v3TileLocations)
-        {
-            if (!tilemapObstacles.HasTile(tile))
-                list.Add(tile);
-        }
-        var locs = list.ToArray();
-        tilemapObstacles.SetTiles(locs, firstTileCopied);
-        return locs;
-         */
+        return newPosArray;
     }
 
     #region Helper Methods
+    private Vector3Int[] Reposition(Vector3Int[] localPos, Vector3Int center)
+    {
+        var globalPos = new Vector3Int[localPos.Length];
+        for(int i = 0; i < localPos.Length; i++)
+        {
+            globalPos[i] = localPos[i] + center;
+        }
+        return globalPos;
+    }
 
     private Vector3Int[] ConvertV2ArrayToV3(Vector2Int[] v2)
     {

@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
@@ -24,6 +25,8 @@ public class BattleManager : MonoBehaviour, IManager
     public int secondsBetweenEnemy = 1;
 
     public GameObject initiatedEnemy; //comes from BattleTrigger.cs
+    public Vector3Int battleBlocksPos; //comes from BattleTrigger.cs
+
     private GameObject _hudsManager;
     private GameObject _tileManager;
     private ChooseObjectWithBools _chooseObjectWithBools;
@@ -86,14 +89,14 @@ public class BattleManager : MonoBehaviour, IManager
         if(initiatedEnemy == null)
             initiatedEnemy = enemiesInvolved[0];
 
-        Vector2Int center = new Vector2Int((int)initiatedEnemy.transform.position.x, (int)initiatedEnemy.transform.position.y);
-        //int size = initiatedEnemy.GetComponent<EnemyStats>().enemyBattleRadius;
-        Tile tile = initiatedEnemy.GetComponent<EnemyStats>().battleBoundaryTile;
-
         var battleArea = initiatedEnemy.GetComponent<EnemyStats>().battleArea;
-        var battleBoundaryTilesLocations = _tileManager.GetComponent<TileManager>().GenerateBoundaryPosFromArea(battleArea); //here is the magic
-        _tileManager.GetComponent<TileManager>().GenerateBoundaryFromArea(battleBoundaryTilesLocations,
-            initiatedEnemy.GetComponent<EnemyStats>().battleBoundaryTile);
+
+        var enemyPosRounded = new Vector3Int(Convert.ToInt32(initiatedEnemy.transform.position.x),
+                                             Convert.ToInt32(initiatedEnemy.transform.position.y),
+                                             Convert.ToInt32(initiatedEnemy.transform.position.z));
+
+        var pos = _tileManager.GetComponent<TileManager>().GenerateBoundaryPosFromArea(battleArea, enemyPosRounded); //here is the magic
+        var battleBoundaryTilesLocations =  _tileManager.GetComponent<TileManager>().PlaceTilesIfEmpty(pos, initiatedEnemy.GetComponent<EnemyStats>().battleBoundaryTile);
         return battleBoundaryTilesLocations;
     }
 

@@ -43,9 +43,6 @@ public class BattleTrigger : MonoBehaviour
             //_playerBattleActionHud.GetComponent<PlayerBattleActionsHudScript>().StartState();
 
             SetUpBattleManager();
-            //enemiesInvolved = GetObjectsWithTagInRange("Enemy", gameObject.transform.position, enemyStats.enemyAccompanyRadius);
-            //TODO: find the enemy if it is in enemyStats.battleArea
-            //var tiles = _tileManager.GetComponent<TileManager>().GenerateBoundaryFromArea(enemyStats.battleArea);
             enemiesInvolved = GetObjectsInTiles(new string[1]{"Enemy"}, enemyStats.battleArea);
 
             battleManager.GetComponent<BattleManager>().enemiesInvolved = enemiesInvolved;
@@ -56,17 +53,10 @@ public class BattleTrigger : MonoBehaviour
     {
         battleManager = GameObject.FindGameObjectWithTag("BattleManager");
         battleManager.GetComponent<BattleManager>().state = BattleState.START; //set to start
-        battleManager.GetComponent<BattleManager>().initiatedEnemy = gameObject.transform.parent.gameObject; //this is the initiated enemy.
+        var thisEnemy = gameObject.transform.parent.gameObject;
+        battleManager.GetComponent<BattleManager>().initiatedEnemy = thisEnemy; //this is the initiated enemy.
         playersInvolved = GetPlayerAndPartner();
         battleManager.GetComponent<BattleManager>().playersInvolved = playersInvolved;
-    }
-
-    private void ObjectsSetActive(GameObject[] objs, bool value)
-    {
-        foreach(var obj in objs)
-        {
-            obj.SetActive(value);
-        }
     }
 
     private GameObject[] GetPlayerAndPartner()    
