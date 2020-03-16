@@ -57,13 +57,14 @@ public class Move : MonoBehaviour
         bool isOnGround = getCell(groundTilemap, startCell) != null; //If the player is on the ground
         bool hasGroundTile = getCell(groundTilemap, targetCell) != null; //If target Tile has a ground
         bool hasObstacleTile = getCell(obstaclesTilemap, targetCell) != null; //if target Tile has an obstacle
+        bool hasUnitsTile = getUnitOccupyingTile(targetCell) != null; //if target Tile has a unit
 
         //If the player starts their movement from a ground tile.
         if (isOnGround)
         {
 
             //If the front tile is a walkable ground tile, the player moves here.
-            if (hasGroundTile && !hasObstacleTile)
+            if (hasGroundTile && !hasObstacleTile && !hasUnitsTile)
             {
                 StartCoroutine(SmoothMovement(targetCell));
             }
@@ -77,6 +78,23 @@ public class Move : MonoBehaviour
     private TileBase getCell(Tilemap tilemap, Vector2 cellWorldPos)
     {
         return tilemap.GetTile(tilemap.WorldToCell(cellWorldPos));
+    }
+
+    private GameObject getUnitOccupyingTile(Vector2 cellWorldPos)
+    {
+        Debug.Log("In getUnitOccupyingTile");
+        var col = Physics2D.OverlapCircle(cellWorldPos,0.1f);
+        if (col == null)
+            return null;
+        
+        if (col.gameObject.GetComponent<SpriteRenderer>().sortingLayerName != null &&
+            col.gameObject.GetComponent<SpriteRenderer>().sortingLayerName == "Units")
+        {
+            Debug.Log("In found unit");
+            return col.gameObject;
+        }
+        
+        return null;
     }
 
     private IEnumerator actionCooldown(float cooldown)

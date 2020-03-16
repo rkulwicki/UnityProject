@@ -18,6 +18,8 @@ public class BattleTrigger : MonoBehaviour
 
     public EnemyStats enemyStats;
 
+    public bool triggered; //REEEEEEEEEEEE!!!
+
     private GameObject _player;
     private GameObject _partner;
     private TagsGlobal _tagsGlobal;
