@@ -71,7 +71,7 @@
     <Compile Include="Assets\Scripts\Actors\Stats\PlayerStats.cs" />
     <Compile Include="Assets\Scripts\Badges\Badge.cs" />
     <Compile Include="Assets\Scripts\Badges\SubBadges\AttackBadge.cs" />
-    <Compile Include="Assets\Scripts\Badges\SubBadges\AttackBadges\TestBadge1.cs" />
+    <Compile Include="Assets\Scripts\Badges\SubBadges\AttackBadges\BadgeFactory.cs" />
     <Compile Include="Assets\Scripts\Badges\SubBadges\MoveBadge.cs" />
     <Compile Include="Assets\Scripts\Badges\SubBadges\StatBadge.cs" />
     <Compile Include="Assets\Scripts\Battle\ActionManager.cs" />

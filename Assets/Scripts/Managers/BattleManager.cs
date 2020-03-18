@@ -27,6 +27,8 @@ public class BattleManager : MonoBehaviour, IManager
     public GameObject initiatedEnemy; //comes from BattleTrigger.cs
     public Vector3Int battleBlocksPos; //comes from BattleTrigger.cs
 
+    public AttackBadge attackBadge;
+
     private GameObject _hudsManager;
     private GameObject _tileManager;
     private ChooseObjectWithBools _chooseObjectWithBools;
@@ -154,7 +156,10 @@ public class BattleManager : MonoBehaviour, IManager
 
 
 
+            //here
             _chooseObjectWithBools.StartChoose(selectorPrefab, enemiesInvolved);
+
+
             _hudsManager.GetComponent<HudsManager>().playerBattleActionHudActive = false;
         }
 
@@ -411,4 +416,5 @@ public class BattleManager : MonoBehaviour, IManager
     }
 
     #endregion
+    
 }

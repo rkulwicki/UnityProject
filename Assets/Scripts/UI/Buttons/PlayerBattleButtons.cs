@@ -13,6 +13,8 @@ public class PlayerBattleButtons : MonoBehaviour
     private GameObject _actionsPanel;
     private GameObject _globalInputs;
     private GameObject _battleManager;
+    private GameObject _player;
+
     void Start()
     {
         _globalInputs = GameObject.FindGameObjectWithTag("GlobalInputs");
@@ -20,6 +22,7 @@ public class PlayerBattleButtons : MonoBehaviour
         _actionsPanel = gameObject.transform.Find("PlayerBattleButtons")
             .gameObject.transform.Find("ActionsPanel").gameObject;
         _actionsPanel.SetActive(false);
+        _player = GameObject.FindGameObjectWithTag("Player");
     }
 
     public void AttackButtonPressed()
@@ -54,5 +57,11 @@ public class PlayerBattleButtons : MonoBehaviour
     public void CloseActionsPanelOnClick()
     {
         _actionsPanel.SetActive(false);
+    }
+
+    public void OpenAttacksPanelOnClick()
+    {
+        var stats = _player.GetComponent<PlayerStats>();
+        Debug.Log(stats.attacks[0]); //do something with these
     }
 }
