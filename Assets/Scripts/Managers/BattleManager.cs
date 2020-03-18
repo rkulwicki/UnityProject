@@ -35,11 +35,13 @@ public class BattleManager : MonoBehaviour, IManager
     private PlayerBattleGlobal _playerBattleGlobal;
     private GameObject _player;
 
+    private BadgeFactory _badgeFactory;
+
     private Vector3Int[] _battleBoundaryTilesLocations;
 
     private bool _setUpState, _takeDownState, _isWon, _isLose, _movingAction, _attackActionDone, _moveActionDone;
     private int _blockSpeed, _moved;
-
+    private DPadGlobal _dPadGlobal;
     public bool testMove;
     void Start()
     {
@@ -49,7 +51,9 @@ public class BattleManager : MonoBehaviour, IManager
         //_chooseObjectWithKeys = gameObject.GetComponent<ChooseObjectWithKeys>();
         _chooseObjectWithBools = gameObject.GetComponent<ChooseObjectWithBools>();
         _playerBattleGlobal = GameObject.FindGameObjectWithTag("GlobalInputs").GetComponent<PlayerBattleGlobal>();
+        _dPadGlobal = GameObject.FindGameObjectWithTag("GlobalInputs").GetComponent<DPadGlobal>();
         _player = GameObject.FindGameObjectWithTag("Player");
+        _badgeFactory = new BadgeFactory();
     }
     //update is the high level battle state. We break the states down even further down in the code.
     private void Update()
@@ -129,6 +133,7 @@ public class BattleManager : MonoBehaviour, IManager
     {
         if (_setUpState)
         {
+            _blockSpeed = _player.GetComponent<PlayerStats>().blockSpeed;
             turnNumber = turnNumber + 1;
             _hudsManager.GetComponent<HudsManager>().playerBattleActionHudActive = true;
             var playerBattleButtons = _hudsManager.GetComponent<HudsManager>().playerBattleActionHud.GetComponent<PlayerBattleButtons>();
@@ -143,10 +148,10 @@ public class BattleManager : MonoBehaviour, IManager
         if (_playerBattleGlobal.AttackButton && !_attackActionDone) //atack false, move true
         {
             _playerBattleGlobal.AttackButton = false;
-            
-            
-            
-            
+
+
+
+
             //TODO: first choose type of attack (goes here before StartChoose)
             //1. display list of attacks. Probably stored in a list related to player stats?
             //2. cycle through the list, whichever is highlighted, showing the ground highlighted.
@@ -154,16 +159,21 @@ public class BattleManager : MonoBehaviour, IManager
             //3. do attack and continue to "_chooseObjectWithBools.result != null"
 
 
-
+            //var chosenAttack = chooseAttack();
+            var chosenAttack = _badgeFactory.PunchAttackBadge();
 
             //here
-            _chooseObjectWithBools.StartChoose(selectorPrefab, enemiesInvolved);
+            var enemiesInRange = enemiesInvolved;
+            _chooseObjectWithBools.StartChoose(selectorPrefab, enemiesInRange);
 
 
             _hudsManager.GetComponent<HudsManager>().playerBattleActionHudActive = false;
         }
-
-        if (_chooseObjectWithBools.result != null) //after chosen
+        if (_dPadGlobal.BButton)
+        {
+            _hudsManager.GetComponent<HudsManager>().playerBattleActionHudActive = true;
+        }
+        if (_chooseObjectWithBools.result != null && !_chooseObjectWithBools.choosing) //after chosen
         {
             currentEnemy = _chooseObjectWithBools.currentObject;
             //TODO:
@@ -192,7 +202,6 @@ public class BattleManager : MonoBehaviour, IManager
         {
             _playerBattleGlobal.MoveButton = false;
             _hudsManager.GetComponent<HudsManager>().playerBattleActionHudActive = false;
-            _blockSpeed = _player.GetComponent<PlayerStats>().blockSpeed;
             _player.GetComponent<PlayerMove>().canMove = true;
             _moved = _player.GetComponent<Move>().moved;
             _movingAction = true;
@@ -416,5 +425,10 @@ public class BattleManager : MonoBehaviour, IManager
     }
 
     #endregion
-    
+
+    //=====================================
+    #region Public Functions
+
+
+    #endregion
 }
