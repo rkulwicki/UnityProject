@@ -76,7 +76,6 @@
     <Compile Include="Assets\Scripts\Badges\SubBadges\AttackBadge.cs" />
     <Compile Include="Assets\Scripts\Badges\SubBadges\MoveBadge.cs" />
     <Compile Include="Assets\Scripts\Badges\SubBadges\StatBadge.cs" />
-    <Compile Include="Assets\Scripts\Battle\ActionManager.cs" />
     <Compile Include="Assets\Scripts\Battle\BattleActions.cs" />
     <Compile Include="Assets\Scripts\Battle\BattleChoices.cs" />
     <Compile Include="Assets\Scripts\Battle\BattleTrigger.cs" />
@@ -102,7 +101,9 @@
     <Compile Include="Assets\Scripts\Text\TextReader.cs" />
     <Compile Include="Assets\Scripts\Text\UITextTypeWriter.cs" />
     <Compile Include="Assets\Scripts\UI\Animations\Rotate.cs" />
+    <Compile Include="Assets\Scripts\UI\Buttons\AttackListButton.cs" />
     <Compile Include="Assets\Scripts\UI\Buttons\DPadButtons.cs" />
+    <Compile Include="Assets\Scripts\UI\Buttons\PlayerAttacksListButtons.cs" />
     <Compile Include="Assets\Scripts\UI\Buttons\PlayerBattleButtons.cs" />
     <Compile Include="Assets\Scripts\UI\Buttons\TextBoxButton.cs" />
     <Compile Include="Assets\Scripts\UI\Huds\PlayerBattleActionsHudScript.cs" />

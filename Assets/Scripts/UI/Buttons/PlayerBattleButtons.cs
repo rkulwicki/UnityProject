@@ -14,6 +14,7 @@ public class PlayerBattleButtons : MonoBehaviour
     private GameObject _globalInputs;
     private GameObject _battleManager;
     private GameObject _player;
+    private GameObject _attacksListScrollView;
 
     void Start()
     {
@@ -22,6 +23,8 @@ public class PlayerBattleButtons : MonoBehaviour
         _actionsPanel = gameObject.transform.Find("PlayerBattleButtons")
             .gameObject.transform.Find("ActionsPanel").gameObject;
         _actionsPanel.SetActive(false);
+        _attacksListScrollView = _actionsPanel.transform.Find("AttackListScrollView").gameObject;
+        _attacksListScrollView.SetActive(false);
         _player = GameObject.FindGameObjectWithTag("Player");
     }
 
@@ -59,8 +62,13 @@ public class PlayerBattleButtons : MonoBehaviour
         _actionsPanel.SetActive(false);
     }
 
-    public void OpenAttacksPanelOnClick()
+    public void ToggleAttacksPanelOnClick()
     {
+        if(_attacksListScrollView.activeSelf == true)
+            _attacksListScrollView.SetActive(false);
+        else
+            _attacksListScrollView.SetActive(true);
+
         var stats = _player.GetComponent<PlayerStats>();
         Debug.Log(stats.attacks[0]); //do something with these
     }
