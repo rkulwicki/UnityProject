@@ -29,6 +29,8 @@ public class BattleManager : MonoBehaviour, IManager
 
     public AttackBadge attackBadge;
 
+    public Vector3Int[] battleArea;
+
     private GameObject _hudsManager;
     private GameObject _tileManager;
     private ChooseObjectWithBools _chooseObjectWithBools;
@@ -38,6 +40,8 @@ public class BattleManager : MonoBehaviour, IManager
     private BadgeFactory _badgeFactory;
 
     private Vector3Int[] _battleBoundaryTilesLocations;
+
+    private Vector3Int[] _highlightedArea;
 
     private bool _setUpState, _takeDownState, _isWon, _isLose, _movingAction, _attackActionDone, _moveActionDone;
     private int _blockSpeed, _moved;
@@ -95,14 +99,15 @@ public class BattleManager : MonoBehaviour, IManager
         if(initiatedEnemy == null)
             initiatedEnemy = enemiesInvolved[0];
 
-        var battleArea = initiatedEnemy.GetComponent<EnemyStats>().battleArea;
+        var localBattleArea = initiatedEnemy.GetComponent<EnemyStats>().battleArea;
 
         var enemyPosRounded = new Vector3Int(Convert.ToInt32(initiatedEnemy.transform.position.x),
                                              Convert.ToInt32(initiatedEnemy.transform.position.y),
                                              Convert.ToInt32(initiatedEnemy.transform.position.z));
 
-        var pos = _tileManager.GetComponent<TileManager>().GenerateBoundaryPosFromArea(battleArea, enemyPosRounded); //here is the magic
+        var pos = _tileManager.GetComponent<TileManager>().GenerateBoundaryPosFromArea(localBattleArea, enemyPosRounded); //here is the magic
         var battleBoundaryTilesLocations =  _tileManager.GetComponent<TileManager>().PlaceTilesIfEmpty(pos, initiatedEnemy.GetComponent<EnemyStats>().battleBoundaryTile);
+        battleArea = _tileManager.GetComponent<TileManager>().Reposition(localBattleArea, enemyPosRounded);
         return battleBoundaryTilesLocations;
     }
 
@@ -110,7 +115,7 @@ public class BattleManager : MonoBehaviour, IManager
     {
         _battleBoundaryTilesLocations = BeforeStart();
         _player.GetComponent<PlayerMove>().canMove = false;
-
+        
         //TODO: make some sort of "button pressed" function or something to do this logic
         _hudsManager.GetComponent<HudsManager>()
                             .playerBattleActionHud.GetComponent<PlayerBattleButtons>()
@@ -143,6 +148,14 @@ public class BattleManager : MonoBehaviour, IManager
             _moveActionDone = false;
         }
 
+        
+        if(_hudsManager.GetComponent<HudsManager>().playerBattleActionHudActive == true &&
+            _highlightedArea != null && _highlightedArea.Length > 0)
+        {
+            _tileManager.GetComponent<TileManager>().RemoveTilesCarpet(_highlightedArea);
+        }
+        
+
         //                      ATTACK
         // ==================================================
         if (_playerBattleGlobal.AttackButton && !_attackActionDone) //atack false, move true
@@ -159,15 +172,36 @@ public class BattleManager : MonoBehaviour, IManager
             //3. do attack and continue to "_chooseObjectWithBools.result != null"
 
 
-            //var chosenAttack = chooseAttack();
+           
+            //var chosenAttack = ChooseAttack(); 
             var chosenAttack = _badgeFactory.PunchAttackBadge();
 
-            //here
-            var enemiesInRange = enemiesInvolved;
-            _chooseObjectWithBools.StartChoose(selectorPrefab, enemiesInRange);
 
 
+
+
+            //todo highlight using chosenAttack.range
+            var range = _tileManager.GetComponent<TileManager>().Reposition(chosenAttack.range,
+                new Vector3Int(Convert.ToInt32(_player.transform.position.x),
+                                Convert.ToInt32(_player.transform.position.y),
+                                Convert.ToInt32(_player.transform.position.z)));
+
+            
+            range = RemoveTilesOutsideOfArea(range, battleArea);
+            _highlightedArea = range;
+            _tileManager.GetComponent<TileManager>().HighlightTiles(range);
+            var enemiesInRange = new BattleTrigger().GetObjectsInTiles(new string[1]{ "Enemy"}, range);
+            //delete range
+            if (enemiesInRange.Length > 0)
+            {
+                _chooseObjectWithBools.StartChoose(selectorPrefab, enemiesInRange);
+            }
+            else
+            {
+                //there's nobody in range
+            }
             _hudsManager.GetComponent<HudsManager>().playerBattleActionHudActive = false;
+
         }
         if (_dPadGlobal.BButton)
         {
@@ -175,6 +209,7 @@ public class BattleManager : MonoBehaviour, IManager
         }
         if (_chooseObjectWithBools.result != null && !_chooseObjectWithBools.choosing) //after chosen
         {
+            
             currentEnemy = _chooseObjectWithBools.currentObject;
             //TODO:
             //Here. Insert logic for attacking, given the attack and the chosen enemy.    
@@ -340,6 +375,20 @@ public class BattleManager : MonoBehaviour, IManager
     #endregion
     //=====================================
     #region Helper Functions
+    private Vector3Int[] RemoveTilesOutsideOfArea(Vector3Int[] range, Vector3Int[] area)
+    {
+        var list = new List<Vector3Int>();
+        foreach (var tile in range)
+        {
+            foreach(var areaTile in area)
+            {
+                if (tile == areaTile)
+                    list.Add(tile);
+            }
+        }
+        return list.ToArray();
+    }
+
     //TODO
     private void DecideWhoGoesFirst()
     {
@@ -348,10 +397,13 @@ public class BattleManager : MonoBehaviour, IManager
 
     public void BattleOver()
     {
+        if (_highlightedArea != null && _highlightedArea.Length > 0)
+            _tileManager.GetComponent<TileManager>().RemoveTilesCarpet(_highlightedArea);
+        
         _hudsManager.GetComponent<HudsManager>().playerMiniStatsHudActive = false;
         _hudsManager.GetComponent<HudsManager>().battleHudActive = false;
 
-        _tileManager.GetComponent<TileManager>().RemoveTiles(_battleBoundaryTilesLocations); //delete boundary tiles
+        _tileManager.GetComponent<TileManager>().RemoveTilesObstacles(_battleBoundaryTilesLocations); //delete boundary tiles
         _player.GetComponent<PlayerMove>().canMove = true;
         state = BattleState.INACTIVE;
         turnNumber = 0;

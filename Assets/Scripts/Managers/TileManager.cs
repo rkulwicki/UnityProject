@@ -105,11 +105,19 @@ public class TileManager : MonoBehaviour, IManager
     /// Removes tiles under the obstacles tilemap. 
     /// </summary>
     /// <param name="tileLocations"></param>
-    public void RemoveTiles(Vector3Int[] tileLocations)
+    public void RemoveTilesObstacles(Vector3Int[] tileLocations)
     {
         foreach (var tileLocation in tileLocations)
         {
             tilemapObstacles.SetTile(tileLocation, null);
+        }
+    }
+
+    public void RemoveTilesCarpet(Vector3Int[] tileLocations)
+    {
+        foreach (var tileLocation in tileLocations)
+        {
+            tilemapCarpet.SetTile(tileLocation, null);
         }
     }
 
@@ -235,7 +243,7 @@ public class TileManager : MonoBehaviour, IManager
     }
 
     #region Helper Methods
-    private Vector3Int[] Reposition(Vector3Int[] localPos, Vector3Int center)
+    public Vector3Int[] Reposition(Vector3Int[] localPos, Vector3Int center)
     {
         var globalPos = new Vector3Int[localPos.Length];
         for(int i = 0; i < localPos.Length; i++)
