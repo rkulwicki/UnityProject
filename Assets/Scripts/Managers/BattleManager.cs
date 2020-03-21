@@ -31,6 +31,8 @@ public class BattleManager : MonoBehaviour, IManager
 
     public Vector3Int[] battleArea;
 
+    public bool canMoveAgain; //this is for a badge
+
     private GameObject _hudsManager;
     private GameObject _tileManager;
     private ChooseObjectWithBools _chooseObjectWithBools;
@@ -440,6 +442,10 @@ public class BattleManager : MonoBehaviour, IManager
 
     public void MovingAction()
     {
+
+        if (_dPadGlobal.BButton && !canMoveAgain)
+            _moveActionDone = true;
+
         if (_blockSpeed > 0)
         {
             if(_moved != _player.GetComponent<PlayerMove>().moved)
