@@ -281,7 +281,8 @@ public class BattleManager : MonoBehaviour, IManager
 
         if (_takeDownState)
         {
-            _hudsManager.GetComponent<HudsManager>().playerBattleActionHudActive = false;
+            MinimizeActions();
+
             if (_isWon)
                 state = BattleState.WON;
             else if (_isLose)
@@ -377,6 +378,14 @@ public class BattleManager : MonoBehaviour, IManager
     #endregion
     //=====================================
     #region Helper Functions
+    
+    private void MinimizeActions()
+    {
+        var pbb = _hudsManager.GetComponent<HudsManager>().playerBattleActionHud.GetComponent<PlayerBattleButtons>();
+        pbb.ToggleAttacksPanelOnClick(false);
+        pbb.CloseActionsPanelOnClick();
+        _hudsManager.GetComponent<HudsManager>().playerBattleActionHudActive = false;
+    }
     private Vector3Int[] RemoveTilesOutsideOfArea(Vector3Int[] range, Vector3Int[] area)
     {
         var list = new List<Vector3Int>();

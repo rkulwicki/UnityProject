@@ -72,4 +72,15 @@ public class PlayerBattleButtons : MonoBehaviour
         var stats = _player.GetComponent<PlayerStats>();
         Debug.Log(stats.attacks[0]); //do something with these
     }
+
+    public void ToggleAttacksPanelOnClick(bool toggle)
+    {
+        if (toggle == true)
+            _attacksListScrollView.SetActive(true);
+        else
+            _attacksListScrollView.SetActive(false);
+
+        var stats = _player.GetComponent<PlayerStats>();
+        Debug.Log(stats.attacks[0]); //do something with these
+    }
 }
