@@ -82,7 +82,6 @@ public class Move : MonoBehaviour
 
     private GameObject getUnitOccupyingTile(Vector2 cellWorldPos)
     {
-        Debug.Log("In getUnitOccupyingTile");
         var col = Physics2D.OverlapCircle(cellWorldPos,0.1f);
         if (col == null)
             return null;
@@ -90,7 +89,6 @@ public class Move : MonoBehaviour
         if (col.gameObject.GetComponent<SpriteRenderer>().sortingLayerName != null &&
             col.gameObject.GetComponent<SpriteRenderer>().sortingLayerName == "Units")
         {
-            Debug.Log("In found unit");
             return col.gameObject;
         }
         

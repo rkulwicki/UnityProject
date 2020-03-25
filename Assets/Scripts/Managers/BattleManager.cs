@@ -160,24 +160,16 @@ public class BattleManager : MonoBehaviour, IManager
 
         //                      ATTACK
         // ==================================================
+
+        //===CHOSING ATTACK===
         if (_playerBattleGlobal.AttackButton && !_attackActionDone) //atack false, move true
         {
             _playerBattleGlobal.AttackButton = false;
-
-
-
-
-            //TODO: first choose type of attack (goes here before StartChoose)
-            //1. display list of attacks. Probably stored in a list related to player stats?
-            //2. cycle through the list, whichever is highlighted, showing the ground highlighted.
-            //2.5 is allowed to choose attack if enemy is in highlighted box.
-            //3. do attack and continue to "_chooseObjectWithBools.result != null"
-
-
            
-            //var chosenAttack = ChooseAttack(); 
-            var chosenAttack = _badgeFactory.PunchAttackBadge();
 
+
+            //var chosenAttack = ChooseAttack(); **TODO
+            var chosenAttack = _badgeFactory.PunchAttackBadge();
 
 
 
@@ -207,19 +199,24 @@ public class BattleManager : MonoBehaviour, IManager
         }
         if (_dPadGlobal.BButton)
         {
+            //todo: 
+            //  this should just reset to the beginning state of the attack or move but
+            //  keeping some necessary info like how much you've moved already.
             _hudsManager.GetComponent<HudsManager>().playerBattleActionHudActive = true;
         }
-        if (_chooseObjectWithBools.result != null && !_chooseObjectWithBools.choosing) //after chosen
+        //===ATTACK CHOSEN===
+        if (_chooseObjectWithBools.result != null && !_chooseObjectWithBools.choosing)
         {
             
             currentEnemy = _chooseObjectWithBools.currentObject;
+
             //TODO:
             //Here. Insert logic for attacking, given the attack and the chosen enemy.    
             var baseD = _player.GetComponent<PlayerStats>().baseDamage;
             var curEnStats = currentEnemy.GetComponent<EnemyStats>();
             var playerActions = _player.GetComponent<PlayerBattleActions>();
             playerActions.Attack(baseD, curEnStats);
-            //^^ currently just the enemy and attack is base damage. Attack choice will be later.
+            //****
 
             _chooseObjectWithBools.result = null; //reset the choice.
             _attackActionDone = true;

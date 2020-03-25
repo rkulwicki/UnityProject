@@ -3,9 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-//this script gets put onto a trigger and I guess really isn't a manager but
-// shhhh don't tell anybody!
-
 public class TextBoxScript: MonoBehaviour
 {
     public GameObject textBoxObject;
@@ -13,10 +10,13 @@ public class TextBoxScript: MonoBehaviour
     public string text;
 
     public GameObject textBoxPrefab; //using the textbox prefab
+    public GameObject textTalkIconPrefab;
 
     public int lineInText;
 
     public bool stillTyping; //this comes from UITextTypeWriter. Probably
+
+    public Vector3 pointOfSpeaking;
 
     private string inputKey = "space";
     private GameObject _playerObject;
@@ -27,7 +27,10 @@ public class TextBoxScript: MonoBehaviour
 
     private HudsManager _hudsManager;
 
-    private bool _inTextBox = false;
+    private GameObject _textIconObj;
+
+    private bool _isListenForAPress = false;
+    private bool _startTextBox = false;
 
     private void Start()
     {
@@ -36,6 +39,13 @@ public class TextBoxScript: MonoBehaviour
         _hudsManager = GameObject.FindGameObjectWithTag("HudsManager").GetComponent<HudsManager>();
         _playerObject = GameObject.Find("Player");
         _textReader = gameObject.GetComponent<TextReader>();
+
+        //create icon
+        _textIconObj = Instantiate(textTalkIconPrefab);
+        _textIconObj.transform.parent = gameObject.transform.parent.transform;
+        _textIconObj.transform.position = gameObject.transform.parent.transform.position + pointOfSpeaking;
+        _textIconObj.SetActive(false);
+
         if (_textReader.lines.Length > 0)
         {
             text = _textReader.lines[lineInText];
@@ -44,9 +54,11 @@ public class TextBoxScript: MonoBehaviour
 
     private void Update()
     {
+        ListenForAPress();
 
-        if (_inTextBox)
+        if (_startTextBox)
         {
+            _textIconObj.SetActive(false);
             _hudsManager.dPadHudActive = false;
             _dPadGlobal.AllButtonsFalse();
             _playerObject.GetComponent<PlayerMove>().canMove = false;
@@ -69,7 +81,7 @@ public class TextBoxScript: MonoBehaviour
                     else if (lineInText == _textReader.lines.Length - 1)
                     {
                         DestroyTextBox();
-                        _inTextBox = false;
+                        _startTextBox = false;
                         _playerObject.GetComponent<PlayerMove>().canMove = true;
                         lineInText = 0; //this is where we start over.
                     }
@@ -90,12 +102,30 @@ public class TextBoxScript: MonoBehaviour
     {
         if (col.tag == "Player")
         {
-            _inTextBox = true;
-            text = _textReader.lines[lineInText];
-            SpawnTextBox(textBoxPrefab);
+            _isListenForAPress = true;
+            _textIconObj.SetActive(true);
         }
     }
-    
+
+    private void OnTriggerExit2D(Collider2D col)
+    {
+        if (col.tag == "Player")
+        {
+            _isListenForAPress = false;
+            _textIconObj.SetActive(false);
+        }
+    }
+
+    private void ListenForAPress()
+    {
+        if (_isListenForAPress && _dPadGlobal.AButton)
+        {
+            text = _textReader.lines[lineInText];
+            SpawnTextBox(textBoxPrefab);
+            _startTextBox = true;
+        }
+    }
+
     #region CreateAndDestroy - SpawnTextBox, DestroyTextBox
 
     public void SpawnTextBox(GameObject textBoxPrefab)
