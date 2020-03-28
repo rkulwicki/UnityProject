@@ -31,7 +31,9 @@ public class BattleManager : MonoBehaviour, IManager
 
     public Vector3Int[] battleArea;
 
-    public bool canMoveAgain; //this is for a badge
+    public AttackBadge chosenAttack;
+
+    public bool canMoveAgain, attackButtonClicked; //this is for a badge
 
     private GameObject _hudsManager;
     private GameObject _tileManager;
@@ -60,6 +62,7 @@ public class BattleManager : MonoBehaviour, IManager
         _dPadGlobal = GameObject.FindGameObjectWithTag("GlobalInputs").GetComponent<DPadGlobal>();
         _player = GameObject.FindGameObjectWithTag("Player");
         _badgeFactory = new BadgeFactory();
+        attackButtonClicked = false;
     }
     //update is the high level battle state. We break the states down even further down in the code.
     private void Update()
@@ -95,7 +98,7 @@ public class BattleManager : MonoBehaviour, IManager
     private Vector3Int[] BeforeStart()
     {
         turnNumber = 0;
-
+        chosenAttack = null;
         var battleBoundaryTilesLocationsList = new List<Vector3Int>();
 
         if(initiatedEnemy == null)
@@ -162,17 +165,18 @@ public class BattleManager : MonoBehaviour, IManager
         // ==================================================
 
         //===CHOSING ATTACK===
-        if (_playerBattleGlobal.AttackButton && !_attackActionDone) //atack false, move true
+        if (attackButtonClicked && chosenAttack != null && !_attackActionDone) //atack false, move true
         {
-            _playerBattleGlobal.AttackButton = false;
-           
+            attackButtonClicked = false;
+
 
 
             //var chosenAttack = ChooseAttack(); **TODO
-            var chosenAttack = _badgeFactory.PunchAttackBadge();
+            //Chosen attack comes from attack list.
+            //TEST chosenAttack = _badgeFactory.PunchAttackBadge();
 
 
-
+            var localChosenAttack = chosenAttack;
 
             //todo highlight using chosenAttack.range
             var range = _tileManager.GetComponent<TileManager>().Reposition(chosenAttack.range,
@@ -202,6 +206,7 @@ public class BattleManager : MonoBehaviour, IManager
             //todo: 
             //  this should just reset to the beginning state of the attack or move but
             //  keeping some necessary info like how much you've moved already.
+            chosenAttack = null;
             _hudsManager.GetComponent<HudsManager>().playerBattleActionHudActive = true;
         }
         //===ATTACK CHOSEN===
@@ -212,10 +217,10 @@ public class BattleManager : MonoBehaviour, IManager
 
             //TODO:
             //Here. Insert logic for attacking, given the attack and the chosen enemy.    
-            var baseD = _player.GetComponent<PlayerStats>().baseDamage;
+            var damage = chosenAttack.damage;
             var curEnStats = currentEnemy.GetComponent<EnemyStats>();
             var playerActions = _player.GetComponent<PlayerBattleActions>();
-            playerActions.Attack(baseD, curEnStats);
+            playerActions.Attack(damage, curEnStats);
             //****
 
             _chooseObjectWithBools.result = null; //reset the choice.
@@ -278,6 +283,7 @@ public class BattleManager : MonoBehaviour, IManager
 
         if (_takeDownState)
         {
+            chosenAttack = null;
             MinimizeActions();
 
             if (_isWon)

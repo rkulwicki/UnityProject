@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Badge : MonoBehaviour
+public class Badge
 {
     public string badgeName;
     public int bpCost;

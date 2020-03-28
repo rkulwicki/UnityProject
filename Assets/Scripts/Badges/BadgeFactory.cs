@@ -29,21 +29,30 @@ public class BadgeFactory : MonoBehaviour
     {
         return new AttackBadge()
         {
-            badgeName = "Punch Attack",
+            badgeName = "Kick Face Attack",
             bpCost = 1,
             description = "Punching is the basic form of attack. The range is minimal and so is the damage but hey, it works!",
             isEquipped = true,
             isAcquired = true,
             range = new Vector3Int[8]{
-                new Vector3Int(-1, 1, 0),  new Vector3Int(0, 1, 0 ),  new Vector3Int(1, 1, 0 ),
-                new Vector3Int(-1, 0, 0),                             new Vector3Int(1, 0, 0),
-                new Vector3Int(-1, -1, 0), new Vector3Int(0, -1, 0 ), new Vector3Int(1, -1, 0 )
+                new Vector3Int(-1, 1, 0),  new Vector3Int(0, 2, 0 ),  new Vector3Int(1, 1, 0 ),
+                new Vector3Int(-2, 0, 0),                             new Vector3Int(2, 0, 0),
+                new Vector3Int(-1, -1, 0), new Vector3Int(0, -2, 0 ), new Vector3Int(1, -1, 0 )
             },
-            numberToHit = 1,
+            numberToHit = 2,
             damage = 1
         };
     }
 
+
+    public AttackBadge[] TestMake2Badges()
+    {
+        return new AttackBadge[2]
+        {
+            ANOTHERAttackBadge(),
+            PunchAttackBadge()
+        };
+    }
     #endregion
 
     #region Move Badges

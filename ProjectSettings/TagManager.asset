@@ -67,6 +67,9 @@ TagManager:
   - name: Obstacles
     uniqueID: 3210658865
     locked: 0
+  - name: Front
+    uniqueID: 1192863805
+    locked: 0
   - name: UI
     uniqueID: 584752905
     locked: 0

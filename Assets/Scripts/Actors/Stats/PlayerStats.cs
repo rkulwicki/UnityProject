@@ -15,7 +15,12 @@ public class PlayerStats : ActorStats
     public int playerCoins;
     public int playerExperience;
 
-    public string[] attacks;
+    public AttackBadge[] attacks;
 
-    public string[] equippedBadges;
+    public AttackBadge[] equippedBadges;
+
+    private void Start()
+    {
+        attacks = new BadgeFactory().TestMake2Badges();
+    }
 }
