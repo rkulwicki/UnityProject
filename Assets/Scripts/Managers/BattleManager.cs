@@ -145,6 +145,7 @@ public class BattleManager : MonoBehaviour, IManager
         {
             _blockSpeed = _player.GetComponent<PlayerStats>().blockSpeed;
             turnNumber = turnNumber + 1;
+            _hudsManager.GetComponent<HudsManager>().CollapseBattleActionsHud();
             _hudsManager.GetComponent<HudsManager>().playerBattleActionHudActive = true;
             var playerBattleButtons = _hudsManager.GetComponent<HudsManager>().playerBattleActionHud.GetComponent<PlayerBattleButtons>();
             _setUpState = false;
@@ -159,7 +160,15 @@ public class BattleManager : MonoBehaviour, IManager
         {
             _tileManager.GetComponent<TileManager>().RemoveTilesCarpet(_highlightedArea);
         }
-        
+
+        // B Button - back
+        if (_dPadGlobal.BButton)
+        {
+            _dPadGlobal.BButton = false;
+            chosenAttack = null;
+            _hudsManager.GetComponent<HudsManager>().BattleActionsHudBack();
+            _hudsManager.GetComponent<HudsManager>().playerBattleActionHudActive = true;
+        }
 
         //                      ATTACK
         // ==================================================
@@ -201,14 +210,7 @@ public class BattleManager : MonoBehaviour, IManager
             _hudsManager.GetComponent<HudsManager>().playerBattleActionHudActive = false;
 
         }
-        if (_dPadGlobal.BButton)
-        {
-            //todo: 
-            //  this should just reset to the beginning state of the attack or move but
-            //  keeping some necessary info like how much you've moved already.
-            chosenAttack = null;
-            _hudsManager.GetComponent<HudsManager>().playerBattleActionHudActive = true;
-        }
+        
         //===ATTACK CHOSEN===
         if (_chooseObjectWithBools.result != null && !_chooseObjectWithBools.choosing)
         {
@@ -227,6 +229,7 @@ public class BattleManager : MonoBehaviour, IManager
             _attackActionDone = true;
             if (!_moveActionDone)
             {
+                _hudsManager.GetComponent<HudsManager>().CollapseBattleActionsHud();
                 _hudsManager.GetComponent<HudsManager>()
                             .playerBattleActionHud.GetComponent<PlayerBattleButtons>()
                             .attackButton.image.color = Color.gray;
@@ -284,7 +287,7 @@ public class BattleManager : MonoBehaviour, IManager
         if (_takeDownState)
         {
             chosenAttack = null;
-            MinimizeActions();
+            
 
             if (_isWon)
                 state = BattleState.WON;
@@ -490,6 +493,7 @@ public class BattleManager : MonoBehaviour, IManager
 
     public void EndPlayerTurn()
     {
+        _hudsManager.GetComponent<HudsManager>().playerBattleActionHudActive = false;
         state = BattleState.PLAYERTURN;
         _takeDownState = true;
     }

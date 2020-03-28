@@ -23,7 +23,7 @@ public class PlayerBattleButtons : MonoBehaviour
         _actionsPanel = gameObject.transform.Find("PlayerBattleButtons")
             .gameObject.transform.Find("ActionsPanel").gameObject;
         _actionsPanel.SetActive(false);
-        _attacksListScrollView = _actionsPanel.transform.Find("AttackListScrollView").gameObject;
+        _attacksListScrollView = _actionsPanel.transform.Find("AttackListPanel").gameObject;
         _attacksListScrollView.SetActive(false);
         _player = GameObject.FindGameObjectWithTag("Player");
     }

@@ -19,8 +19,8 @@ public class PlayerAttacksListButtons : MonoBehaviour
         _playerStats = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerStats>();
         if(_playerStats.attacks != null)
         {
-            var pos = _buttonTemplate.GetComponent<RectTransform>().rect.position.y;
-
+            var pos = 0f; //_buttonTemplate.GetComponent<RectTransform>().rect.position.y;
+            _buttonTemplate.SetActive(false);
             //TODO!!!!!
             //set button's on-click action to be AttackBadge's action.
 
@@ -38,6 +38,7 @@ public class PlayerAttacksListButtons : MonoBehaviour
 
                 button.GetComponent<Button>().onClick.AddListener(new UnityAction(() =>
                     button.GetComponent<AttackListButton>().OnClick()));
+                button.SetActive(true);
             };
 
         }

@@ -94,6 +94,52 @@ public class HudsManager : MonoBehaviour, IManager
 
     }
 
+    public void BattleActionsHudBack()
+    {
+        //get panels
+        var panel1 = playerBattleActionHud.transform.Find("PlayerBattleButtons").gameObject;
+        var panel2 = panel1.transform.Find("ActionsPanel").gameObject;
+        var panel3 = panel2.transform.Find("AttackListPanel").gameObject;
+
+        playerBattleActionHudActive = true;
+
+        if(panel1.activeSelf == true && panel2.activeSelf == false && panel3.activeSelf == false)
+        {
+            //stay the same
+            panel1.SetActive(true);
+            panel2.SetActive(false);
+            panel3.SetActive(false);
+        }
+        else if (panel1.activeSelf == true && panel2.activeSelf == true && panel3.activeSelf == false)
+        {
+            panel1.SetActive(true);
+            panel2.SetActive(false);
+            panel3.SetActive(false);
+        }
+        else if(panel1.activeSelf == true && panel2.activeSelf == true && panel3.activeSelf == true)
+        {
+            panel1.SetActive(true);
+            panel2.SetActive(true);
+            panel3.SetActive(false);
+        }
+        else //all panels collapsed
+        {
+            panel1.SetActive(true);
+            panel2.SetActive(false);
+            panel3.SetActive(false);
+        }
+    }
+
+    public void CollapseBattleActionsHud()
+    {
+        //get panels
+        var panel1 = playerBattleActionHud.transform.Find("PlayerBattleButtons").gameObject;
+        var panel2 = panel1.transform.Find("ActionsPanel").gameObject;
+        var panel3 = panel2.transform.Find("AttackListPanel").gameObject;
+        panel2.SetActive(false);
+        panel3.SetActive(false);
+    }
+
     private void InstatiateAllHuds()
     {
         playerMiniStatsHud = Instantiate(playerMiniStatsHudPrefab);
