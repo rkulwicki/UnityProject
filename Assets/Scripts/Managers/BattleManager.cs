@@ -8,7 +8,7 @@ public enum BattleState { INACTIVE, START, PLAYERTURN, ENEMYTURN, WON, LOST }
 public class BattleManager : MonoBehaviour, IManager
 {
     public int turnNumber, blocksLeftToMove;
-
+    
     public GameObject selectorPrefab;
 
     public GameObject grid;
@@ -120,14 +120,13 @@ public class BattleManager : MonoBehaviour, IManager
     {
         _battleBoundaryTilesLocations = BeforeStart();
         _player.GetComponent<PlayerMove>().canMove = false;
-        
-        //TODO: make some sort of "button pressed" function or something to do this logic
-        _hudsManager.GetComponent<HudsManager>()
+
+        _hudsManager.GetComponent<HudsManager>().ToggleEnableButton(_hudsManager.GetComponent<HudsManager>()
                             .playerBattleActionHud.GetComponent<PlayerBattleButtons>()
-                            .moveButton.image.color = Color.white;
-        _hudsManager.GetComponent<HudsManager>()
+                            .ActionsButton, true);
+        _hudsManager.GetComponent<HudsManager>().ToggleEnableButton(_hudsManager.GetComponent<HudsManager>()
                             .playerBattleActionHud.GetComponent<PlayerBattleButtons>()
-                            .attackButton.image.color = Color.white;
+                            .moveButton, true);
 
         foreach (var enemy in enemiesInvolved) //make them in "BattleMode"
         {
@@ -141,6 +140,7 @@ public class BattleManager : MonoBehaviour, IManager
 
     private void PlayerTurn()
     {
+        //=== Beginning ===
         if (_setUpState)
         {
             _blockSpeed = _player.GetComponent<PlayerStats>().blockSpeed;
@@ -161,31 +161,19 @@ public class BattleManager : MonoBehaviour, IManager
             _tileManager.GetComponent<TileManager>().RemoveTilesCarpet(_highlightedArea);
         }
 
-        // B Button - back
+        //=== B Button, back ===
         if (_dPadGlobal.BButton)
         {
-            _dPadGlobal.BButton = false;
-            chosenAttack = null;
-            _hudsManager.GetComponent<HudsManager>().BattleActionsHudBack();
-            _hudsManager.GetComponent<HudsManager>().playerBattleActionHudActive = true;
+            BButtonBack();
         }
 
         //                      ATTACK
         // ==================================================
 
         //===CHOSING ATTACK===
-        if (attackButtonClicked && chosenAttack != null && !_attackActionDone) //atack false, move true
+        if (attackButtonClicked && chosenAttack != null && !_attackActionDone) //attack false, move true
         {
             attackButtonClicked = false;
-
-
-
-            //var chosenAttack = ChooseAttack(); **TODO
-            //Chosen attack comes from attack list.
-            //TEST chosenAttack = _badgeFactory.PunchAttackBadge();
-
-
-            var localChosenAttack = chosenAttack;
 
             //todo highlight using chosenAttack.range
             var range = _tileManager.GetComponent<TileManager>().Reposition(chosenAttack.range,
@@ -217,8 +205,7 @@ public class BattleManager : MonoBehaviour, IManager
             
             currentEnemy = _chooseObjectWithBools.currentObject;
 
-            //TODO:
-            //Here. Insert logic for attacking, given the attack and the chosen enemy.    
+            //TODO attacking logic ****    
             var damage = chosenAttack.damage;
             var curEnStats = currentEnemy.GetComponent<EnemyStats>();
             var playerActions = _player.GetComponent<PlayerBattleActions>();
@@ -230,9 +217,10 @@ public class BattleManager : MonoBehaviour, IManager
             if (!_moveActionDone)
             {
                 _hudsManager.GetComponent<HudsManager>().CollapseBattleActionsHud();
-                _hudsManager.GetComponent<HudsManager>()
+
+                _hudsManager.GetComponent<HudsManager>().ToggleEnableButton(_hudsManager.GetComponent<HudsManager>()
                             .playerBattleActionHud.GetComponent<PlayerBattleButtons>()
-                            .attackButton.image.color = Color.gray;
+                            .ActionsButton, false);
                 _hudsManager.GetComponent<HudsManager>().playerBattleActionHudActive = true;
                 //turn button off or something?
             }
@@ -258,9 +246,9 @@ public class BattleManager : MonoBehaviour, IManager
             _movingAction = false;
             if (!_attackActionDone)
             {
-                _hudsManager.GetComponent<HudsManager>()
+                _hudsManager.GetComponent<HudsManager>().ToggleEnableButton(_hudsManager.GetComponent<HudsManager>()
                             .playerBattleActionHud.GetComponent<PlayerBattleButtons>()
-                            .moveButton.image.color = Color.gray;
+                            .moveButton, false);
                 _hudsManager.GetComponent<HudsManager>().playerBattleActionHudActive = true;
                 //turn button off or something?
             }
@@ -297,12 +285,12 @@ public class BattleManager : MonoBehaviour, IManager
             {
                 state = BattleState.ENEMYTURN;
             }
-            _hudsManager.GetComponent<HudsManager>()
+            _hudsManager.GetComponent<HudsManager>().ToggleEnableButton(_hudsManager.GetComponent<HudsManager>()
                             .playerBattleActionHud.GetComponent<PlayerBattleButtons>()
-                            .attackButton.image.color = Color.white;
-            _hudsManager.GetComponent<HudsManager>()
+                            .ActionsButton, true);
+            _hudsManager.GetComponent<HudsManager>().ToggleEnableButton(_hudsManager.GetComponent<HudsManager>()
                             .playerBattleActionHud.GetComponent<PlayerBattleButtons>()
-                            .moveButton.image.color = Color.white;
+                            .moveButton, true);
             _moveActionDone = false;
             _attackActionDone = false;
             _takeDownState = false;
@@ -385,6 +373,17 @@ public class BattleManager : MonoBehaviour, IManager
     //=====================================
     #region Helper Functions
     
+    private void BButtonBack()
+    {
+        _chooseObjectWithBools.CancelChoose();
+        _dPadGlobal.BButton = false;
+        chosenAttack = null;
+        _hudsManager.GetComponent<HudsManager>().BattleActionsHudBack();
+        _hudsManager.GetComponent<HudsManager>().playerBattleActionHudActive = true;
+        if (_movingAction && !canMoveAgain)
+            _moveActionDone = true;
+    }
+
     private void MinimizeActions()
     {
         var pbb = _hudsManager.GetComponent<HudsManager>().playerBattleActionHud.GetComponent<PlayerBattleButtons>();
@@ -419,6 +418,7 @@ public class BattleManager : MonoBehaviour, IManager
         
         _hudsManager.GetComponent<HudsManager>().playerMiniStatsHudActive = false;
         _hudsManager.GetComponent<HudsManager>().battleHudActive = false;
+        _hudsManager.GetComponent<HudsManager>().playerBattleActionHudActive = false;
 
         _tileManager.GetComponent<TileManager>().RemoveTilesObstacles(_battleBoundaryTilesLocations); //delete boundary tiles
         _player.GetComponent<PlayerMove>().canMove = true;
@@ -457,10 +457,6 @@ public class BattleManager : MonoBehaviour, IManager
 
     public void MovingAction()
     {
-
-        if (_dPadGlobal.BButton && !canMoveAgain)
-            _moveActionDone = true;
-
         if (_blockSpeed > 0)
         {
             if(_moved != _player.GetComponent<PlayerMove>().moved)

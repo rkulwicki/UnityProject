@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
+using UnityEngine.UI;
 
 public class HudsManager : MonoBehaviour, IManager
 {
@@ -138,6 +139,20 @@ public class HudsManager : MonoBehaviour, IManager
         var panel3 = panel2.transform.Find("AttackListPanel").gameObject;
         panel2.SetActive(false);
         panel3.SetActive(false);
+    }
+
+    public void ToggleEnableButton(Button button, bool isEnable)
+    {
+        if (isEnable)
+        {
+            button.enabled = true;
+            button.image.color = Color.white;
+        }
+        else
+        {
+            button.enabled = false;
+            button.image.color = Color.gray;
+        }
     }
 
     private void InstatiateAllHuds()

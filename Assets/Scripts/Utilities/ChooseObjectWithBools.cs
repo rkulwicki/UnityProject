@@ -81,11 +81,6 @@ public class ChooseObjectWithBools : MonoBehaviour
                 result = currentObject;
                 CancelChoose();
             }
-
-            if (_dPadGlobal.BButton)
-            {
-                CancelChoose();
-            }
             
         }
     }

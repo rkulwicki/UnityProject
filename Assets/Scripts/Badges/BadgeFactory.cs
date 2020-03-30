@@ -39,8 +39,8 @@ public class BadgeFactory : MonoBehaviour
                 new Vector3Int(-2, 0, 0),                             new Vector3Int(2, 0, 0),
                 new Vector3Int(-1, -1, 0), new Vector3Int(0, -2, 0 ), new Vector3Int(1, -1, 0 )
             },
-            numberToHit = 2,
-            damage = 1
+            numberToHit = 1,
+            damage = 2
         };
     }
 
