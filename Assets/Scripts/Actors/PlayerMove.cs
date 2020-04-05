@@ -22,7 +22,7 @@ public class PlayerMove :Move
     void Update()
     {
         //We do nothing if the player is still moving.
-        if (isMoving || _onCooldown || _onExit || !canMove) return;
+        if (isMoving || inActionCooldown || _onExit || !canMove) return;
 
         //To store move directions.
         int horizontal = 0;

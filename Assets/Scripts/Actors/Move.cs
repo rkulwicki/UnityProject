@@ -8,7 +8,7 @@ public class Move : MonoBehaviour
 {
     public float moveTime = 0.1f;
     public float moveCoolDown = 0.15f;
-    public bool canMoveOneTile = true;
+    public bool inMoveOneTile = true;
     public bool canMove = true;
 
     public int moved;
@@ -17,12 +17,12 @@ public class Move : MonoBehaviour
     public Tilemap groundTilemap;
     public Tilemap obstaclesTilemap;
 
-    protected bool _onCooldown, _onExit = false;
+    protected bool inActionCooldown, _onExit = false;
     public bool isMoving;
 
     public void MoveOneTile(Direction dir)
     {
-        canMoveOneTile = true;
+        inMoveOneTile = true;
         moved = moved * -1; //basically a move tracker
         int vertical = 0;
         int horizontal = 0;
@@ -41,12 +41,12 @@ public class Move : MonoBehaviour
 
         if (horizontal != 0)
             vertical = 0;
-        if ((horizontal != 0 || vertical != 0) && canMoveOneTile)
+        if ((horizontal != 0 || vertical != 0) && inMoveOneTile)
         {
             StartCoroutine(actionCooldown(moveCoolDown));
             MoveOne(horizontal, vertical);
         }
-        canMoveOneTile = false;
+        inMoveOneTile = false;
     }
 
     private void MoveOne(int xDir, int yDir)
@@ -97,7 +97,7 @@ public class Move : MonoBehaviour
 
     private IEnumerator actionCooldown(float cooldown)
     {
-        _onCooldown = true;
+        inActionCooldown = true;
 
         //float cooldown = 0.2f;
         while (cooldown > 0f)
@@ -106,7 +106,7 @@ public class Move : MonoBehaviour
             yield return null;
         }
 
-        _onCooldown = false;
+        inActionCooldown = false;
     }
 
     private IEnumerator BlockedMovement(Vector3 end)
