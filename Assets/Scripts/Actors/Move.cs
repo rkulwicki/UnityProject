@@ -57,7 +57,7 @@ public class Move : MonoBehaviour
         bool isOnGround = getCell(groundTilemap, startCell) != null; //If the player is on the ground
         bool hasGroundTile = getCell(groundTilemap, targetCell) != null; //If target Tile has a ground
         bool hasObstacleTile = getCell(obstaclesTilemap, targetCell) != null; //if target Tile has an obstacle
-        bool hasUnitsTile = getUnitOccupyingTile(targetCell) != null; //if target Tile has a unit
+        bool hasUnitsTile = GetUnitOccupyingTile(targetCell) != null; //if target Tile has a unit
 
         //If the player starts their movement from a ground tile.
         if (isOnGround)
@@ -80,13 +80,15 @@ public class Move : MonoBehaviour
         return tilemap.GetTile(tilemap.WorldToCell(cellWorldPos));
     }
 
-    private GameObject getUnitOccupyingTile(Vector2 cellWorldPos)
+    protected GameObject GetUnitOccupyingTile(Vector2 cellWorldPos)
     {
-        var col = Physics2D.OverlapCircle(cellWorldPos,0.1f);
+        var layer = LayerMask.GetMask("BlockingLayer");
+        var col = Physics2D.OverlapCircle(cellWorldPos,0.1f, layer); 
         if (col == null)
             return null;
         
-        if (col.gameObject.GetComponent<SpriteRenderer>().sortingLayerName != null &&
+        if (col.gameObject.GetComponent<SpriteRenderer>() != null &&
+            col.gameObject.GetComponent<SpriteRenderer>().sortingLayerName != null &&
             col.gameObject.GetComponent<SpriteRenderer>().sortingLayerName == "Units")
         {
             return col.gameObject;

@@ -44,13 +44,32 @@ public class BadgeFactory : MonoBehaviour
         };
     }
 
-
+    //TEST
     public AttackBadge[] TestMake2Badges()
     {
         return new AttackBadge[2]
         {
             ANOTHERAttackBadge(),
             PunchAttackBadge()
+        };
+    }
+
+    public AttackBadge PlusAttackBadge()
+    {
+        return new AttackBadge()
+        {
+            badgeName = "Plus Attack",
+            bpCost = 1,
+            description = "Plus Attack can hit up, down, left, and right.",
+            isEquipped = true,
+            isAcquired = true,
+            range = new Vector3Int[4]{
+                                          new Vector3Int(0, 1, 0 ), 
+                new Vector3Int(-1, 0, 0),                             new Vector3Int(1, 0, 0),
+                                          new Vector3Int(0, -1, 0 ),
+            },
+            numberToHit = 1,
+            damage = 1
         };
     }
     #endregion

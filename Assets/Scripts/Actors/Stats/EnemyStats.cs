@@ -12,4 +12,5 @@ public class EnemyStats : ActorStats
     public int enemySightRadius;
     public Tile battleBoundaryTile;
     public Vector3Int[] battleArea;
+    public AttackBadge[] attacks;
 }

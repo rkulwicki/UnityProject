@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System;
+using System.Collections.Generic;
 
 public class DemonEnemyBattleAI : EnemyBattleAI
 {
@@ -9,9 +10,22 @@ public class DemonEnemyBattleAI : EnemyBattleAI
 
     private int logicDictator = 1;
 
-    private int stepsToMove = 3;
+    private int steps = 3;
 
-    private int stepsCounter = 0;
+    //private int stepsCounter = 0;
+    private void Start()
+    {
+        EnemyBattleAIStart();
+        //setting attacks
+        var list = new List<AttackBadge>();
+
+        var badgeFactory = new BadgeFactory();
+
+        list.Add(badgeFactory.PlusAttackBadge());
+
+        enemyStats.attacks = list.ToArray();
+        //====
+    }
 
     private void Update()
     {
@@ -21,16 +35,21 @@ public class DemonEnemyBattleAI : EnemyBattleAI
             return;
 
         //it's the enemy's turn. What does it do?
-        if (logicDictator == 1) //MOVE
+        if (logicDictator == 1) //Move then attack if in Plus Range
         {
-            if (isMoving || inActionCooldown || _onExit || !canMove) return; //moving. don't try to move again
+            //move
+            beginTurn = MoveTowardsActor(this.gameObject, player, steps);
 
-            MoveTowardsActor(this.gameObject, player);
-            stepsCounter++;
-            if (stepsCounter >= stepsToMove)
+            //Attack if in range
+            if (!beginTurn) //do after move.
             {
-                beginTurn = false; //turn ender.
-                stepsCounter = 0;
+                var attack = enemyStats.attacks[0]; //the attack :]
+                var repositionedRange = Reposition(enemyStats.attacks[0].range, ConvertV3ToV3Int(this.transform.position));
+                var maybePlayer = GetPlayerInRange(repositionedRange);
+                if (maybePlayer != null)
+                {
+                    enemyActions.Attack(attack.damage, maybePlayer.GetComponent<PlayerStats>()); //attack
+                }
             }
         }
         else if (logicDictator == 2)

@@ -11,14 +11,19 @@ public class EnemyBattleAI : Move
     //(1) Movement Patterns
     //(2) Attack Patterns
 
-    private EnemyStats _enemyStatsReference;
+    protected EnemyStats enemyStats;
     protected GameObject player;
     protected bool inMoveTowardsActor;
     protected bool inMoveTowardsActorWIP;
 
-    void Start()
+    protected int stepsCounter = 0;
+    protected EnemyBattleActions enemyActions;
+     
+
+    protected void EnemyBattleAIStart()
     {
-        _enemyStatsReference = gameObject.GetComponent<EnemyStats>();
+        enemyActions = gameObject.AddComponent<EnemyBattleActions>();
+        enemyStats = gameObject.GetComponent<EnemyStats>();
         player = GameObject.FindGameObjectWithTag("Player");
         grid = GameObject.FindGameObjectWithTag("Grid");
         groundTilemap = grid.transform.Find("Floor").gameObject.GetComponent<Tilemap>();
@@ -49,6 +54,12 @@ public class EnemyBattleAI : Move
     }
 
     //TODO!!!!!!!!!!!!!!!
+    //works but an be improved
+    /// <summary>
+    /// Moves linearly towards the actor given.
+    /// </summary>
+    /// <param name="myActor"></param>
+    /// <param name="otherActor"></param>
     protected void MoveTowardsActor(GameObject myActor, GameObject otherActor)
     {
         inMoveTowardsActor = true;
@@ -150,21 +161,21 @@ public class EnemyBattleAI : Move
         }
 
     }
+    public bool MoveTowardsActor(GameObject me, GameObject other, int steps)
+    {
+        if (isMoving || inActionCooldown || _onExit || !canMove) return true; //moving. don't try to move again
 
-    //TODO!!!!!!!!!!!!!!! HOW DO I MAKE THIS WORK AHHHHHHH
-    //public IEnumerator MoveTowardsActor(GameObject myActor, GameObject otherActor, int stepsToMove)
-    //{
-    //    if(stepsToMove > 0 && inMoveTowardsActor)
-    //    {
-    //        StartCoroutine(MoveTowardsActor(myActor, otherActor));
-    //        stepsToMove--;
-    //    }
-    //    else
-    //    {
-    //        yield return null;
-    //    }
-    //}
+        MoveTowardsActor(this.gameObject, player);
+        stepsCounter++;
+        if (stepsCounter >= steps)
+        {
+            stepsCounter = 0;
+            return false; // Done.
+        }
+        return true;
+    }
 
+    //TODO:
     //private Direction? DecideDirection(int x, int y)
     //{
     //    if (Math.Abs(x) > Math.Abs(y))
@@ -190,33 +201,73 @@ public class EnemyBattleAI : Move
     //    }
     //}
 
+        /// <summary>
+        /// Checks to see a tile is open by checking for a unit, and if it there is an obstacles tile
+        /// </summary>
+        /// <param name="target"></param>
+        /// <returns></returns>
     protected bool IsTileOpen(Vector3Int target)
     {
         if (GetUnitOccupyingTile(new Vector2(target.x, target.y)) != null) return false; //check for units
 
-        if (GetCell(groundTilemap, new Vector2(target.x, target.y)) != null) return false; //check for obstacles
+        if (GetCell(obstaclesTilemap, new Vector2(target.x, target.y)) != null) return false; //check for obstacles
 
         return true;
-
     }
 
-    protected GameObject GetUnitOccupyingTile(Vector2 cellWorldPos)
-    {
-        var col = Physics2D.OverlapCircle(cellWorldPos, 0.1f);
-        if (col == null)
-            return null;
-
-        if (col.gameObject.GetComponent<SpriteRenderer>().sortingLayerName != null &&
-            col.gameObject.GetComponent<SpriteRenderer>().sortingLayerName == "Units")
-        {
-            return col.gameObject;
-        }
-
-        return null;
-    }
 
     private TileBase GetCell(Tilemap tilemap, Vector2 cellWorldPos)
     {
         return tilemap.GetTile(tilemap.WorldToCell(cellWorldPos));
+    }
+
+    protected GameObject GetPlayerInRange(Vector3Int[] tiles)
+    {
+        var units = GetUnitsInRange(tiles);
+        var player = GetObjectInArrayWithTag(units, "Player");
+        return player;
+    }
+
+    protected GameObject[] GetUnitsInRange(Vector3Int[] tiles)
+    {
+        List<GameObject> list = new List<GameObject>();
+        foreach(var tile in tiles)
+        {
+            var targetGameObject = GetUnitOccupyingTile(new Vector2(tile.x, tile.y));
+            if(targetGameObject != null)
+            {
+                list.Add(targetGameObject);
+            }
+        }
+        return list.ToArray();
+    }
+
+    protected GameObject GetObjectInArrayWithTag(GameObject[] objs, string tag)
+    {
+        foreach(var obj in objs)
+        {
+            if (obj.tag == tag)
+            {
+                return obj;
+            }
+        }
+        return null;
+    }
+
+    protected Vector3Int[] Reposition(Vector3Int[] localPos, Vector3Int center)
+    {
+        var globalPos = new Vector3Int[localPos.Length];
+        for (int i = 0; i < localPos.Length; i++)
+        {
+            globalPos[i] = localPos[i] + center;
+        }
+        return globalPos;
+    }
+
+    protected Vector3Int ConvertV3ToV3Int(Vector3 vec)
+    {
+        return new Vector3Int(Convert.ToInt32(vec.x),
+                                Convert.ToInt32(vec.y),
+                                Convert.ToInt32(vec.z));
     }
 }
