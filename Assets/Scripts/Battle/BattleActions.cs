@@ -5,6 +5,8 @@ using UnityEngine;
 public class BattleActions : MonoBehaviour
 {
 
+    private float timeUntilDestroyIcon = 0.7f;
+
     public ActorStats Heal(int toHealBy, ActorStats targetStats)
     {
         targetStats.currentHP = targetStats.currentHP + toHealBy;
@@ -32,9 +34,26 @@ public class BattleActions : MonoBehaviour
         return targetStats;
     }
 
+    public ActorStats Attack(int toAttackBy, ActorStats targetStats, GameObject attackIcon, Vector3 posToSpawn)
+    {
+        var attackIconComp = gameObject.AddComponent<AttackIcon>();
+        attackIconComp.attackIconPrefab = attackIcon;
+        var tempIcon = attackIconComp.Spawn(posToSpawn, toAttackBy);
+
+        StartCoroutine(DestroyAfterTime(tempIcon));
+
+        return Attack(toAttackBy, targetStats);
+    }
+
     public ActorStats Move(int toMoveBy, ActorStats targetStats)
     {
         //TODO
         return targetStats;
     }
-}
+
+    protected IEnumerator DestroyAfterTime(GameObject obj)
+    {
+        yield return new WaitForSeconds(timeUntilDestroyIcon);
+        Destroy(obj);
+    }
+} 

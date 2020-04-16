@@ -8,4 +8,5 @@ public class Badge
     public string description;
     public bool isEquipped;
     public bool isAcquired;
+    //public GameObject badgeIcon;
 }
