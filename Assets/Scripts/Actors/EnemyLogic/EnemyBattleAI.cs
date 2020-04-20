@@ -46,13 +46,6 @@ public class EnemyBattleAI : Move
         }
     }
 
-    // TODO
-    //=== enemy methods ===
-    protected bool CanAttackInRange() //todo
-    {
-        return true;
-    }
-
     //TODO!!!!!!!!!!!!!!!
     //works but an be improved
     /// <summary>

@@ -17,8 +17,7 @@ public class AttackIcon : MonoBehaviour
         var textObj = icon.transform.GetChild(0).GetChild(0).gameObject;
         var text = textObj.GetComponent<Text>();
         text.text = num.ToString();
-        //var textObj = icon.transform.GetChild(0).GetChild(0).gameObject;
-        //this.gameObject.AddComponent<MorphSize>().StartMorph(1.5f, 0.25f, 2f, attackIconPrefab);
+
         return icon;
     }
 }

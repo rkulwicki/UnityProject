@@ -209,7 +209,7 @@ public class BattleManager : MonoBehaviour, IManager
             var damage = chosenAttack.damage;
             var curEnStats = currentEnemy.GetComponent<EnemyStats>();
             var playerActions = _player.GetComponent<PlayerBattleActions>();
-            playerActions.Attack(damage, curEnStats);
+            playerActions.Attack(damage, curEnStats, chosenAttack.attackIcon, currentEnemy.transform.position + new Vector3(0, 0.5f, 0));
             //****
 
             _chooseObjectWithBools.result = null; //reset the choice.

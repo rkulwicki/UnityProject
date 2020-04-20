@@ -48,7 +48,8 @@ public class DemonEnemyBattleAI : EnemyBattleAI
                 var maybePlayer = GetPlayerInRange(repositionedRange);
                 if (maybePlayer != null)
                 {
-                    enemyActions.Attack(attack.damage, maybePlayer.GetComponent<PlayerStats>(), attack.attackIcon, maybePlayer.transform.position); //attack
+                    enemyActions.Attack(attack.damage, maybePlayer.GetComponent<PlayerStats>(), attack.attackIcon, 
+                        maybePlayer.transform.position + new Vector3(0,0.5f,0)); //attack
                 }
             }
         }

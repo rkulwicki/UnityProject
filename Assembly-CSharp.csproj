@@ -64,6 +64,7 @@
   <ItemGroup>
     <Compile Include="Assets\Scripts\Actors\EnemyLogic\DemonEnemyBattleAI.cs" />
     <Compile Include="Assets\Scripts\Actors\EnemyLogic\EnemyBattleAI.cs" />
+    <Compile Include="Assets\Scripts\Actors\EnemyLogic\EnemyOutOfBattleAI.cs" />
     <Compile Include="Assets\Scripts\Actors\LineOfSight.cs" />
     <Compile Include="Assets\Scripts\Actors\Move.cs" />
     <Compile Include="Assets\Scripts\Actors\PlayerMove.cs" />
@@ -100,7 +101,7 @@
     <Compile Include="Assets\Scripts\Text\TextHolder.cs" />
     <Compile Include="Assets\Scripts\Text\TextReader.cs" />
     <Compile Include="Assets\Scripts\Text\UITextTypeWriter.cs" />
-    <Compile Include="Assets\Scripts\UI\Animations\MorphSize.cs" />
+    <Compile Include="Assets\Scripts\UI\Animations\AttackIconAnimScript.cs" />
     <Compile Include="Assets\Scripts\UI\Animations\Rotate.cs" />
     <Compile Include="Assets\Scripts\UI\Buttons\AttackListButton.cs" />
     <Compile Include="Assets\Scripts\UI\Buttons\DPadButtons.cs" />

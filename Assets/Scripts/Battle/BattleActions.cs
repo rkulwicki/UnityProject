@@ -5,7 +5,7 @@ using UnityEngine;
 public class BattleActions : MonoBehaviour
 {
 
-    private float timeUntilDestroyIcon = 0.7f;
+    private float timeUntilDestroyIcon;
 
     public ActorStats Heal(int toHealBy, ActorStats targetStats)
     {
@@ -40,8 +40,6 @@ public class BattleActions : MonoBehaviour
         attackIconComp.attackIconPrefab = attackIcon;
         var tempIcon = attackIconComp.Spawn(posToSpawn, toAttackBy);
 
-        StartCoroutine(DestroyAfterTime(tempIcon));
-
         return Attack(toAttackBy, targetStats);
     }
 
@@ -49,11 +47,5 @@ public class BattleActions : MonoBehaviour
     {
         //TODO
         return targetStats;
-    }
-
-    protected IEnumerator DestroyAfterTime(GameObject obj)
-    {
-        yield return new WaitForSeconds(timeUntilDestroyIcon);
-        Destroy(obj);
     }
 } 
