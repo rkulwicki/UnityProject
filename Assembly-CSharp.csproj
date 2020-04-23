@@ -63,8 +63,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Scripts\Actors\EnemyLogic\DemonEnemyBattleAI.cs" />
+    <Compile Include="Assets\Scripts\Actors\EnemyLogic\DemonEnemyMoveAI.cs" />
     <Compile Include="Assets\Scripts\Actors\EnemyLogic\EnemyBattleAI.cs" />
-    <Compile Include="Assets\Scripts\Actors\EnemyLogic\EnemyOutOfBattleAI.cs" />
+    <Compile Include="Assets\Scripts\Actors\EnemyLogic\EnemyMoveAI.cs" />
     <Compile Include="Assets\Scripts\Actors\LineOfSight.cs" />
     <Compile Include="Assets\Scripts\Actors\Move.cs" />
     <Compile Include="Assets\Scripts\Actors\PlayerMove.cs" />

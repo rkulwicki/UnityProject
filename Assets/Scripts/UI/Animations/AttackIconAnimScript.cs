@@ -42,10 +42,4 @@ public class AttackIconAnimScript : MonoBehaviour
         }
     }
 
-    public IEnumerator DestroyAfterTime(GameObject obj)
-    {
-        yield return new WaitForSeconds(timeUntilDelete);
-        Destroy(obj);
-    }
-
 }

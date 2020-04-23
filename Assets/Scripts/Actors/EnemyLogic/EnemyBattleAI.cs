@@ -18,17 +18,21 @@ public class EnemyBattleAI : Move
 
     protected int stepsCounter = 0;
     protected EnemyBattleActions enemyActions;
-     
+
+    protected BattleManager battleManager;
 
     protected void EnemyBattleAIStart()
     {
         enemyActions = gameObject.AddComponent<EnemyBattleActions>();
         enemyStats = gameObject.GetComponent<EnemyStats>();
+        battleManager = GameObject.FindGameObjectWithTag("BattleManager").GetComponent<BattleManager>();
         player = GameObject.FindGameObjectWithTag("Player");
         grid = GameObject.FindGameObjectWithTag("Grid");
         groundTilemap = grid.transform.Find("Floor").gameObject.GetComponent<Tilemap>();
         obstaclesTilemap = grid.transform.Find("Obstacles").gameObject.GetComponent<Tilemap>();
         inMoveTowardsActor = false;
+
+        //battle manager
     }
 
     protected void CheckDead()

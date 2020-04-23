@@ -75,7 +75,7 @@ public class Move : MonoBehaviour
             StartCoroutine(BlockedMovement(targetCell));
     }
 
-    private TileBase getCell(Tilemap tilemap, Vector2 cellWorldPos)
+    protected TileBase getCell(Tilemap tilemap, Vector2 cellWorldPos)
     {
         return tilemap.GetTile(tilemap.WorldToCell(cellWorldPos));
     }
