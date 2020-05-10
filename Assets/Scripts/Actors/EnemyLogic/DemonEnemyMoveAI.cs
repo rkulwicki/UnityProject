@@ -25,13 +25,13 @@ public class DemonEnemyMoveAI : EnemyMoveAI
             co = StartCoroutine(Wait(Convert.ToSingle(rand)));
 
         }
-        else
-        {
-            if (co != null && battleManager.state != BattleState.INACTIVE)
-            {
-                StopCoroutine(co);
-            }
-        }
+        //else
+        //{
+        //    if (co != null && battleManager.state != BattleState.INACTIVE)
+        //    {
+        //        StopCoroutine(co);
+        //    }
+        //}
         
 
     }
