@@ -3130,7 +3130,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6412142806429601123}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1, y: 0, z: 0}
+  m_LocalPosition: {x: -2, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 6412142806747416993}
@@ -3204,6 +3204,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7efd4f4b3b9af274ea2b4bd79df667b3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  timeToWaitAfterTriggered: 2
   battleManager: {fileID: 0}
   enemiesInvolved: []
   playersInvolved: []
@@ -3211,6 +3212,7 @@ MonoBehaviour:
   enemyAccompanyRadius: 0
   enemyStats: {fileID: 0}
   triggered: 0
+  actorsAreStoped: 0
 --- !u!61 &6412142806747416995
 BoxCollider2D:
   m_ObjectHideFlags: 0

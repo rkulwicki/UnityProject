@@ -14,26 +14,13 @@ public class DemonEnemyMoveAI : EnemyMoveAI
     // Update is called once per frame
     void Update()
     {
-        //TODO:
-        //Works ONLY when up against a wall... Why???
-
         if (battleManager.state == BattleState.INACTIVE && !waiting) //move if not battle or not waiting
         {
-
             var rnd = new System.Random();
             var rand = (rnd.NextDouble() * (randUp - randLow)) + randLow;
             co = StartCoroutine(Wait(Convert.ToSingle(rand)));
 
         }
-        //else
-        //{
-        //    if (co != null && battleManager.state != BattleState.INACTIVE)
-        //    {
-        //        StopCoroutine(co);
-        //    }
-        //}
-        
-
     }
 
     public IEnumerator Wait(float time)

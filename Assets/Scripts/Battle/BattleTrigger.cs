@@ -8,6 +8,8 @@ using UnityEngine;
 
 public class BattleTrigger : MonoBehaviour
 {
+    public float timeToWaitAfterTriggered;
+
     public GameObject battleManager;
 
     public GameObject[] enemiesInvolved;
@@ -18,7 +20,7 @@ public class BattleTrigger : MonoBehaviour
 
     public EnemyStats enemyStats;
 
-    public bool triggered; //REEEEEEEEEEEE!!!
+    public bool triggered, actorsAreStoped; 
 
     private GameObject _player;
     private GameObject _partner;
@@ -26,39 +28,63 @@ public class BattleTrigger : MonoBehaviour
     private string[] _tagsToIgnore;
     private GameObject _playerBattleActionHud;
     private GameObject _tileManager;
+
+    protected EnemyMoveAI moveScript;
+    //isBattle
+
     private void Start()
     {
         _tagsGlobal = gameObject.AddComponent<TagsGlobal>();
         _tagsToIgnore = _tagsGlobal.tagsToIgnoreInBattle;
         enemyStats = gameObject.GetComponentInParent<EnemyStats>(); //get stats from 
         _tileManager = GameObject.FindGameObjectWithTag("TileManager");
-        //_playerBattleActionHud = ;
-        //string[] tagsToIgnore = global list of tags to ignore.
 
+        moveScript = gameObject.GetComponentInParent<EnemyMoveAI>();
+
+        battleManager = GameObject.FindGameObjectWithTag("BattleManager");
+
+    }
+
+    private void Update()
+    {
+        //move on trigger enter to here
+        if (triggered) //stop actors movement
+        {
+            moveScript.enabled = false;
+
+            battleManager.GetComponent<BattleManager>().state = BattleState.BEFORESTART; //set to start
+
+            //wait for time for a time so it doesn't mess up the battle manager for some reason.
+            StartCoroutine(Wait(timeToWaitAfterTriggered));
+            triggered = false;
+        }
+
+        if (actorsAreStoped) //set up battle manager
+        {
+            enemiesInvolved = GetObjectsInTiles(new string[1] { "Enemy" }, enemyStats.battleArea) //here is the problem. No "Enemies Involved"
+
+            var thisEnemy = gameObject.transform.parent.gameObject;
+            battleManager.GetComponent<BattleManager>().initiatedEnemy = thisEnemy; //this is the initiated enemy.
+            playersInvolved = GetPlayerAndPartner();
+            battleManager.GetComponent<BattleManager>().playersInvolved = playersInvolved;
+
+            battleManager.GetComponent<BattleManager>().enemiesInvolved = enemiesInvolved;
+
+            battleManager.GetComponent<BattleManager>().state = BattleState.START; //set to start
+
+            actorsAreStoped = false;
+        }
     }
 
     void OnTriggerEnter2D(Collider2D col)
     {
-        if (col.tag == "Player")
-        {
-            // maybe todo? vvvvv
-            //_playerBattleActionHud.GetComponent<PlayerBattleActionsHudScript>().StartState();
-
-            SetUpBattleManager();
-            enemiesInvolved = GetObjectsInTiles(new string[1]{"Enemy"}, enemyStats.battleArea);
-
-            battleManager.GetComponent<BattleManager>().enemiesInvolved = enemiesInvolved;
-        }
+        if (col.tag == "Player") triggered = true;
     }
 
-    private void SetUpBattleManager()
+    private IEnumerator Wait(float time)
     {
-        battleManager = GameObject.FindGameObjectWithTag("BattleManager");
-        battleManager.GetComponent<BattleManager>().state = BattleState.START; //set to start
-        var thisEnemy = gameObject.transform.parent.gameObject;
-        battleManager.GetComponent<BattleManager>().initiatedEnemy = thisEnemy; //this is the initiated enemy.
-        playersInvolved = GetPlayerAndPartner();
-        battleManager.GetComponent<BattleManager>().playersInvolved = playersInvolved;
+        yield return new WaitForSeconds(time);
+        actorsAreStoped = true;
     }
 
     private GameObject[] GetPlayerAndPartner()    

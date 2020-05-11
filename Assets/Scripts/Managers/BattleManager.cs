@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
-public enum BattleState { INACTIVE, START, PLAYERTURN, ENEMYTURN, WON, LOST }
+public enum BattleState { INACTIVE, BEFORESTART, START, PLAYERTURN, ENEMYTURN, WON, LOST }
 public class BattleManager : MonoBehaviour, IManager
 {
     public int turnNumber, blocksLeftToMove;
