@@ -61,8 +61,17 @@ public class BattleTrigger : MonoBehaviour
 
         if (actorsAreStoped) //set up battle manager
         {
-            enemiesInvolved = GetObjectsInTiles(new string[1] { "Enemy" }, enemyStats.battleArea) //here is the problem. No "Enemies Involved"
+            enemiesInvolved = GetObjectsInTiles(new string[1] { "Enemy" }, enemyStats.GetRelativeBattleArea()); //here is the problem. No "Enemies Involved"
+            
 
+
+            //============================test
+            //enemiesInvolved = new GameObject[1] { this.gameObject.transform.parent.gameObject };
+            
+            
+            
+            
+            
             var thisEnemy = gameObject.transform.parent.gameObject;
             battleManager.GetComponent<BattleManager>().initiatedEnemy = thisEnemy; //this is the initiated enemy.
             playersInvolved = GetPlayerAndPartner();
@@ -173,6 +182,35 @@ public class BattleTrigger : MonoBehaviour
                                                 Convert.ToInt32(allWithTag[i].transform.position.y),
                                                 Convert.ToInt32(allWithTag[i].transform.position.z));
                 foreach (var tile in tiles) {
+                    if (posRounded == tile)
+                    {
+                        list.Add(allWithTag[i]);
+                    }
+                }
+            }
+        }
+        return list.ToArray();
+    }
+    /// <summary>
+    /// Freeze movement of objects and rounds their position to nearest Int.
+    /// </summary>
+    /// <param name="tags"></param>
+    /// <param name="tiles"></param>
+    /// <returns></returns>
+    public GameObject[] StopActorsMovement(string[] tags, Vector3Int[] tiles)
+    {
+        List<GameObject> list = new List<GameObject>();
+        foreach (var tag in tags)
+        {
+            var allWithTag = GameObject.FindGameObjectsWithTag(tag); //gets all objects but we only want ones so far away
+
+            for (int i = 0; i < allWithTag.Length; i++)
+            {
+                var posRounded = new Vector3Int(Convert.ToInt32(allWithTag[i].transform.position.x),
+                                                Convert.ToInt32(allWithTag[i].transform.position.y),
+                                                Convert.ToInt32(allWithTag[i].transform.position.z));
+                foreach (var tile in tiles)
+                {
                     if (posRounded == tile)
                     {
                         list.Add(allWithTag[i]);
