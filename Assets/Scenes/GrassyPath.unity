@@ -520,6 +520,11 @@ PrefabInstance:
       propertyPath: obstaclesTilemap
       value: 
       objectReference: {fileID: 3057343201839641908}
+    - target: {fileID: 1455746436243949095, guid: 6a95f9cdd01b4ec468194b877d61b03c,
+        type: 3}
+      propertyPath: outOfBattleMoveSpeed
+      value: 3
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6a95f9cdd01b4ec468194b877d61b03c, type: 3}
 --- !u!1 &3057343201839641899
@@ -3555,7 +3560,7 @@ Tilemap:
     second:
       serializedVersion: 2
       m_TileIndex: 0
-      m_TileSpriteIndex: 0
+      m_TileSpriteIndex: 15
       m_TileMatrixIndex: 0
       m_TileColorIndex: 0
       m_TileObjectToInstantiateIndex: 65535
@@ -5440,8 +5445,8 @@ Tilemap:
   - m_RefCount: 0
     m_Data: {fileID: 0}
   m_TileSpriteArray:
-  - m_RefCount: 1
-    m_Data: {fileID: 21300000, guid: 4a86294cf1cecc3408bf977f9f4a3326, type: 3}
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
   - m_RefCount: 2
     m_Data: {fileID: 21300000, guid: aaa3161f0e1daf34795d1e9ef69e4db6, type: 3}
   - m_RefCount: 2
@@ -5470,8 +5475,8 @@ Tilemap:
     m_Data: {fileID: 21300000, guid: c4caad4a701efdf46a1a58da408b45ab, type: 3}
   - m_RefCount: 8
     m_Data: {fileID: 21300000, guid: f9f387b02eb276f498f544fefbb9d5c4, type: 3}
-  - m_RefCount: 0
-    m_Data: {fileID: 0}
+  - m_RefCount: 1
+    m_Data: {fileID: 21300000, guid: 4a86294cf1cecc3408bf977f9f4a3326, type: 3}
   m_TileMatrixArray:
   - m_RefCount: 306
     m_Data:
@@ -5714,6 +5719,7 @@ MonoBehaviour:
   moveCoolDown: 0.15
   inMoveOneTile: 1
   canMove: 1
+  outOfBattleMoveSpeed: 1
   moved: 0
   grid: {fileID: 0}
   groundTilemap: {fileID: 0}
@@ -5816,6 +5822,7 @@ MonoBehaviour:
   moveCoolDown: 0.15
   inMoveOneTile: 1
   canMove: 1
+  outOfBattleMoveSpeed: 1
   moved: 0
   grid: {fileID: 0}
   groundTilemap: {fileID: 0}

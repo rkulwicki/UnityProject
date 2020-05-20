@@ -5,22 +5,41 @@ using UnityEngine.Tilemaps;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using TMPro;
+using System;
 
-public class PlayerMove :Move
+public class PlayerMove : Move
 {
     public bool isKeyboardMovement;
     private DPadGlobal _DPadGlobal;
     private PlayerStats _playerStats;
+
+    private BattleManager _bm;
+    private bool _flag;
     void Start()
     {
+        _bm = GameObject.FindGameObjectWithTag("BattleManager").GetComponent<BattleManager>();
         moved = 1;
         _DPadGlobal = GameObject.FindGameObjectWithTag("GlobalInputs").GetComponent<DPadGlobal>();
         isKeyboardMovement = false;
         _playerStats = gameObject.GetComponent<PlayerStats>();
+        _flag = true;
     }
 
     void Update()
     {
+        OutOfBattleMove(); //if out of battle
+
+        //Listener
+        if (_bm.state != BattleState.INACTIVE && _flag)
+        {
+            SmoothPositionToTile(1);
+            _flag = false;
+        }
+        if(_bm.state == BattleState.INACTIVE)
+        {
+            _flag = true;
+        }
+
         //We do nothing if the player is still moving.
         if (isMoving || inActionCooldown || _onExit || !canMove) return;
 
@@ -41,7 +60,27 @@ public class PlayerMove :Move
         {
             horizontal = (int)(Input.GetAxisRaw("Horizontal"));
             vertical = (int)(Input.GetAxisRaw("Vertical"));
-            //todo basically impliment move one tile
         }
+    }
+
+    private void OutOfBattleMove()
+    {
+        if(_bm.state == BattleState.INACTIVE)
+        {
+            //if tile is obstacle then can't move
+
+            MoveUp();
+            MoveDown();
+            MoveRight();
+            MoveLeft();
+        }
+    }
+
+    private void SmoothPositionToTile(float time)
+    {
+        var v3int = new Vector3Int(Convert.ToInt32(transform.position.x),
+                                Convert.ToInt32(transform.position.y),
+                                Convert.ToInt32(transform.position.z));
+        Vector3.MoveTowards(transform.position, v3int, time);
     }
 }

@@ -11,6 +11,8 @@ public class Move : MonoBehaviour
     public bool inMoveOneTile = true;
     public bool canMove = true;
 
+    public float outOfBattleMoveSpeed = 1;
+
     public int moved;
 
     public GameObject grid;
@@ -164,5 +166,39 @@ public class Move : MonoBehaviour
         }
 
         isMoving = false;
+    }
+
+    protected void MoveUp()
+    {
+
+        if (Input.GetKey("up"))//Press up arrow key to move forward on the Y AXIS
+        {
+            transform.Translate(0, outOfBattleMoveSpeed * Time.deltaTime, 0);
+        }
+
+    }
+
+    protected void MoveDown()
+    {
+        if (Input.GetKey("down"))//Press up arrow key to move forward on the Y AXIS
+        {
+            transform.Translate(0, -outOfBattleMoveSpeed * Time.deltaTime, 0);
+        }
+    }
+
+    protected void MoveRight()
+    {
+        if (Input.GetKey("right"))//Press up arrow key to move forward on the Y AXIS
+        {
+            transform.Translate(outOfBattleMoveSpeed * Time.deltaTime, 0, 0);
+        }
+    }
+
+    protected void MoveLeft()
+    {
+        if (Input.GetKey("left"))//Press up arrow key to move forward on the Y AXIS
+        {
+            transform.Translate(-outOfBattleMoveSpeed * Time.deltaTime, 0, 0);
+        }
     }
 }
