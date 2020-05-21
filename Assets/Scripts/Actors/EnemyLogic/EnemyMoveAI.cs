@@ -55,7 +55,7 @@ public class EnemyMoveAI : Move
             else if (dir == Direction.LEFT) targetCell = startCell + new Vector2(-1, 0);
 
             bool hasObstacleTile = getCell(obstaclesTilemap, targetCell) != null; //if target Tile has an obstacle
-            Debug.Log(dir.ToString() + " " + hasObstacleTile.ToString());
+            //Debug.Log(dir.ToString() + " " + hasObstacleTile.ToString());
             if (!hasObstacleTile)
             {
                 list.Add(dir);

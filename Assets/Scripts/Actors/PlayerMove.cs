@@ -15,8 +15,12 @@ public class PlayerMove : Move
 
     private BattleManager _bm;
     private bool _flag;
+
+    private CapsuleCollider2D _cap2D;
+
     void Start()
     {
+        _cap2D = gameObject.GetComponent<CapsuleCollider2D>();
         _bm = GameObject.FindGameObjectWithTag("BattleManager").GetComponent<BattleManager>();
         moved = 1;
         _DPadGlobal = GameObject.FindGameObjectWithTag("GlobalInputs").GetComponent<DPadGlobal>();
@@ -32,7 +36,12 @@ public class PlayerMove : Move
         //Listener
         if (_bm.state != BattleState.INACTIVE && _flag)
         {
-            SmoothPositionToTile(1);
+            _cap2D.enabled = false;
+
+            var v3int = new Vector3Int(Convert.ToInt32(this.transform.position.x),
+                Convert.ToInt32(this.transform.position.y),
+                Convert.ToInt32(this.transform.position.z));
+            StartCoroutine(MoveOverSpeed(this.gameObject, v3int, 3));
             _flag = false;
         }
         if(_bm.state == BattleState.INACTIVE)
@@ -65,10 +74,9 @@ public class PlayerMove : Move
 
     private void OutOfBattleMove()
     {
-        if(_bm.state == BattleState.INACTIVE)
+        if (_bm.state == BattleState.INACTIVE)
         {
-            //if tile is obstacle then can't move
-
+            _cap2D.enabled = true;
             MoveUp();
             MoveDown();
             MoveRight();
@@ -76,11 +84,9 @@ public class PlayerMove : Move
         }
     }
 
-    private void SmoothPositionToTile(float time)
+    void OnCollisionEnter2D(Collision2D collision)
     {
-        var v3int = new Vector3Int(Convert.ToInt32(transform.position.x),
-                                Convert.ToInt32(transform.position.y),
-                                Convert.ToInt32(transform.position.z));
-        Vector3.MoveTowards(transform.position, v3int, time);
+        //if (collision.gameObject.name == "Obstacles")
+            Debug.Log("hit obstacles");
     }
 }
