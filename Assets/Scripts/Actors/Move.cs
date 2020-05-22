@@ -19,6 +19,10 @@ public class Move : MonoBehaviour
     public Tilemap groundTilemap;
     public Tilemap obstaclesTilemap;
 
+    //test
+    public Tilemap[] obstaclesTilemaps;
+    //test
+
     protected bool inActionCooldown, _onExit = false;
     public bool isMoving;
 
@@ -58,8 +62,14 @@ public class Move : MonoBehaviour
 
         bool isOnGround = getCell(groundTilemap, startCell) != null; //If the player is on the ground
         bool hasGroundTile = getCell(groundTilemap, targetCell) != null; //If target Tile has a ground
-        bool hasObstacleTile = getCell(obstaclesTilemap, targetCell) != null; //if target Tile has an obstacle
+        bool hasObstacleTile = false; //if target Tile has an obstacle
         bool hasUnitsTile = GetUnitOccupyingTile(targetCell) != null; //if target Tile has a unit
+
+        foreach (var obstaclesTilemap in obstaclesTilemaps)
+        {
+            if (getCell(obstaclesTilemap, targetCell) != null)
+                hasObstacleTile = true;
+        }
 
         //If the player starts their movement from a ground tile.
         if (isOnGround)

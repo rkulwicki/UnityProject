@@ -6,6 +6,7 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using TMPro;
 using System;
+using static TilemapFunctions;
 
 public class PlayerMove : Move
 {
@@ -27,6 +28,9 @@ public class PlayerMove : Move
         isKeyboardMovement = false;
         _playerStats = gameObject.GetComponent<PlayerStats>();
         _flag = true;
+        //test
+        obstaclesTilemaps = GetObstaclesTileMaps();
+        //test
     }
 
     void Update()

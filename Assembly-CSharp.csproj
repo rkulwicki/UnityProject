@@ -104,6 +104,7 @@
     <Compile Include="Assets\Scripts\Text\TextHolder.cs" />
     <Compile Include="Assets\Scripts\Text\TextReader.cs" />
     <Compile Include="Assets\Scripts\Text\UITextTypeWriter.cs" />
+    <Compile Include="Assets\Scripts\TilemapFunctions.cs" />
     <Compile Include="Assets\Scripts\UI\Animations\AttackIconAnimScript.cs" />
     <Compile Include="Assets\Scripts\UI\Animations\Rotate.cs" />
     <Compile Include="Assets\Scripts\UI\Buttons\AttackListButton.cs" />
