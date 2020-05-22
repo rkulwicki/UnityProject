@@ -28,9 +28,7 @@ public class PlayerMove : Move
         isKeyboardMovement = false;
         _playerStats = gameObject.GetComponent<PlayerStats>();
         _flag = true;
-        //test
         obstaclesTilemaps = GetObstaclesTileMaps();
-        //test
     }
 
     void Update()
@@ -90,7 +88,6 @@ public class PlayerMove : Move
 
     void OnCollisionEnter2D(Collision2D collision)
     {
-        //if (collision.gameObject.name == "Obstacles")
-            Debug.Log("hit obstacles");
+    
     }
 }

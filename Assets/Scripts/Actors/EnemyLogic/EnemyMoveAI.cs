@@ -3,6 +3,7 @@ using System.Collections;
 using UnityEngine.Tilemaps;
 using System;
 using System.Collections.Generic;
+using static TilemapFunctions;
 
 //todo inhearit 
 //using Actors.Move;
@@ -30,7 +31,9 @@ public class EnemyMoveAI : Move
         player = GameObject.FindGameObjectWithTag("Player");
         grid = GameObject.FindGameObjectWithTag("Grid");
         groundTilemap = grid.transform.Find("Floor").gameObject.GetComponent<Tilemap>();
-        obstaclesTilemap = grid.transform.Find("Obstacles").gameObject.GetComponent<Tilemap>();
+
+        obstaclesTilemaps = GetObstaclesTileMaps();
+
         inMoveTowardsActor = false;
     }
 
@@ -54,7 +57,14 @@ public class EnemyMoveAI : Move
             else if (dir == Direction.DOWN) targetCell = startCell + new Vector2(0, -1);
             else if (dir == Direction.LEFT) targetCell = startCell + new Vector2(-1, 0);
 
-            bool hasObstacleTile = getCell(obstaclesTilemap, targetCell) != null; //if target Tile has an obstacle
+            //check for obstacles
+            bool hasObstacleTile = false;
+            foreach (var obstaclesTilemap in obstaclesTilemaps)
+            {
+                if(getCell(obstaclesTilemap, targetCell) != null)
+                    hasObstacleTile = true;
+            }
+
             //Debug.Log(dir.ToString() + " " + hasObstacleTile.ToString());
             if (!hasObstacleTile)
             {

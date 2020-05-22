@@ -92,7 +92,6 @@
     <Compile Include="Assets\Scripts\Global\PlayerBattleGlobal.cs" />
     <Compile Include="Assets\Scripts\Global\TagsGlobal.cs" />
     <Compile Include="Assets\Scripts\Global\TextBoxGlobal.cs" />
-    <Compile Include="Assets\Scripts\HighlightBlocks.cs" />
     <Compile Include="Assets\Scripts\Managers\BattleManager.cs" />
     <Compile Include="Assets\Scripts\Managers\HudsManager.cs" />
     <Compile Include="Assets\Scripts\Managers\IManager.cs" />

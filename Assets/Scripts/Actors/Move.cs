@@ -17,11 +17,8 @@ public class Move : MonoBehaviour
 
     public GameObject grid;
     public Tilemap groundTilemap;
-    public Tilemap obstaclesTilemap;
 
-    //test
     public Tilemap[] obstaclesTilemaps;
-    //test
 
     protected bool inActionCooldown, _onExit = false;
     public bool isMoving;

@@ -11,10 +11,6 @@ public class BattleManager : MonoBehaviour, IManager
     
     public GameObject selectorPrefab;
 
-    public GameObject grid;
-    public GameObject tilemapFloor;
-    public GameObject tilemapObstacles;
-
     public GameObject[] playersInvolved;
     public GameObject[] enemiesInvolved;
 
@@ -420,7 +416,7 @@ public class BattleManager : MonoBehaviour, IManager
         _hudsManager.GetComponent<HudsManager>().battleHudActive = false;
         _hudsManager.GetComponent<HudsManager>().playerBattleActionHudActive = false;
 
-        _tileManager.GetComponent<TileManager>().RemoveTilesObstacles(_battleBoundaryTilesLocations); //delete boundary tiles
+        _tileManager.GetComponent<TileManager>().RemoveTilesObstacles99(_battleBoundaryTilesLocations); //delete boundary tiles
         _player.GetComponent<PlayerMove>().canMove = true;
         state = BattleState.INACTIVE;
         turnNumber = 0;

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using static TilemapFunctions;
 
 public class TileManager : MonoBehaviour, IManager
 {
@@ -15,8 +16,10 @@ public class TileManager : MonoBehaviour, IManager
     public Tile tile;
     public Tile[] tiles;
     public Tilemap tilemapFloor;
-    public Tilemap tilemapObstacles;
+    public Tilemap obstaclesTilemap99;
     public Tilemap tilemapCarpet;
+
+    public Tilemap[] obstaclesTilemaps;
 
     public Tile highlightTile;
     //public Vector2Int center;
@@ -26,8 +29,10 @@ public class TileManager : MonoBehaviour, IManager
         //get gid, floor, and obstacles
         grid = GameObject.FindGameObjectWithTag("Grid");
         tilemapFloor = grid.transform.Find("Floor").gameObject.GetComponent<Tilemap>();
-        tilemapObstacles = grid.transform.Find("Obstacles").gameObject.GetComponent<Tilemap>();
+        obstaclesTilemap99 = grid.transform.Find("Obstacles99").gameObject.GetComponent<Tilemap>();
         tilemapCarpet = grid.transform.Find("Carpet").gameObject.GetComponent<Tilemap>();
+
+        obstaclesTilemaps = GetObstaclesTileMaps();
     }
 
     public void HighlightTiles(Vector3Int[] locs)
@@ -91,25 +96,29 @@ public class TileManager : MonoBehaviour, IManager
         List<Vector3Int> list = new List<Vector3Int>();
         foreach(var tile in v3TileLocations)
         {
-            if (!tilemapObstacles.HasTile(tile))
-                list.Add(tile);
+            foreach(var obstaclesTilemap in obstaclesTilemaps)
+            {
+                if (!obstaclesTilemap.HasTile(tile))
+                    list.Add(tile);
+            }
         }
         var locs = list.ToArray();
-        tilemapObstacles.SetTiles(locs, firstTileCopied);
+        obstaclesTilemap99.SetTiles(locs, firstTileCopied); //todo - set tiles where the battle is going, 
+                        //or set them to the highest obstacles tilemap to make sure you can't cross them.
         return locs;
 
     }
 
 
     /// <summary>
-    /// Removes tiles under the obstacles tilemap. 
+    /// Removes tiles under the obstacles99 tilemap. 
     /// </summary>
     /// <param name="tileLocations"></param>
-    public void RemoveTilesObstacles(Vector3Int[] tileLocations)
+    public void RemoveTilesObstacles99(Vector3Int[] tileLocations)
     {
         foreach (var tileLocation in tileLocations)
         {
-            tilemapObstacles.SetTile(tileLocation, null);
+            obstaclesTilemap99.SetTile(tileLocation, null);
         }
     }
 
@@ -227,7 +236,13 @@ public class TileManager : MonoBehaviour, IManager
         List<Vector3Int> listPos = new List<Vector3Int>();
         foreach (var pos in positions)
         {
-            if (!tilemapObstacles.HasTile(pos))
+            bool addPos = true;
+            foreach (var obstaclesTilemap in obstaclesTilemaps)
+            {
+                if (obstaclesTilemap.HasTile(pos))
+                    addPos = false;
+            }
+            if (addPos)
                 listPos.Add(pos);
         }
 
@@ -238,7 +253,7 @@ public class TileManager : MonoBehaviour, IManager
             tiles[i] = tile;
         }
         //TODO!!!
-        tilemapObstacles.SetTiles(newPosArray, tiles);
+        obstaclesTilemap99.SetTiles(newPosArray, tiles);
         return newPosArray;
     }
 

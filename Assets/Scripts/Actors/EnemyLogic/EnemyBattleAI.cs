@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using static TilemapFunctions;
 
 public class EnemyBattleAI : Move
 {
@@ -29,10 +30,9 @@ public class EnemyBattleAI : Move
         player = GameObject.FindGameObjectWithTag("Player");
         grid = GameObject.FindGameObjectWithTag("Grid");
         groundTilemap = grid.transform.Find("Floor").gameObject.GetComponent<Tilemap>();
-        obstaclesTilemap = grid.transform.Find("Obstacles").gameObject.GetComponent<Tilemap>();
         inMoveTowardsActor = false;
 
-        //battle manager
+        obstaclesTilemaps = GetObstaclesTileMaps();
     }
 
     protected void CheckDead()
@@ -44,7 +44,7 @@ public class EnemyBattleAI : Move
             //remove from enemiesInvolved array
             var battleManager = GameObject.FindGameObjectWithTag("BattleManager");
             var enemiesInvolved = battleManager.GetComponent<BattleManager>().enemiesInvolved;
-            System.Collections.Generic.List<GameObject> list = new System.Collections.Generic.List<GameObject>(enemiesInvolved);
+            List<GameObject> list = new List<GameObject>(enemiesInvolved);
             list.Remove(gameObject);
             battleManager.GetComponent<BattleManager>().enemiesInvolved = list.ToArray();
         }
@@ -207,7 +207,11 @@ public class EnemyBattleAI : Move
     {
         if (GetUnitOccupyingTile(new Vector2(target.x, target.y)) != null) return false; //check for units
 
-        if (GetCell(obstaclesTilemap, new Vector2(target.x, target.y)) != null) return false; //check for obstacles
+        //check for obstacles
+        foreach (var obstaclesTilemap in obstaclesTilemaps)
+        {
+            if (GetCell(obstaclesTilemap, new Vector2(target.x, target.y)) != null) return false;
+        }
 
         return true;
     }
