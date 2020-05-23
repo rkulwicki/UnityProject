@@ -28,7 +28,9 @@ public class PlayerMove : Move
         isKeyboardMovement = false;
         _playerStats = gameObject.GetComponent<PlayerStats>();
         _flag = true;
+
         obstaclesTilemaps = GetObstaclesTileMaps();
+        floorTilemaps = GetFloorTileMaps();
     }
 
     void Update()

@@ -15,24 +15,23 @@ public class TileManager : MonoBehaviour, IManager
 
     public Tile tile;
     public Tile[] tiles;
-    public Tilemap tilemapFloor;
-    public Tilemap obstaclesTilemap99;
-    public Tilemap tilemapCarpet;
+    public Tilemap obstaclesTilemap99, carpetTilemap99;
 
     public Tilemap[] obstaclesTilemaps;
+    public Tilemap[] floorTilemaps;
+    public Tilemap[] carpetTilemaps;
 
     public Tile highlightTile;
-    //public Vector2Int center;
-    //public int size;
+
     private void Start()
     {
-        //get gid, floor, and obstacles
         grid = GameObject.FindGameObjectWithTag("Grid");
-        tilemapFloor = grid.transform.Find("Floor").gameObject.GetComponent<Tilemap>();
         obstaclesTilemap99 = grid.transform.Find("Obstacles99").gameObject.GetComponent<Tilemap>();
-        tilemapCarpet = grid.transform.Find("Carpet").gameObject.GetComponent<Tilemap>();
+        carpetTilemap99 = grid.transform.Find("Carpet99").gameObject.GetComponent<Tilemap>();
 
+        carpetTilemaps = GetCarpetTileMaps();
         obstaclesTilemaps = GetObstaclesTileMaps();
+        floorTilemaps = GetFloorTileMaps();
     }
 
     public void HighlightTiles(Vector3Int[] locs)
@@ -42,7 +41,7 @@ public class TileManager : MonoBehaviour, IManager
         {
             tempTiles[i] = highlightTile;
         }
-        tilemapCarpet.SetTiles(locs, tempTiles);
+        carpetTilemap99.SetTiles(locs, tempTiles);
     }
 
     /// <summary>
@@ -122,11 +121,11 @@ public class TileManager : MonoBehaviour, IManager
         }
     }
 
-    public void RemoveTilesCarpet(Vector3Int[] tileLocations)
+    public void RemoveTilesCarpet99(Vector3Int[] tileLocations)
     {
         foreach (var tileLocation in tileLocations)
         {
-            tilemapCarpet.SetTile(tileLocation, null);
+            carpetTilemap99.SetTile(tileLocation, null);
         }
     }
 

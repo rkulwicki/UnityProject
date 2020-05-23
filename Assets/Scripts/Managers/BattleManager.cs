@@ -154,7 +154,7 @@ public class BattleManager : MonoBehaviour, IManager
         if(_hudsManager.GetComponent<HudsManager>().playerBattleActionHudActive == true &&
             _highlightedArea != null && _highlightedArea.Length > 0)
         {
-            _tileManager.GetComponent<TileManager>().RemoveTilesCarpet(_highlightedArea);
+            _tileManager.GetComponent<TileManager>().RemoveTilesCarpet99(_highlightedArea);
         }
 
         //=== B Button, back ===
@@ -410,7 +410,7 @@ public class BattleManager : MonoBehaviour, IManager
     public void BattleOver()
     {
         if (_highlightedArea != null && _highlightedArea.Length > 0)
-            _tileManager.GetComponent<TileManager>().RemoveTilesCarpet(_highlightedArea);
+            _tileManager.GetComponent<TileManager>().RemoveTilesCarpet99(_highlightedArea);
         
         _hudsManager.GetComponent<HudsManager>().playerMiniStatsHudActive = false;
         _hudsManager.GetComponent<HudsManager>().battleHudActive = false;

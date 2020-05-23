@@ -3015,7 +3015,7 @@ TilemapRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -994173003
   m_SortingLayer: 2
-  m_SortingOrder: 0
+  m_SortingOrder: 99
   m_ChunkSize: {x: 32, y: 32, z: 32}
   m_ChunkCullingBounds: {x: 0, y: 0, z: 0}
   m_MaxChunkCount: 16
@@ -3134,7 +3134,7 @@ GameObject:
   - component: {fileID: 3057343203032112233}
   - component: {fileID: 3057343203032112232}
   m_Layer: 0
-  m_Name: Carpet
+  m_Name: Carpet99
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6308,8 +6308,8 @@ MonoBehaviour:
   outOfBattleMoveSpeed: 1
   moved: 0
   grid: {fileID: 0}
-  groundTilemap: {fileID: 0}
   obstaclesTilemaps: []
+  floorTilemaps: []
   isMoving: 0
   beginLogic: 0
   beginTurn: 0
@@ -6411,8 +6411,8 @@ MonoBehaviour:
   outOfBattleMoveSpeed: 1
   moved: 0
   grid: {fileID: 0}
-  groundTilemap: {fileID: 0}
   obstaclesTilemaps: []
+  floorTilemaps: []
   isMoving: 0
   isBattle: 0
   randLow: 0.5

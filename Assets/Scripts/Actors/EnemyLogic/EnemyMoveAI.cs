@@ -30,9 +30,9 @@ public class EnemyMoveAI : Move
         enemyStats = gameObject.GetComponent<EnemyStats>();
         player = GameObject.FindGameObjectWithTag("Player");
         grid = GameObject.FindGameObjectWithTag("Grid");
-        groundTilemap = grid.transform.Find("Floor").gameObject.GetComponent<Tilemap>();
 
         obstaclesTilemaps = GetObstaclesTileMaps();
+        floorTilemaps = GetFloorTileMaps();
 
         inMoveTowardsActor = false;
     }

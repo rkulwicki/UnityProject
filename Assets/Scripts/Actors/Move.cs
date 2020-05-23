@@ -16,10 +16,11 @@ public class Move : MonoBehaviour
     public int moved;
 
     public GameObject grid;
-    public Tilemap groundTilemap;
+    //public Tilemap groundTilemap;
 
     public Tilemap[] obstaclesTilemaps;
-
+    public Tilemap[] floorTilemaps;
+ 
     protected bool inActionCooldown, _onExit = false;
     public bool isMoving;
 
@@ -57,10 +58,22 @@ public class Move : MonoBehaviour
         Vector2 startCell = transform.position;
         Vector2 targetCell = startCell + new Vector2(xDir, yDir);
 
-        bool isOnGround = getCell(groundTilemap, startCell) != null; //If the player is on the ground
-        bool hasGroundTile = getCell(groundTilemap, targetCell) != null; //If target Tile has a ground
+        bool isOnGround = false; //If the player is on the ground
+        bool hasFloorTile = false; //If target Tile has a ground
         bool hasObstacleTile = false; //if target Tile has an obstacle
         bool hasUnitsTile = GetUnitOccupyingTile(targetCell) != null; //if target Tile has a unit
+
+        foreach(var floorTilemap in floorTilemaps)
+        {
+            if (getCell(floorTilemap, startCell) != null)
+                isOnGround = true;
+        }
+
+        foreach (var floorTilemap in floorTilemaps)
+        {
+            if (getCell(floorTilemap, targetCell) != null)
+                hasFloorTile = true;
+        }
 
         foreach (var obstaclesTilemap in obstaclesTilemaps)
         {
@@ -73,7 +86,7 @@ public class Move : MonoBehaviour
         {
 
             //If the front tile is a walkable ground tile, the player moves here.
-            if (hasGroundTile && !hasObstacleTile && !hasUnitsTile)
+            if (hasFloorTile && !hasObstacleTile && !hasUnitsTile)
             {
                 StartCoroutine(SmoothMovement(targetCell));
             }

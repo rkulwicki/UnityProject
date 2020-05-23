@@ -29,10 +29,10 @@ public class EnemyBattleAI : Move
         battleManager = GameObject.FindGameObjectWithTag("BattleManager").GetComponent<BattleManager>();
         player = GameObject.FindGameObjectWithTag("Player");
         grid = GameObject.FindGameObjectWithTag("Grid");
-        groundTilemap = grid.transform.Find("Floor").gameObject.GetComponent<Tilemap>();
         inMoveTowardsActor = false;
 
         obstaclesTilemaps = GetObstaclesTileMaps();
+        floorTilemaps = GetFloorTileMaps();
     }
 
     protected void CheckDead()
