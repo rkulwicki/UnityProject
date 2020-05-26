@@ -63,6 +63,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Jump.cs" />
     <Compile Include="Assets\Scripts\Actors\EnemyLogic\DemonEnemyBattleAI.cs" />
     <Compile Include="Assets\Scripts\Actors\EnemyLogic\DemonEnemyMoveAI.cs" />
     <Compile Include="Assets\Scripts\Actors\EnemyLogic\EnemyBattleAI.cs" />
@@ -116,6 +117,7 @@
     <Compile Include="Assets\Scripts\Utilities\ChooseObjectWithBools.cs" />
     <Compile Include="Assets\Scripts\Utilities\ChooseObjectWithKeys.cs" />
     <Compile Include="Assets\Scripts\Utilities\CoroutineWithData.cs" />
+    <Compile Include="Assets\Shadow.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01_UGUI.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark02.cs" />
