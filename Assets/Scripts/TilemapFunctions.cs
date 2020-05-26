@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.Tilemaps;
 using System.Collections.Generic;
+using System;
 
 public class TilemapFunctions
 {
@@ -22,6 +23,19 @@ public class TilemapFunctions
     public static Tilemap[] GetFrontTileMaps()
     {
         return GetTilemapsBySortingLayer("Front");
+    }
+
+    public static int GetOrderInLayerOfFloorBelow(Vector3 pos)
+    {
+        Tilemap[] floorTilemaps = GetFloorTileMaps();
+        Tilemap[] obstaclesTilemaps = GetObstaclesTileMaps();
+        foreach (var floorTilemap in floorTilemaps)
+        {
+            var roundedPos = new Vector3Int(Convert.ToInt32(pos.x), Convert.ToInt32(pos.y), Convert.ToInt32(pos.z));
+            if (floorTilemap.HasTile(roundedPos))
+                return floorTilemap.gameObject.GetComponent<TilemapRenderer>().sortingOrder;
+        }
+        return -99;
     }
 
     private static Tilemap[] GetTilemapsBySortingLayer(string sortingLayer)
