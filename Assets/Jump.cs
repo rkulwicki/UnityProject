@@ -30,11 +30,11 @@ public class Jump : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.Space) && !jumping)
             {
                 GameObject objectToMove     = this.gameObject;
-                Vector3 end                 = (this.gameObject.transform.position + new Vector3(0, heightOfJump, 0));
+                float height                = heightOfJump;
                 float seconds               = timeToJump;
                 int startingFloorOrder      = GetOrderInLayerOfFloorBelow(this.gameObject.transform.position);
 
-                StartCoroutine(JumpAction(objectToMove, end, seconds, startingFloorOrder));
+                StartCoroutine(JumpAction(objectToMove, height, seconds, startingFloorOrder));
             }
 
         }
@@ -43,18 +43,20 @@ public class Jump : MonoBehaviour
 
     //move up
 
-    private IEnumerator JumpAction(GameObject objectToMove, Vector3 end, float seconds, int startingFloorOrder) //move over time
+    private IEnumerator JumpAction(GameObject objectToMove, float height, float seconds, int startingFloorOrder) //move over time
     {
-
-        var distanceToTravel = end;
-
         jumping = true;
+
         float elapsedTime = 0;
         Vector3 startingPos = objectToMove.transform.position;
         Vector3 copyOfStartingPos = startingPos;
-        while (elapsedTime < (seconds/2)) //up
+        while (elapsedTime < seconds) //up
         {
-            objectToMove.transform.position = Vector3.Lerp(startingPos, end, (elapsedTime / seconds));
+            //third parameter is like the x axis of a graph (usually over time) from 0 to 1
+            //Vector3.Lerp(startingPos, end, (elapsedTime / seconds));
+
+            var amountToMove = (Time.deltaTime * height)/seconds; //change in time
+            objectToMove.transform.position += new Vector3(0,amountToMove,0);
             elapsedTime += Time.deltaTime;
             yield return new WaitForEndOfFrame();
         }
@@ -63,7 +65,8 @@ public class Jump : MonoBehaviour
         Vector3 newStartingPos = objectToMove.transform.position;
         while (elapsedTime < (seconds)) //down
         {
-            objectToMove.transform.position = Vector3.Lerp(newStartingPos, copyOfStartingPos, (elapsedTime / seconds));
+            var amountToMove = (Time.deltaTime * height) / seconds; //change in time
+            objectToMove.transform.position -= new Vector3(0, amountToMove, 0);
             elapsedTime += Time.deltaTime;
             yield return new WaitForEndOfFrame();
         }
