@@ -140,6 +140,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   floorBelow: 0
+  jumping: 0
+  timeToJump: 1
+  heightOfJump: 2
 --- !u!114 &298910041
 MonoBehaviour:
   m_ObjectHideFlags: 0
