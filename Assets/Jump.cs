@@ -12,6 +12,8 @@ public class Jump : MonoBehaviour
 
     public bool jumping;
 
+    public Vector3 projectedLanding;
+
     private BattleManager _battlemanager;
 
     public float timeToJump, heightOfJump; 
@@ -47,27 +49,41 @@ public class Jump : MonoBehaviour
     {
         jumping = true;
 
-        float elapsedTime = 0;
-        Vector3 startingPos = objectToMove.transform.position;
-        Vector3 copyOfStartingPos = startingPos;
-        while (elapsedTime < seconds) //up
-        {
-            //third parameter is like the x axis of a graph (usually over time) from 0 to 1
-            //Vector3.Lerp(startingPos, end, (elapsedTime / seconds));
+        projectedLanding = objectToMove.transform.position;
 
+        float elapsedTime = 0;
+
+        var sum = 0f;
+
+        //up
+        while (elapsedTime < seconds)
+        {
+            //float x = elapsedTime;
+            //float amountToMove = (height * (x) * (x - seconds) + 0.25f) / 10f; //change in time
+            
+            
             var amountToMove = (Time.deltaTime * height)/seconds; //change in time
-            objectToMove.transform.position += new Vector3(0,amountToMove,0);
+            objectToMove.transform.position += new Vector3(0, amountToMove, 0);
             elapsedTime += Time.deltaTime;
+
+            sum += amountToMove;
+            projectedLanding = objectToMove.transform.position - new Vector3(0, sum, 0);
+
             yield return new WaitForEndOfFrame();
         }
 
+        //down
         elapsedTime = 0;
         Vector3 newStartingPos = objectToMove.transform.position;
-        while (elapsedTime < (seconds)) //down
+        while (elapsedTime < (seconds)) 
         {
             var amountToMove = (Time.deltaTime * height) / seconds; //change in time
             objectToMove.transform.position -= new Vector3(0, amountToMove, 0);
             elapsedTime += Time.deltaTime;
+
+            sum -= amountToMove;
+            projectedLanding = objectToMove.transform.position - new Vector3(0, sum, 0);
+
             yield return new WaitForEndOfFrame();
         }
 

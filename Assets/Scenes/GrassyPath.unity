@@ -141,20 +141,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   floorBelow: 0
   jumping: 0
-  timeToJump: 1
-  heightOfJump: 2
---- !u!114 &298910041
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 298910039}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: adcf12359d5075b44b9a8899b32e675e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  projectedLanding: {x: 0, y: 0, z: 0}
+  timeToJump: 0.25
+  heightOfJump: 1.25
 --- !u!50 &298910042
 Rigidbody2D:
   serializedVersion: 4
@@ -780,6 +769,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1366366765}
   - component: {fileID: 1366366766}
+  - component: {fileID: 1366366767}
   m_Layer: 0
   m_Name: Shadow
   m_TagString: Untagged
@@ -795,7 +785,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1366366764}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.02, y: -0.03, z: 0}
+  m_LocalPosition: {x: 0, y: -0.03, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1495283882}
@@ -851,6 +841,19 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &1366366767
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1366366764}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: adcf12359d5075b44b9a8899b32e675e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  anchorAdjustment: {x: 0, y: 0, z: 0}
 --- !u!4 &1495283882 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1455746436243949093, guid: 6a95f9cdd01b4ec468194b877d61b03c,
