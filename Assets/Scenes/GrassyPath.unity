@@ -142,8 +142,8 @@ MonoBehaviour:
   floorBelow: 0
   jumping: 0
   projectedLanding: {x: 0, y: 0, z: 0}
-  timeToJump: 0.25
-  heightOfJump: 1.25
+  timeToJump: 0.2
+  heightOfJump: 1.5
 --- !u!50 &298910042
 Rigidbody2D:
   serializedVersion: 4
