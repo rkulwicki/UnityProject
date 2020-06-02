@@ -77,6 +77,7 @@ public class Jump : MonoBehaviour
         Vector3 newStartingPos = objectToMove.transform.position;
         while (elapsedTime < (seconds)) 
         {
+
             var amountToMove = (Time.deltaTime * height) / seconds; //change in time
             objectToMove.transform.position -= new Vector3(0, amountToMove, 0);
             elapsedTime += Time.deltaTime;

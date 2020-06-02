@@ -64,6 +64,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Jump.cs" />
+    <Compile Include="Assets\PlayerAnimationController.cs" />
     <Compile Include="Assets\Scripts\Actors\EnemyLogic\DemonEnemyBattleAI.cs" />
     <Compile Include="Assets\Scripts\Actors\EnemyLogic\DemonEnemyMoveAI.cs" />
     <Compile Include="Assets\Scripts\Actors\EnemyLogic\EnemyBattleAI.cs" />

@@ -61,11 +61,11 @@ TagManager:
   - name: Items
     uniqueID: 448530851
     locked: 0
-  - name: Units
-    uniqueID: 1835449111
-    locked: 0
   - name: Obstacles
     uniqueID: 3210658865
+    locked: 0
+  - name: Units
+    uniqueID: 1835449111
     locked: 0
   - name: Front
     uniqueID: 1192863805
