@@ -2024,6 +2024,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 20c3456e6d0e3cd4482110cffc3f8a48, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  test: 0
 --- !u!50 &298910042
 Rigidbody2D:
   serializedVersion: 4
@@ -3543,6 +3544,11 @@ PrefabInstance:
     - target: {fileID: 1455746436243949093, guid: 6a95f9cdd01b4ec468194b877d61b03c,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1455746436243949094, guid: 6a95f9cdd01b4ec468194b877d61b03c,
+        type: 3}
+      propertyPath: m_FlipX
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1455746436243949095, guid: 6a95f9cdd01b4ec468194b877d61b03c,
