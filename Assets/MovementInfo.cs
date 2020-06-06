@@ -1,9 +1,12 @@
 ﻿using UnityEngine;
 using System.Collections;
+using static TilemapFunctions;
 
 public class MovementInfo : MonoBehaviour
 {
     //todo - take into account jumping for "upfacing"
+
+    public float playerHeight;
 
     public Vector3 velocity;
     public bool upFacing;

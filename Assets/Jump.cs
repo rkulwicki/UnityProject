@@ -7,6 +7,7 @@ using static TilemapFunctions;
 
 public class Jump : MonoBehaviour
 {
+    public int floorGrounded;
 
     public int floorBelow;
 
@@ -16,7 +17,9 @@ public class Jump : MonoBehaviour
 
     private BattleManager _battlemanager;
 
-    public float timeToJump, heightOfJump; 
+    public float timeToJump, heightOfJump;
+
+    public float playerHeight;
     // Start is called before the first frame update
     void Start()
     {
@@ -39,6 +42,11 @@ public class Jump : MonoBehaviour
                 StartCoroutine(JumpAction(objectToMove, height, seconds, startingFloorOrder));
             }
 
+        }
+        if (!jumping)
+        {
+            floorGrounded = GetOrderInLayerOfFloorBelow(transform.position);
+            playerHeight = floorGrounded;
         }
     }
 
@@ -69,14 +77,19 @@ public class Jump : MonoBehaviour
             sum += amountToMove;
             projectedLanding = objectToMove.transform.position - new Vector3(0, sum, 0);
 
+            playerHeight = startingFloorOrder + sum;
+
             yield return new WaitForEndOfFrame();
         }
 
         //down
         elapsedTime = 0;
         Vector3 newStartingPos = objectToMove.transform.position;
-        while (elapsedTime < (seconds)) 
+        while (playerHeight > floorBelow) // (elapsedTime < (seconds)) 
         {
+
+            //if (playerHeight <= floorBelow)
+            //    break; //you landed!
 
             var amountToMove = (Time.deltaTime * height) / seconds; //change in time
             objectToMove.transform.position -= new Vector3(0, amountToMove, 0);
@@ -85,9 +98,13 @@ public class Jump : MonoBehaviour
             sum -= amountToMove;
             projectedLanding = objectToMove.transform.position - new Vector3(0, sum, 0);
 
+            playerHeight = startingFloorOrder + sum;
+
             yield return new WaitForEndOfFrame();
         }
 
+        //what floor did we land on?
+        floorGrounded = GetOrderInLayerOfFloorBelow(transform.position);
         jumping = false;
     }
 

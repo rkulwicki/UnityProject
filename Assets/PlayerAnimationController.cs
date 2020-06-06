@@ -39,9 +39,9 @@ public class PlayerAnimationController : MonoBehaviour
             JumpFrontLeft();
         //jumping back
         else if (_jump.jumping && _mi.rightFacing && _mi.upFacing)
-            JumpBackRight();
+            JumpFrontRight();//JumpBackRight();
         else if (_jump.jumping && !_mi.rightFacing && _mi.upFacing)
-            JumpBackLeft();
+            JumpFrontLeft();//JumpBackLeft();
 
         //walking
         else if (_mi.isMoving && _mi.rightFacing && !_mi.upFacing)

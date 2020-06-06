@@ -63,6 +63,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\AddCollidersToObstacleTilemaps.cs" />
     <Compile Include="Assets\Jump.cs" />
     <Compile Include="Assets\MovementInfo.cs" />
     <Compile Include="Assets\PlayerAnimationController.cs" />
