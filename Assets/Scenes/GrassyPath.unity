@@ -2007,11 +2007,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c86964b5b441604f82ca0edf9b747e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  floorGrounded: 0
   floorBelow: 0
   jumping: 0
   projectedLanding: {x: 0, y: 0, z: 0}
   timeToJump: 0.5
   heightOfJump: 1.5
+  playerHeight: 0
 --- !u!114 &298910041
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2034,7 +2036,7 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 298910039}
-  m_BodyType: 0
+  m_BodyType: 2
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
@@ -2094,6 +2096,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c27417bf4b0b2d04790d424f4cff8c57, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerHeight: 0
   velocity: {x: 0, y: 0, z: 0}
   upFacing: 0
   rightFacing: 0

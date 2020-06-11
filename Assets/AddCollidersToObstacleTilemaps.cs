@@ -7,7 +7,7 @@ public class AddCollidersToObstacleTilemaps : MonoBehaviour
 {
 
     public GameObject[] tilemapGameObjects;  //arrays are faster
-    public float jumpBuffer = 0.1f;
+    public float jumpBuffer = 0.2f;
     private Jump _jump;
 
     void Start()
@@ -25,7 +25,7 @@ public class AddCollidersToObstacleTilemaps : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //ChangeTilemapLayerByPlayerHeight();
+        ChangeTilemapLayerByPlayerHeight();
 
         EnableCollidersForObstaclesTilemaps();
     }
@@ -34,8 +34,11 @@ public class AddCollidersToObstacleTilemaps : MonoBehaviour
     {
         foreach (var tm in tilemapGameObjects)
         {
+
+            //TODO
+            //change this so it only affects tilemaps that are one layer above the player
             if (tm.GetComponent<TilemapRenderer>().sortingLayerName == "Floor" &&
-                _jump.playerHeight < tm.GetComponent<TilemapRenderer>().sortingOrder)
+                _jump.playerHeight - jumpBuffer < tm.GetComponent<TilemapRenderer>().sortingOrder)
             {
                 tm.GetComponent<TilemapRenderer>().sortingLayerName = "Obstacles";
             }

@@ -25,15 +25,27 @@ public class TilemapFunctions
         return GetTilemapsBySortingLayer("Front");
     }
 
+    public static GameObject[] GetAllTileMapsObjects()
+    {
+        var grid = GameObject.FindGameObjectWithTag("Grid");
+
+        var list = new List<GameObject>();
+        foreach (Transform child in grid.transform)
+        {
+            list.Add(child.gameObject);
+        }
+        return list.ToArray();
+    }
+
     public static int GetOrderInLayerOfFloorBelow(Vector3 pos)
     {
-        Tilemap[] floorTilemaps = GetFloorTileMaps();
-        Tilemap[] obstaclesTilemaps = GetObstaclesTileMaps();
-        foreach (var floorTilemap in floorTilemaps)
+        GameObject[] objs = GetAllTileMapsObjects();
+        foreach (var obj in objs)
         {
+            var tilemap = obj.GetComponent<Tilemap>();   
             var roundedPos = new Vector3Int(Convert.ToInt32(pos.x), Convert.ToInt32(pos.y), Convert.ToInt32(pos.z));
-            if (floorTilemap.HasTile(roundedPos))
-                return floorTilemap.gameObject.GetComponent<TilemapRenderer>().sortingOrder;
+            if (tilemap.HasTile(roundedPos))
+                return tilemap.gameObject.GetComponent<TilemapRenderer>().sortingOrder;
         }
         return -99;
     }
