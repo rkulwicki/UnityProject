@@ -28,9 +28,14 @@ public class Shadow : MonoBehaviour
             gameObject.transform.position = _jump.projectedLanding + anchorAdjustment;
         }
 
+        ShadowSizeAdjustment();
+    }
+
+    private void ShadowSizeAdjustment()
+    {
         //change size depending on how far away from the actor the shadow is.
         Vector3 dis = gameObject.transform.parent.transform.position - gameObject.transform.position + anchorAdjustment;
-        float xScale = 1/(Mathf.Abs(dis.y) + 1); //y = 1/(x+1)
+        float xScale = 1 / (Mathf.Abs(dis.y) + 1); //y = 1/(x+1)
         gameObject.transform.localScale = new Vector3(
             xScale,
             gameObject.transform.localScale.y,
