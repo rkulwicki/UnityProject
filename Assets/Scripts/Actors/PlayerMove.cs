@@ -107,28 +107,29 @@ public class PlayerMove : Move
         {
             // Cast a ray up.
             RaycastHit2D hit = Physics2D.Raycast(center, Vector2.up, distance);
-            if(hit.collider != null || IsOnWallTilemap(transform.position + _offset))
+            if(hit.collider != null || IsOnWallTilemap(transform.position + _offset)) // if you hit something, but also
+                                                                                      // if it's not in front of a wall
                 return false;
         }
         else if (dir == Direction.RIGHT)
         {
             // Cast a ray right.
             RaycastHit2D hit = Physics2D.Raycast(center, Vector2.right, distance);
-            if (hit.collider != null)
+            if (hit.collider != null && !IsOnWallTilemap(transform.position + _offset))
                 return false;
         }
         else if (dir == Direction.DOWN)
         {
             // Cast a ray down.
             RaycastHit2D hit = Physics2D.Raycast(center, Vector2.down, distance);
-            if (hit.collider != null)
+            if (hit.collider != null && !IsOnWallTilemap(transform.position + _offset)) 
                 return false;
         }
         else if (dir == Direction.LEFT)
         {
             // Cast a ray left.
             RaycastHit2D hit = Physics2D.Raycast(center, Vector2.left, distance);
-            if (hit.collider != null)
+            if (hit.collider != null && !IsOnWallTilemap(transform.position + _offset))
                 return false;
         }
         return true;
