@@ -21,13 +21,14 @@ public class Jump : MonoBehaviour
 
     public float playerHeight;
     public CapsuleCollider2D _cap2D;
+    public int difInFloors;
     private Vector3 offset;
     // Start is called before the first frame update
     void Start()
     {
         _cap2D = gameObject.GetComponent<CapsuleCollider2D>();
         _battlemanager = GameObject.FindGameObjectWithTag("BattleManager").GetComponent<BattleManager>();
-        offset = new Vector3(_cap2D.offset.x, _cap2D.offset.y, 0);
+        offset = new Vector3(0, -0.5f, 0);
     }
 
     // Update is called once per frame
@@ -40,7 +41,7 @@ public class Jump : MonoBehaviour
                 GameObject objectToMove     = this.gameObject;
                 float height                = heightOfJump;
                 float seconds               = timeToJump;
-                int startingFloorOrder      = GetOrderOfTilemapAtPosition(this.gameObject.transform.position);
+                int startingFloorOrder      = GetOrderOfTilemapAtPosition(this.gameObject.transform.position + offset);
 
                 StartCoroutine(JumpAction(objectToMove, height, seconds, startingFloorOrder));
             }
@@ -61,18 +62,18 @@ public class Jump : MonoBehaviour
     {
         jumping = true;
 
-        projectedLanding = objectToMove.transform.position;
+        projectedLanding = objectToMove.transform.position; // + offset;
 
         float elapsedTime = 0;
 
         var sum = 0f;
-        var difInFloors = 0;
+        difInFloors = 0;
 
         //up
         while (elapsedTime < seconds)
         {
             //getting the projected Landing is hard man
-            var b = objectToMove.transform.position; //actor's bottom
+            var b = objectToMove.transform.position; // + offset; //actor's bottom
             difInFloors = floorBelow - floorGrounded; 
             projectedLanding = b - new Vector3(0, sum, 0) + new Vector3(0, difInFloors, 0);
 
@@ -82,7 +83,7 @@ public class Jump : MonoBehaviour
 
             sum += amountToMove;
             
-            floorBelow = GetOrderOfTilemapAtPosition(projectedLanding);
+            floorBelow = GetOrderOfTilemapAtPosition(projectedLanding); //TODO PROJECTED LANDING MESSED UP???
 
             playerHeight = startingFloorOrder + sum;
 
@@ -95,7 +96,7 @@ public class Jump : MonoBehaviour
         while (playerHeight > floorBelow || IsOnWallTilemap(transform.position + offset)) // (elapsedTime < (seconds)) 
         {
             //getting the projected Landing is hard man
-            var b = objectToMove.transform.position; //actor's bottom
+            var b = objectToMove.transform.position; //+ offset; //actor's bottom
             difInFloors = floorBelow - floorGrounded;
             projectedLanding = objectToMove.transform.position - new Vector3(0, sum, 0) + new Vector3(0, difInFloors, 0);
             floorBelow = GetOrderOfTilemapAtPosition(projectedLanding);
