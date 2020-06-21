@@ -22,7 +22,7 @@ public class Jump : MonoBehaviour
     public float playerHeight;
     public CapsuleCollider2D _cap2D;
     public int difInFloors;
-    private Vector3 offset;
+    public Vector3 offset;
     // Start is called before the first frame update
     void Start()
     {
@@ -49,6 +49,7 @@ public class Jump : MonoBehaviour
         }
         if (!jumping)
         {
+            projectedLanding = gameObject.transform.position + offset;
             floorGrounded = GetOrderOfTilemapAtPosition(transform.position + offset);
             floorBelow = floorGrounded;
             playerHeight = floorGrounded;
@@ -58,11 +59,18 @@ public class Jump : MonoBehaviour
 
     //move up
 
+        //SOMETHING WIERD IS GOING ON WHEN THE PLAYER'S POSITION IS OVER HALF THE TOP EDGE
+
+
     private IEnumerator JumpAction(GameObject objectToMove, float height, float seconds, int startingFloorOrder) //move over time
     {
         jumping = true;
 
-        projectedLanding = objectToMove.transform.position; // + offset;
+        //TODO FIX THE POSITION OF THE PROJECTED LANDING AND THE PLAYER OBJECT!!!!!!
+        //TODO FIX THE POSITION OF THE PROJECTED LANDING AND THE PLAYER OBJECT!!!!!!
+        //TODO FIX THE POSITION OF THE PROJECTED LANDING AND THE PLAYER OBJECT!!!!!!
+        //TODO FIX THE POSITION OF THE PROJECTED LANDING AND THE PLAYER OBJECT!!!!!!
+        projectedLanding = objectToMove.transform.position + offset;
 
         float elapsedTime = 0;
 
@@ -73,7 +81,7 @@ public class Jump : MonoBehaviour
         while (elapsedTime < seconds)
         {
             //getting the projected Landing is hard man
-            var b = objectToMove.transform.position; // + offset; //actor's bottom
+            var b = objectToMove.transform.position + offset; //actor's bottom
             difInFloors = floorBelow - floorGrounded; 
             projectedLanding = b - new Vector3(0, sum, 0) + new Vector3(0, difInFloors, 0);
 
@@ -93,12 +101,12 @@ public class Jump : MonoBehaviour
         //down
         elapsedTime = 0;
 
-        while (playerHeight > floorBelow || IsOnWallTilemap(transform.position + offset)) // (elapsedTime < (seconds)) 
+        while (playerHeight > floorBelow || IsOnWallTilemap(objectToMove.transform.position + offset)) // (elapsedTime < (seconds)) 
         {
             //getting the projected Landing is hard man
-            var b = objectToMove.transform.position; //+ offset; //actor's bottom
+            var b = objectToMove.transform.position + offset; // + offset; //actor's bottom
             difInFloors = floorBelow - floorGrounded;
-            projectedLanding = objectToMove.transform.position - new Vector3(0, sum, 0) + new Vector3(0, difInFloors, 0);
+            projectedLanding = b - new Vector3(0, sum, 0) + new Vector3(0, difInFloors, 0);
             floorBelow = GetOrderOfTilemapAtPosition(projectedLanding);
 
             var amountToMove = (Time.deltaTime * height) / seconds; //change in time

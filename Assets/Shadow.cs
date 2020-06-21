@@ -10,23 +10,17 @@ public class Shadow : MonoBehaviour
 
     //shadow relies on Jump.cs, which is in the parent
     private Jump _jump;
-
+    private Vector3 localOffset;
     private void Start()
     {
         anchorAdjustment = gameObject.transform.localPosition;
         _jump = GetComponentInParent<Jump>();
+        localOffset = new Vector3(0, -0.1f, 0);
     }
 
     private void Update()
     {
-        if (!_jump.jumping)
-        {
-            gameObject.transform.position = gameObject.transform.parent.transform.position + anchorAdjustment;
-        }
-        else
-        {
-            gameObject.transform.position = _jump.projectedLanding + anchorAdjustment;
-        }
+        gameObject.transform.position = _jump.projectedLanding - _jump.offset + localOffset;
 
         ShadowSizeAdjustment();
     }
@@ -34,7 +28,8 @@ public class Shadow : MonoBehaviour
     private void ShadowSizeAdjustment()
     {
         //change size depending on how far away from the actor the shadow is.
-        Vector3 dis = gameObject.transform.parent.transform.position - gameObject.transform.position + anchorAdjustment;
+
+        Vector3 dis = gameObject.transform.parent.transform.position - gameObject.transform.position;
         float xScale = 1 / (Mathf.Abs(dis.y) + 1); //y = 1/(x+1)
         gameObject.transform.localScale = new Vector3(
             xScale,
