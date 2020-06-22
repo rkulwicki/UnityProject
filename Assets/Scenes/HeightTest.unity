@@ -721,6 +721,7 @@ MonoBehaviour:
   playerHeight: 0
   _cap2D: {fileID: 0}
   difInFloors: 0
+  offset: {x: 0, y: 0, z: 0}
 --- !u!114 &298910041
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2674,7 +2675,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tilemapGameObjects: []
-  jumpBuffer: 0
+  jumpBuffer: 0.1
 --- !u!4 &3057343201987837652
 Transform:
   m_ObjectHideFlags: 0

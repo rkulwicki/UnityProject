@@ -5,13 +5,19 @@ using UnityEngine;
 using UnityEngine.Tilemaps;
 using static TilemapFunctions;
 
+
+//TODO 
+//1. When jump buffer is set to 0.1,  we can "fall" off of edges, but when you move to a lower tilemap, you don't "fall". Fix.
+//2. When jump buffer is set to 0.1,  you can clip into a higher tilemap. Fix. Add raycast to the corners to prevent clipping.
+//3. When jumping in the down direction from a lower to a higher tilemap, the jitters and the "projected landing" increases in the y direction.
+
 public class Jump : MonoBehaviour
 {
     public int floorGrounded;
 
-    public int floorBelow;
+    public int floorBelow, previousFloor;
 
-    public bool jumping;
+    public bool jumping, falling;
 
     public Vector3 projectedLanding;
 
@@ -36,7 +42,7 @@ public class Jump : MonoBehaviour
     {
         if (_battlemanager.state == BattleState.INACTIVE) {
 
-            if (Input.GetKeyDown(KeyCode.Space) && !jumping)
+            if (Input.GetKeyDown(KeyCode.Space) && !jumping && !falling)
             {
                 GameObject objectToMove     = this.gameObject;
                 float height                = heightOfJump;
@@ -47,12 +53,20 @@ public class Jump : MonoBehaviour
             }
 
         }
-        if (!jumping)
+        if (!jumping && !falling)
         {
+            //check for falling if floor below was different than it was before.
+            previousFloor = floorBelow;
+
             projectedLanding = gameObject.transform.position + offset;
             floorGrounded = GetOrderOfTilemapAtPosition(transform.position + offset);
             floorBelow = floorGrounded;
-            playerHeight = floorGrounded;
+
+            //if (floorBelow != previousFloor)
+            //    StartCoroutine(Fall(previousFloor, floorBelow, this.gameObject, heightOfJump, timeToJump));
+
+            if (!falling)
+                playerHeight = floorGrounded;//needs to go after "Fall"
         }
     }
 
@@ -66,10 +80,6 @@ public class Jump : MonoBehaviour
     {
         jumping = true;
 
-        //TODO FIX THE POSITION OF THE PROJECTED LANDING AND THE PLAYER OBJECT!!!!!!
-        //TODO FIX THE POSITION OF THE PROJECTED LANDING AND THE PLAYER OBJECT!!!!!!
-        //TODO FIX THE POSITION OF THE PROJECTED LANDING AND THE PLAYER OBJECT!!!!!!
-        //TODO FIX THE POSITION OF THE PROJECTED LANDING AND THE PLAYER OBJECT!!!!!!
         projectedLanding = objectToMove.transform.position + offset;
 
         float elapsedTime = 0;
@@ -124,7 +134,36 @@ public class Jump : MonoBehaviour
         floorGrounded = GetOrderOfTilemapAtPosition(transform.position);
         jumping = false;
     }
+    
+    public IEnumerator Fall(int previousFloorBelow, int floorBelow, GameObject objectToMove, float height, float seconds)
+    {
+        falling = true;
 
-    //need to find out when changing between tilemaps?
-    //1. What one did we start on?
+        var sum = 0f;
+        float elapsedTime = 0;
+
+        //change transform until the current floor below is less
+        while (playerHeight > floorBelow || IsOnWallTilemap(objectToMove.transform.position + offset)) // (elapsedTime < (seconds)) 
+        {
+            //getting the projected Landing is hard man
+            var b = objectToMove.transform.position + offset; // + offset; //actor's bottom
+            difInFloors = floorBelow - floorGrounded;
+            projectedLanding = b - new Vector3(0, sum, 0) + new Vector3(0, difInFloors, 0);
+            floorBelow = GetOrderOfTilemapAtPosition(projectedLanding);
+
+            var amountToMove = (Time.deltaTime * height) / seconds; //change in time
+            objectToMove.transform.position -= new Vector3(0, amountToMove, 0);
+            elapsedTime += Time.deltaTime;
+
+            sum -= amountToMove;
+
+            playerHeight = previousFloorBelow + sum;
+
+            yield return new WaitForEndOfFrame();
+        }
+
+        //what floor did we land on?
+        floorGrounded = GetOrderOfTilemapAtPosition(transform.position);
+        falling = false;
+    }
 }
