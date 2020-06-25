@@ -80,20 +80,57 @@ public class TilemapFunctions
         return tilemaps.ToArray();
     }
 
+    private static Tilemap[] GetTilemapsByOrder(int order)
+    {
+        var tilemaps = new List<Tilemap>();
+
+        var grid = GameObject.FindGameObjectWithTag("Grid");
+
+        //check each tilemap in grid to see if it is under the sorting layer sortingLayer
+        foreach (Transform child in grid.transform)
+        {
+            if (child.gameObject.GetComponent<TilemapRenderer>().sortingOrder == order)
+                tilemaps.Add(child.gameObject.GetComponent<Tilemap>());
+        }
+
+        return tilemaps.ToArray();
+    }
+
+    private static Tilemap[] GetTilemapsByOrderInLayer(string sortingLayer, int order)
+    {
+        var tilemaps = new List<Tilemap>();
+
+        var grid = GameObject.FindGameObjectWithTag("Grid");
+
+        //check each tilemap in grid to see if it is under the sorting layer sortingLayer
+        foreach (Transform child in grid.transform)
+        {
+            if (child.gameObject.GetComponent<TilemapRenderer>().sortingLayerName == sortingLayer &&
+                child.gameObject.GetComponent<TilemapRenderer>().sortingOrder == order)
+                tilemaps.Add(child.gameObject.GetComponent<Tilemap>());
+        }
+
+        return tilemaps.ToArray();
+    }
+
+
+    //  WIP
+
+
+        todo
     /// <summary>
     /// Takes in a position (x, y) and the height (z) and determines what tilemap floor they directly above.
     /// </summary>
     /// <returns></returns>
     public static Vector3 GetProjectedLanding(Vector3 pos, float zHeight)
     {
-        var listOfFloorsBelow = new List<int>();
-        var leftover = zHeight - (float)Math.Truncate(zHeight);
-        for (var i = Math.Truncate(zHeight); i >= 1; i--) //check each floor if it is the potential floor straight below.
+        var floorsBelow = (int)Math.Truncate(zHeight);
+        for (var i = floorsBelow; i > 0; i--) //check each floor if it is the potential floor straight below.
         {
             //"i" represents the order in layer of they tilemap. Aka, the floor.
 
             //check only the tilemap which is the floor we are currently looking at
-            var iLayerTilemaps = GetTilemapsBySortingLayer(i.ToString());
+            var iLayerTilemaps = GetTilemapsByOrder(i);
 
             foreach (var tilemap in iLayerTilemaps)
             {
@@ -101,7 +138,7 @@ public class TilemapFunctions
                 //need to truncate because "HasTile" only takes V3Int
                 var tileLandedOn = new Vector3Int((int)Math.Truncate(pos.x),
                                                   (int)Math.Truncate(pos.y - distFromTilemap),
-                                                  (int)Math.Truncate(pos.z));
+                                                  0);
                 
                 var hasTile = tilemap.GetComponent<Tilemap>().HasTile(tileLandedOn);
 
