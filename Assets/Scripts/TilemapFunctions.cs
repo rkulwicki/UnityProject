@@ -113,11 +113,6 @@ public class TilemapFunctions
         return tilemaps.ToArray();
     }
 
-
-    //  WIP
-
-
-        todo
     /// <summary>
     /// Takes in a position (x, y) and the height (z) and determines what tilemap floor they directly above.
     /// </summary>
@@ -136,8 +131,8 @@ public class TilemapFunctions
             {
                 var distFromTilemap = zHeight - (float)i; 
                 //need to truncate because "HasTile" only takes V3Int
-                var tileLandedOn = new Vector3Int((int)Math.Truncate(pos.x),
-                                                  (int)Math.Truncate(pos.y - distFromTilemap),
+                var tileLandedOn = new Vector3Int((int)Math.Round(pos.x),
+                                                  (int)Math.Round(pos.y - distFromTilemap),
                                                   0);
                 
                 var hasTile = tilemap.GetComponent<Tilemap>().HasTile(tileLandedOn);

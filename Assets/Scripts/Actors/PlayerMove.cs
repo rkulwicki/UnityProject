@@ -122,7 +122,8 @@ public class PlayerMove : Move
         {
             // Cast a ray down.
             RaycastHit2D hit = Physics2D.Raycast(center, Vector2.down, distance);
-            if (hit.collider != null && !IsOnWallTilemap(transform.position + _offset)) 
+            if (hit.collider != null && !IsOnWallTilemap(transform.position + _offset) &&
+                hit.collider.gameObject.name != "Wall") //if you're going down, you're above the wall. Can move
                 return false;
         }
         else if (dir == Direction.LEFT)
