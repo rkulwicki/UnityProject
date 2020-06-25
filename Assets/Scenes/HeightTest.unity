@@ -700,42 +700,6 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 1954083776}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &298910040
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 298910039}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3c86964b5b441604f82ca0edf9b747e1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  floorGrounded: 0
-  floorBelow: 0
-  jumping: 0
-  projectedLanding: {x: 0, y: 0, z: 0}
-  timeToJump: 0.5
-  heightOfJump: 1.5
-  playerHeight: 0
-  _cap2D: {fileID: 0}
-  difInFloors: 0
-  offset: {x: 0, y: 0, z: 0}
---- !u!114 &298910041
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 298910039}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 20c3456e6d0e3cd4482110cffc3f8a48, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  movementBuffer: 0.01
-  test: 0
 --- !u!50 &298910042
 Rigidbody2D:
   serializedVersion: 4
@@ -776,6 +740,38 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &298910044
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 298910039}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c7501937886618a4b8ad1d64aae4696e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerHeight: 0
+  velocity: {x: 0, y: 0, z: 0}
+  upFacing: 0
+  rightFacing: 0
+  isMoving: 0
+  movingBuffer: 0.1
+--- !u!114 &298910045
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 298910039}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3bcde5a4d47b91e42bf03ae7be5a651b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  movementBuffer: 0.01
+  test: 0
 --- !u!70 &298910046
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -792,7 +788,7 @@ CapsuleCollider2D:
   m_Offset: {x: 0, y: -0.35}
   m_Size: {x: 0.75, y: 0.25}
   m_Direction: 1
---- !u!114 &298910050
+--- !u!114 &298910047
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -801,15 +797,21 @@ MonoBehaviour:
   m_GameObject: {fileID: 298910039}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c27417bf4b0b2d04790d424f4cff8c57, type: 3}
+  m_Script: {fileID: 11500000, guid: f254f35bf9938c14bb06f75985c3abba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerHeight: 0
-  velocity: {x: 0, y: 0, z: 0}
-  upFacing: 0
-  rightFacing: 0
-  isMoving: 0
-  movingBuffer: 0.1
+  floorGrounded: 0
+  floorBelow: 0
+  previousFloor: 0
+  jumping: 0
+  falling: 0
+  projectedLanding: {x: 0, y: 0, z: 0}
+  timeToJump: 0.5
+  heightOfJump: 1.5
+  playerZHeight: 0
+  _cap2D: {fileID: 0}
+  difInFloors: 0
+  offset: {x: 0, y: 0, z: 0}
 --- !u!1001 &518869018
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2518,7 +2520,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1366366764}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: adcf12359d5075b44b9a8899b32e675e, type: 3}
+  m_Script: {fileID: 11500000, guid: 48e10853454f5824ba974a3e04f6ae45, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   anchorAdjustment: {x: 0, y: 0, z: 0}
@@ -2655,6 +2657,7 @@ GameObject:
   - component: {fileID: 3057343201987837652}
   - component: {fileID: 3057343201987837653}
   - component: {fileID: 3057343201987837644}
+  - component: {fileID: 3057343201987837645}
   m_Layer: 0
   m_Name: Grid
   m_TagString: Grid
@@ -2672,6 +2675,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 227538ea6fdb8f843b973ff553a23a51, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &3057343201987837645
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3057343201987837643}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5c06d549bcecb9b418fc313919d8d180, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   tilemapGameObjects: []

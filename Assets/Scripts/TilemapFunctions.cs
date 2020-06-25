@@ -80,4 +80,39 @@ public class TilemapFunctions
         return tilemaps.ToArray();
     }
 
+    /// <summary>
+    /// Takes in a position (x, y) and the height (z) and determines what tilemap floor they directly above.
+    /// </summary>
+    /// <returns></returns>
+    public static Vector3 GetProjectedLanding(Vector3 pos, float zHeight)
+    {
+        var listOfFloorsBelow = new List<int>();
+        var leftover = zHeight - (float)Math.Truncate(zHeight);
+        for (var i = Math.Truncate(zHeight); i >= 1; i--) //check each floor if it is the potential floor straight below.
+        {
+            //"i" represents the order in layer of they tilemap. Aka, the floor.
+
+            //check only the tilemap which is the floor we are currently looking at
+            var iLayerTilemaps = GetTilemapsBySortingLayer(i.ToString());
+
+            foreach (var tilemap in iLayerTilemaps)
+            {
+                var distFromTilemap = zHeight - (float)i; 
+                //need to truncate because "HasTile" only takes V3Int
+                var tileLandedOn = new Vector3Int((int)Math.Truncate(pos.x),
+                                                  (int)Math.Truncate(pos.y - distFromTilemap),
+                                                  (int)Math.Truncate(pos.z));
+                
+                var hasTile = tilemap.GetComponent<Tilemap>().HasTile(tileLandedOn);
+
+                //if found a tile at a certain tilemap at a given landing position then return the landing position
+                if (hasTile)
+                    return new Vector3(pos.x, pos.y - distFromTilemap, pos.z);
+            }
+        }
+
+        //else
+        return pos;
+    }
+
 }
