@@ -91,12 +91,18 @@ public class Jump : MonoBehaviour
         //up
         while (elapsedTime < seconds)
         {
-            difInFloors = floorBelow - floorGrounded; 
 
-            var amountToMove = (Time.deltaTime * height)/seconds; //change in time
+            //NOTES
+            //sum is "y"
+            //elapsedTime is "x"
+            //Time.Delta
+
+            difInFloors = floorBelow - floorGrounded;
+
+            var amountToMove = ((Time.deltaTime * height)/seconds) * (seconds - elapsedTime) * 3;
             objectToMove.transform.position += new Vector3(0, amountToMove, 0);
-            elapsedTime += Time.deltaTime;
 
+            elapsedTime += Time.deltaTime;
             sum += amountToMove;
             
             floorBelow = GetOrderOfTilemapAtPosition(transformPlusOffset);
@@ -116,7 +122,11 @@ public class Jump : MonoBehaviour
 
             floorBelow = GetOrderOfTilemapAtPosition(transformPlusOffset);
 
-            var amountToMove = (Time.deltaTime * height) / seconds; //change in time
+            var amountToMove = 0f;
+            if (elapsedTime < seconds)
+                amountToMove = ((Time.deltaTime * height) / seconds) * (elapsedTime) * 3; //change in time
+            else
+                amountToMove = ((Time.deltaTime * height) / seconds);
             objectToMove.transform.position -= new Vector3(0, amountToMove, 0);
             elapsedTime += Time.deltaTime;
 
@@ -146,7 +156,12 @@ public class Jump : MonoBehaviour
 
             floorBelow = GetOrderOfTilemapAtPosition(transformPlusOffset);
 
-            var amountToMove = (Time.deltaTime * height) / seconds; //change in time
+            var amountToMove = 0f;
+            if (elapsedTime < seconds)
+                amountToMove = ((Time.deltaTime * height) / seconds) * (elapsedTime) * 3; //change in time
+            else
+                amountToMove = ((Time.deltaTime * height) / seconds);
+
             objectToMove.transform.position -= new Vector3(0, amountToMove, 0);
             elapsedTime += Time.deltaTime;
 
