@@ -10,6 +10,12 @@ using static TilemapFunctions;
 
 public class PlayerMove : Move
 {
+
+    //TEST
+    public bool upRay, rightRay, downRay, leftRay;
+    //TEST
+
+
     public bool isKeyboardMovement;
     private DPadGlobal _DPadGlobal;
     private PlayerStats _playerStats;
@@ -22,6 +28,8 @@ public class PlayerMove : Move
     private float _jitterBuffer;
 
     private Vector3 _offset;
+
+    private BoxCollider2D _helperBoxCol2D;
     void Start()
     {
         _cap2D = gameObject.GetComponent<CapsuleCollider2D>();
@@ -37,6 +45,9 @@ public class PlayerMove : Move
 
         _jitterBuffer = 0.1f;
         _offset = new Vector3(_cap2D.offset.x, _cap2D.offset.y, 0);
+
+        _helperBoxCol2D = gameObject.transform.Find("MovementHelper").GetComponent<BoxCollider2D>();
+
     }
 
     void Update()
@@ -89,21 +100,51 @@ public class PlayerMove : Move
             var tAdjusted = new Vector2(transform.position.x + _cap2D.offset.x, transform.position.y + _cap2D.offset.y);
 
             _cap2D.enabled = true;
-            if (CanMoveThisDirection(Direction.UP, tAdjusted, (_cap2D.size.y/2) + _jitterBuffer))
+            if (CanMoveThisDirection(Direction.UP, tAdjusted, (_cap2D.size.y / 2) + _jitterBuffer))
+            {
+                upRay = true;
                 MoveUp();
+            }
+            else
+            {
+                upRay = false;
+            }
             if (CanMoveThisDirection(Direction.DOWN, tAdjusted, (_cap2D.size.y / 2) + _jitterBuffer))
+            {
+                downRay = true;
                 MoveDown();
+            }
+            else
+            {
+                downRay = false;
+            }
             if (CanMoveThisDirection(Direction.RIGHT, tAdjusted, (_cap2D.size.x / 2) + _jitterBuffer))
+            {
+                rightRay = true;
                 MoveRight();
+            }
+            else
+            {
+                rightRay = false;
+            }
             if (CanMoveThisDirection(Direction.LEFT, tAdjusted, (_cap2D.size.x / 2) + _jitterBuffer))
+            {
+                leftRay = true;
                 MoveLeft();
+            }
+            else
+            {
+                leftRay = false;
+            }
         }
     }
 
     private bool CanMoveThisDirection(Direction dir, Vector2 center, float distance)
     {
-        
-        if(dir == Direction.UP)
+
+        //TODO
+        //refactor to use _helperBoxCol2D
+        if (dir == Direction.UP)
         {
             // Cast a ray up.
             RaycastHit2D hit = Physics2D.Raycast(center, Vector2.up, distance);
