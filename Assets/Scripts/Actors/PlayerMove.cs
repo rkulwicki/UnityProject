@@ -101,42 +101,31 @@ public class PlayerMove : Move
 
             _cap2D.enabled = true;
             if (CanMoveThisDirection(Direction.UP, tAdjusted, (_cap2D.size.y / 2) + _jitterBuffer))
-            {
-                upRay = true;
                 MoveUp();
-            }
-            else
-            {
-                upRay = false;
-            }
+
             if (CanMoveThisDirection(Direction.DOWN, tAdjusted, (_cap2D.size.y / 2) + _jitterBuffer))
-            {
-                downRay = true;
                 MoveDown();
-            }
-            else
-            {
-                downRay = false;
-            }
+
             if (CanMoveThisDirection(Direction.RIGHT, tAdjusted, (_cap2D.size.x / 2) + _jitterBuffer))
-            {
-                rightRay = true;
                 MoveRight();
-            }
-            else
-            {
-                rightRay = false;
-            }
+
             if (CanMoveThisDirection(Direction.LEFT, tAdjusted, (_cap2D.size.x / 2) + _jitterBuffer))
-            {
-                leftRay = true;
                 MoveLeft();
-            }
-            else
-            {
-                leftRay = false;
-            }
         }
+    }
+
+
+
+    TODO
+
+    private bool DidCollideGivenVelocityAndCollider(Vector3 vel, Collider col)
+    {
+        return false;
+    }
+
+    private Vector3 GetEdgeOfCollider()
+    {
+        return new Vector3();
     }
 
     private bool CanMoveThisDirection(Direction dir, Vector2 center, float distance)
@@ -197,6 +186,8 @@ public class PlayerMove : Move
         }
         return new Vector2(0, 0);
     }
+
+
 
     //TODO - need a way to determine if you're pressed up against a wall or not
 }
