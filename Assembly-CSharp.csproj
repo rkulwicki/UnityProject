@@ -62,7 +62,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\SceneChanger.cs" />
     <Compile Include="Assets\Scripts\Actors\EnemyLogic\DemonEnemyBattleAI.cs" />
     <Compile Include="Assets\Scripts\Actors\EnemyLogic\DemonEnemyMoveAI.cs" />
     <Compile Include="Assets\Scripts\Actors\EnemyLogic\EnemyBattleAI.cs" />
@@ -89,6 +88,7 @@
     <Compile Include="Assets\Scripts\Battle\PlayerBattleActions.cs" />
     <Compile Include="Assets\Scripts\Camera\MainCamera.cs" />
     <Compile Include="Assets\Scripts\ColliderHitScript.cs" />
+    <Compile Include="Assets\Scripts\DontDestroy.cs" />
     <Compile Include="Assets\Scripts\Global\DPadGlobal.cs" />
     <Compile Include="Assets\Scripts\Global\GlobalInputs.cs" />
     <Compile Include="Assets\Scripts\Global\PlayerBattleGlobal.cs" />
@@ -105,6 +105,8 @@
     <Compile Include="Assets\Scripts\MovementInfo.cs" />
     <Compile Include="Assets\Scripts\PlayerAnimationController.cs" />
     <Compile Include="Assets\Scripts\ScaleCanvas.cs" />
+    <Compile Include="Assets\Scripts\SceneChangeTrigger.cs" />
+    <Compile Include="Assets\Scripts\SceneChanger.cs" />
     <Compile Include="Assets\Scripts\Shadow.cs" />
     <Compile Include="Assets\Scripts\Text\TextBoxScript.cs" />
     <Compile Include="Assets\Scripts\Text\TextHolder.cs" />

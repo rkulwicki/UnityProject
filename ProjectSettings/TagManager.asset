@@ -16,6 +16,7 @@ TagManager:
   - GlobalInputs
   - NPC
   - Floor
+  - SceneChanger
   layers:
   - Default
   - TransparentFX
