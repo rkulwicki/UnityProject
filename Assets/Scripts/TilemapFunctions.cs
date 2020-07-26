@@ -51,6 +51,20 @@ public class TilemapFunctions
         return false;
     }
 
+    public static bool IsOnWallFrontTilemap(Vector3 pos)
+    {
+        var roundedPos = new Vector3Int(Convert.ToInt32(pos.x), Convert.ToInt32(pos.y), Convert.ToInt32(pos.z));
+        var tilemaps = GetTilemapsBySortingLayer("WallFront");
+        if (tilemaps == null)
+            return false;
+        foreach (var tilemap in tilemaps)
+        {
+            if (tilemap.HasTile(roundedPos))
+                return true;
+        }
+        return false;
+    }
+
     public static int GetOrderOfTilemapAtPosition(Vector3 pos)
     {
         GameObject[] objs = GetAllTileMapsObjects();

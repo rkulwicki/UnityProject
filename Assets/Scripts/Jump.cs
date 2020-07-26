@@ -30,6 +30,8 @@ public class Jump : MonoBehaviour
     public int difInFloors;
     public Vector3 offset;
 
+    public double distanceAboveGround;
+
     private Vector3 transformPlusOffset;
     // Start is called before the first frame update
     void Start()
@@ -73,6 +75,8 @@ public class Jump : MonoBehaviour
             if (!falling)
                 playerZHeight = floorGrounded; //needs to go after "Fall"
         }
+
+        distanceAboveGround = Math.Round(transform.position.y - projectedLanding.y - 0.5, 2);
     }
 
     

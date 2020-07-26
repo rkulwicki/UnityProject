@@ -72,6 +72,9 @@ TagManager:
   - name: Units
     uniqueID: 1835449111
     locked: 0
+  - name: WallFront
+    uniqueID: 3540274231
+    locked: 0
   - name: Front
     uniqueID: 1192863805
     locked: 0

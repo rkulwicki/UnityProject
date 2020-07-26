@@ -11,11 +11,6 @@ using static TilemapFunctions;
 public class PlayerMove : Move
 {
 
-    //TEST
-    public bool upRay, rightRay, downRay, leftRay;
-    //TEST
-
-
     public bool isKeyboardMovement;
     private DPadGlobal _DPadGlobal;
     private PlayerStats _playerStats;
@@ -29,7 +24,6 @@ public class PlayerMove : Move
 
     private Vector3 _offset;
 
-    private BoxCollider2D _helperBoxCol2D;
     void Start()
     {
         _cap2D = gameObject.GetComponent<CapsuleCollider2D>();
@@ -46,7 +40,6 @@ public class PlayerMove : Move
         _jitterBuffer = 0.1f;
         _offset = new Vector3(_cap2D.offset.x, _cap2D.offset.y, 0);
 
-        _helperBoxCol2D = gameObject.transform.Find("MovementHelper").GetComponent<BoxCollider2D>();
 
     }
 
@@ -131,13 +124,11 @@ public class PlayerMove : Move
     private bool CanMoveThisDirection(Direction dir, Vector2 center, float distance)
     {
 
-        //TODO
-        //refactor to use _helperBoxCol2D
         if (dir == Direction.UP)
         {
             // Cast a ray up.
             RaycastHit2D hit = Physics2D.Raycast(center, Vector2.up, distance);
-            if(hit.collider != null || IsOnWallTilemap(transform.position + _offset)) // if you hit something, but also
+            if(hit.collider != null && !IsOnWallTilemap(transform.position + _offset)) // if you hit something, but also
                                                                                       // if it's not in front of a wall
                 return false;
         }
@@ -187,7 +178,4 @@ public class PlayerMove : Move
         return new Vector2(0, 0);
     }
 
-
-
-    //TODO - need a way to determine if you're pressed up against a wall or not
 }
