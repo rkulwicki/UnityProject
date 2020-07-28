@@ -128,9 +128,12 @@ public class PlayerMove : Move
         {
             // Cast a ray up.
             RaycastHit2D hit = Physics2D.Raycast(center, Vector2.up, distance);
-            if(hit.collider != null && !IsOnWallTilemap(transform.position + _offset)) // if you hit something, but also
-                                                                                      // if it's not in front of a wall
+            if (hit.collider != null && (!IsOnWallTilemap(transform.position + _offset) || !IsOnWallFrontTilemap(transform.position + _offset)))
+            { // if you hit something, but also
+              // if it's not in front of a wall
+                Debug.Log("cannot move up");
                 return false;
+            }
         }
         else if (dir == Direction.RIGHT)
         {

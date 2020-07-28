@@ -9,8 +9,8 @@ public class WallTilemapsFunctionality : MonoBehaviour
 
     public double y;
 
-    private double distanceAboveGround;
     private GameObject player;
+    private float projectedLanding;
 
     void Start()
     {
@@ -24,7 +24,6 @@ public class WallTilemapsFunctionality : MonoBehaviour
         wallTilemapGameObjects = list.ToArray();
 
         player = GameObject.FindGameObjectWithTag("Player");
-        distanceAboveGround = player.GetComponent<Jump>().distanceAboveGround;
     }
 
     // Update is called once per frame
@@ -36,7 +35,8 @@ public class WallTilemapsFunctionality : MonoBehaviour
 
     private void ChangeWallTilemapLayerByPlayerY()
     {
-        y = player.transform.position.y - distanceAboveGround;
+        y = player.transform.position.y - player.GetComponent<Jump>().distanceAboveGround;
+
         foreach (var tm in wallTilemapGameObjects)
         {
             if (y > tm.GetComponent<TilemapRenderer>().sortingOrder) //behind wall
