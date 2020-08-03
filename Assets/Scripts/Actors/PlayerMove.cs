@@ -128,7 +128,9 @@ public class PlayerMove : Move
         {
             // Cast a ray up.
             RaycastHit2D hit = Physics2D.Raycast(center, Vector2.up, distance);
-            if (hit.collider != null && (!IsOnWallTilemap(transform.position + _offset) || !IsOnWallFrontTilemap(transform.position + _offset)))
+            RaycastHit2D projLandHit = Physics2D.Raycast(transform.GetComponent<Jump>().projectedLanding, Vector2.up, distance);
+            if (hit.collider != null && !IsOnWallTilemap(transform.position + _offset) ||
+                (IsOnWallTilemap(transform.position + _offset) && projLandHit.collider != null))
             { // if you hit something, but also
               // if it's not in front of a wall
                 Debug.Log("cannot move up");
@@ -144,10 +146,12 @@ public class PlayerMove : Move
         }
         else if (dir == Direction.DOWN)
         {
-            // Cast a 3 rays down.
+            // Cast a ray down.
             RaycastHit2D hit = Physics2D.Raycast(center, Vector2.down, distance);
+            RaycastHit2D projLandHit = Physics2D.Raycast(center, Vector2.up, distance);
             if (hit.collider != null && !IsOnWallTilemap(transform.position + _offset) &&
-                hit.collider.gameObject.name != "Wall") //if you're going down, you're above the wall. Can move
+                hit.collider.gameObject.name != "Wall" ||
+                (IsOnWallFrontTilemap(transform.position + _offset) && projLandHit.collider != null)) //if you're going down, you're above the wall. Can move
                 return false;
         }
         else if (dir == Direction.LEFT)

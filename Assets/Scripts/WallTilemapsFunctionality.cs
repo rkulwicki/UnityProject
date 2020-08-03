@@ -35,7 +35,8 @@ public class WallTilemapsFunctionality : MonoBehaviour
 
     private void ChangeWallTilemapLayerByPlayerY()
     {
-        y = player.transform.position.y - player.GetComponent<Jump>().distanceAboveGround;
+        //TODO
+        y = player.transform.position.y - player.GetComponent<Jump>().distanceAboveGround - player.GetComponent<Jump>().floorBelow;
 
         foreach (var tm in wallTilemapGameObjects)
         {

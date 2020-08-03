@@ -5,6 +5,7 @@ using static TilemapFunctions;
 public class MovementInfo : MonoBehaviour
 {
     //todo - take into account jumping for "upfacing"
+    public Vector3 globalPosition;
 
     public float playerHeight;
 
@@ -25,6 +26,9 @@ public class MovementInfo : MonoBehaviour
 
     void Update()
     {
+        TODO
+        globalPosition = new Vector3(transform.position.x, transform.position.y - _jump.playerZHeight, _jump.playerZHeight);
+
         velocity = (transform.position - _lastPosition) / Time.deltaTime;
         this._lastPosition = transform.position;
 
