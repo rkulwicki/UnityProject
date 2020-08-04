@@ -25,7 +25,6 @@ public class Jump : MonoBehaviour
 
     public float timeToJump, heightOfJump;
 
-    public float playerZHeight;
     public CapsuleCollider2D _cap2D;
     public int difInFloors;
     public Vector3 offset;
@@ -33,20 +32,23 @@ public class Jump : MonoBehaviour
     public double distanceAboveGround;
 
     private Vector3 transformPlusOffset;
+
+    private MovementInfo _moveInfo;
     // Start is called before the first frame update
     void Start()
     {
         _cap2D = gameObject.GetComponent<CapsuleCollider2D>();
         _battlemanager = GameObject.FindGameObjectWithTag("BattleManager").GetComponent<BattleManager>();
         offset = new Vector3(0, -0.5f, 0);
+        _moveInfo = gameObject.GetComponent<MovementInfo>();
     }
 
     // Update is called once per frame
     void Update()
     {
 
-        transformPlusOffset = transform.position + offset;//GetProjectedLanding(transform.position + offset, playerZHeight);
-        projectedLanding = GetProjectedLanding(transform.position + offset, playerZHeight); //WIP
+        transformPlusOffset = transform.position + offset;
+        projectedLanding = GetProjectedLanding(transform.position + offset, _moveInfo.GlobalPosition.z); //WIP
 
         if (_battlemanager.state == BattleState.INACTIVE) {
 
@@ -73,7 +75,7 @@ public class Jump : MonoBehaviour
                 StartCoroutine(Fall(previousFloor, floorBelow, this.gameObject, heightOfJump, timeToJump));
 
             if (!falling)
-                playerZHeight = floorGrounded; //needs to go after "Fall"
+                _moveInfo.Z = floorGrounded; //needs to go after "Fall"
         }
 
         distanceAboveGround = Math.Round(transform.position.y - projectedLanding.y - 0.5, 2);
@@ -95,12 +97,6 @@ public class Jump : MonoBehaviour
         //up
         while (elapsedTime < seconds)
         {
-
-            //NOTES
-            //sum is "y"
-            //elapsedTime is "x"
-            //Time.Delta
-
             difInFloors = floorBelow - floorGrounded;
 
             var amountToMove = ((Time.deltaTime * height)/seconds) * (seconds - elapsedTime) * 3;
@@ -111,7 +107,7 @@ public class Jump : MonoBehaviour
             
             floorBelow = GetOrderOfTilemapAtPosition(transformPlusOffset);
 
-            playerZHeight = startingFloorOrder + sum;
+            _moveInfo.Z= startingFloorOrder + sum;
 
             yield return new WaitForEndOfFrame();
         }
@@ -119,7 +115,7 @@ public class Jump : MonoBehaviour
         //down
         elapsedTime = 0;
 
-        while (playerZHeight > floorBelow || IsOnWallTilemap(objectToMove.transform.position + offset)) // (elapsedTime < (seconds)) 
+        while (_moveInfo.GlobalPosition.z > floorBelow || IsOnWallTilemap(objectToMove.transform.position + offset)) // (elapsedTime < (seconds)) 
         {
 
             difInFloors = floorBelow - floorGrounded;
@@ -136,7 +132,7 @@ public class Jump : MonoBehaviour
 
             sum -= amountToMove;
 
-            playerZHeight = startingFloorOrder + sum;
+            _moveInfo.Z = startingFloorOrder + sum;
 
             yield return new WaitForEndOfFrame();
         }
@@ -154,7 +150,7 @@ public class Jump : MonoBehaviour
         float elapsedTime = 0;
 
         //change transform until the current floor below is less
-        while (playerZHeight > floorBelow || IsOnWallTilemap(objectToMove.transform.position + offset))
+        while (_moveInfo.GlobalPosition.z > floorBelow || IsOnWallTilemap(objectToMove.transform.position + offset))
         {
             difInFloors = floorBelow - floorGrounded;
 
@@ -171,7 +167,7 @@ public class Jump : MonoBehaviour
 
             sum -= amountToMove;
 
-            playerZHeight = previousFloorBelow + sum;
+            _moveInfo.Z = previousFloorBelow + sum;
 
             yield return new WaitForEndOfFrame();
         }

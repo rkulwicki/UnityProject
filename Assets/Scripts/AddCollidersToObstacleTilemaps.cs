@@ -9,17 +9,18 @@ public class AddCollidersToObstacleTilemaps : MonoBehaviour
     public GameObject[] tilemapGameObjects;  //arrays are faster
     public float jumpBuffer = 0.2f;
     private Jump _jump;
+    private MovementInfo _moveInfo;
 
     void Start()
     {
+        
         var list = new List<GameObject>();
         foreach(Transform child in transform)
         {
             list.Add(child.gameObject);
         }
         tilemapGameObjects = list.ToArray();
-
-        _jump = GameObject.FindGameObjectWithTag("Player").GetComponent<Jump>();
+        _moveInfo  = GameObject.FindGameObjectWithTag("Player").GetComponent<MovementInfo>();
     }
 
     // Update is called once per frame
@@ -38,13 +39,13 @@ public class AddCollidersToObstacleTilemaps : MonoBehaviour
             //TODO
             //change this so it only affects tilemaps that are one layer above the player
             if (tm.GetComponent<TilemapRenderer>().sortingLayerName == "Floor" &&
-                _jump.playerZHeight - jumpBuffer < tm.GetComponent<TilemapRenderer>().sortingOrder)
+                _moveInfo.GlobalPosition.z - jumpBuffer < tm.GetComponent<TilemapRenderer>().sortingOrder)
             {
                 tm.GetComponent<TilemapRenderer>().sortingLayerName = "Obstacles";
             }
 
             if (tm.GetComponent<TilemapRenderer>().sortingLayerName == "Obstacles" &&
-                _jump.playerZHeight + jumpBuffer > tm.GetComponent<TilemapRenderer>().sortingOrder)
+                _moveInfo.GlobalPosition.z + jumpBuffer > tm.GetComponent<TilemapRenderer>().sortingOrder)
             {
                 tm.GetComponent<TilemapRenderer>().sortingLayerName = "Floor";
             }

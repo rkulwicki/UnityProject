@@ -87,6 +87,7 @@
     <Compile Include="Assets\Scripts\Battle\EnemyBattleActions.cs" />
     <Compile Include="Assets\Scripts\Battle\PartiallyInactiveDuringBattle.cs" />
     <Compile Include="Assets\Scripts\Battle\PlayerBattleActions.cs" />
+    <Compile Include="Assets\Scripts\CalculatePlayerZPosition.cs" />
     <Compile Include="Assets\Scripts\Camera\MainCamera.cs" />
     <Compile Include="Assets\Scripts\ColliderHitScript.cs" />
     <Compile Include="Assets\Scripts\DontDestroy.cs" />
@@ -127,6 +128,7 @@
     <Compile Include="Assets\Scripts\Utilities\ChooseObjectWithKeys.cs" />
     <Compile Include="Assets\Scripts\Utilities\CoroutineWithData.cs" />
     <Compile Include="Assets\Scripts\WallTilemapsFunctionality.cs" />
+    <Compile Include="Assets\TestFollowPlayer.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01_UGUI.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark02.cs" />
