@@ -12,6 +12,7 @@ public class PlayerMove : Move
 {
 
     public bool isKeyboardMovement;
+    public bool canMoveUp, canMoveRight, canMoveLeft, canMoveDown;
     private DPadGlobal _DPadGlobal;
     private PlayerStats _playerStats;
 
@@ -39,8 +40,6 @@ public class PlayerMove : Move
 
         _jitterBuffer = 0.1f;
         _offset = new Vector3(_cap2D.offset.x, _cap2D.offset.y, 0);
-
-
     }
 
     void Update()
@@ -93,32 +92,18 @@ public class PlayerMove : Move
             var tAdjusted = new Vector2(transform.position.x + _cap2D.offset.x, transform.position.y + _cap2D.offset.y);
 
             _cap2D.enabled = true;
-            if (CanMoveThisDirection(Direction.UP, tAdjusted, (_cap2D.size.y / 2) + _jitterBuffer))
+            if (CanMoveThisDirection(Direction.UP, tAdjusted, (_cap2D.size.y / 2) + _jitterBuffer) && canMoveUp)
                 MoveUp();
 
-            if (CanMoveThisDirection(Direction.DOWN, tAdjusted, (_cap2D.size.y / 2) + _jitterBuffer))
+            if (CanMoveThisDirection(Direction.DOWN, tAdjusted, (_cap2D.size.y / 2) + _jitterBuffer) && canMoveDown)
                 MoveDown();
 
-            if (CanMoveThisDirection(Direction.RIGHT, tAdjusted, (_cap2D.size.x / 2) + _jitterBuffer))
+            if (CanMoveThisDirection(Direction.RIGHT, tAdjusted, (_cap2D.size.x / 2) + _jitterBuffer) && canMoveRight)
                 MoveRight();
 
-            if (CanMoveThisDirection(Direction.LEFT, tAdjusted, (_cap2D.size.x / 2) + _jitterBuffer))
+            if (CanMoveThisDirection(Direction.LEFT, tAdjusted, (_cap2D.size.x / 2) + _jitterBuffer) && canMoveLeft)
                 MoveLeft();
         }
-    }
-
-
-
-    //-------------------------------------------------------------------TODO
-
-    private bool DidCollideGivenVelocityAndCollider(Vector3 vel, Collider col)
-    {
-        return false;
-    }
-
-    private Vector3 GetEdgeOfCollider()
-    {
-        return new Vector3();
     }
 
     private bool CanMoveThisDirection(Direction dir, Vector2 center, float distance)

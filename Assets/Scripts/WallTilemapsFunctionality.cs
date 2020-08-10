@@ -9,7 +9,14 @@ public class WallTilemapsFunctionality : MonoBehaviour
 
     public double y;
 
-    private GameObject player;
+    // These locks are so we don't set to "can move" to true by any other tilemap.
+    TODO
+    public bool canMoveLocked;
+    public GameObject tilemapWithLock;
+    //------------
+
+    private MovementInfo _moveInfo;
+    private PlayerMove _playerMove;
     private float projectedLanding;
 
     void Start()
@@ -22,8 +29,11 @@ public class WallTilemapsFunctionality : MonoBehaviour
             list.Add(child.gameObject);
         }
         wallTilemapGameObjects = list.ToArray();
+        AddWallTilemapComponent();
 
-        player = GameObject.FindGameObjectWithTag("Player");
+        _moveInfo = GameObject.FindGameObjectWithTag("Player").GetComponent<MovementInfo>();
+        _playerMove = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMove>();
+
     }
 
     // Update is called once per frame
@@ -33,10 +43,18 @@ public class WallTilemapsFunctionality : MonoBehaviour
         ChangeWallTilemapsFunctionalityByLayer();
     }
 
+    private void AddWallTilemapComponent()
+    {
+        foreach (var tm in wallTilemapGameObjects)
+        {
+            tm.gameObject.AddComponent<WallTilemapScript>();
+        }
+    }
+
     private void ChangeWallTilemapLayerByPlayerY()
     {
         //TODO
-        y = player.transform.position.y - player.GetComponent<Jump>().distanceAboveGround - player.GetComponent<Jump>().floorBelow;
+        y = _moveInfo.GlobalPosition.y + 0.5;
 
         foreach (var tm in wallTilemapGameObjects)
         {
@@ -53,12 +71,13 @@ public class WallTilemapsFunctionality : MonoBehaviour
         {
             if (tm.GetComponent<TilemapRenderer>().sortingLayerName == "Wall")
             {
+
                 //continue as normal
-                tm.GetComponent<TilemapCollider2D>().enabled = true;
+                //tm.GetComponent<TilemapCollider2D>().enabled = true;
             }
             if (tm.GetComponent<TilemapRenderer>().sortingLayerName == "WallFront")
             {
-                tm.GetComponent<TilemapCollider2D>().enabled = false;
+                //tm.GetComponent<TilemapCollider2D>().enabled = false;
 
             }
         }

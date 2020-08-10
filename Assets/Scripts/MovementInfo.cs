@@ -1,10 +1,12 @@
 ﻿using UnityEngine;
 using System.Collections;
 using static TilemapFunctions;
+using System;
 
 public class MovementInfo : MonoBehaviour
 {
     public Vector3 GlobalPosition; //{ private set; get; }
+    public Vector3Int GlobalTilePosition;
     public float Z { set; private get; }
 
     public float playerHeight;
@@ -28,6 +30,7 @@ public class MovementInfo : MonoBehaviour
     {
         //TODO
         GlobalPosition = new Vector3(transform.position.x, transform.position.y - Z + 0.5f, Z);
+        GlobalTilePosition = GetPlayerGlobalTileLocation();
 
         velocity = (transform.position - _lastPosition) / Time.deltaTime;
         this._lastPosition = transform.position;
@@ -51,5 +54,26 @@ public class MovementInfo : MonoBehaviour
             upFacing = false;
 
 
+    }
+
+    public Vector3Int GetPlayerGlobalTileLocation()
+    {
+        return new Vector3Int(Convert.ToInt32(GlobalPosition.x), Convert.ToInt32(GlobalPosition.y), Convert.ToInt32(GlobalPosition.z));
+    }
+
+    public Vector3Int GetPlayerGlobalTileLocation(float wallBuffer, Direction dir)
+    {
+        switch (dir)
+        {
+            case Direction.UP:
+                return new Vector3Int(Convert.ToInt32(GlobalPosition.x), Convert.ToInt32(GlobalPosition.y + wallBuffer), Convert.ToInt32(GlobalPosition.z));
+            case Direction.RIGHT:
+                return new Vector3Int(Convert.ToInt32(GlobalPosition.x + wallBuffer), Convert.ToInt32(GlobalPosition.y), Convert.ToInt32(GlobalPosition.z));
+            case Direction.DOWN:
+                return new Vector3Int(Convert.ToInt32(GlobalPosition.x), Convert.ToInt32(GlobalPosition.y - wallBuffer), Convert.ToInt32(GlobalPosition.z));
+            case Direction.LEFT:
+                return new Vector3Int(Convert.ToInt32(GlobalPosition.x - wallBuffer), Convert.ToInt32(GlobalPosition.y), Convert.ToInt32(GlobalPosition.z));
+        }
+        return new Vector3Int(Convert.ToInt32(GlobalPosition.x), Convert.ToInt32(GlobalPosition.y), Convert.ToInt32(GlobalPosition.z));
     }
 }

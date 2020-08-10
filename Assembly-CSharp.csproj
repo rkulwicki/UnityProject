@@ -127,6 +127,7 @@
     <Compile Include="Assets\Scripts\Utilities\ChooseObjectWithBools.cs" />
     <Compile Include="Assets\Scripts\Utilities\ChooseObjectWithKeys.cs" />
     <Compile Include="Assets\Scripts\Utilities\CoroutineWithData.cs" />
+    <Compile Include="Assets\Scripts\WallTilemapScript.cs" />
     <Compile Include="Assets\Scripts\WallTilemapsFunctionality.cs" />
     <Compile Include="Assets\TestFollowPlayer.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01.cs" />
