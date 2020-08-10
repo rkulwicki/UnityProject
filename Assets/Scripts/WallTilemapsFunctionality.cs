@@ -2,22 +2,23 @@
 using System.Collections.Generic;
 using UnityEngine.Tilemaps;
 
+//The parent organizer of all Wall Tilemaps.
+
 public class WallTilemapsFunctionality : MonoBehaviour
 {
 
-    public GameObject[] wallTilemapGameObjects;  //arrays are faster
+    public GameObject[] wallTilemapGameObjects;
 
     public double y;
 
     // These locks are so we don't set to "can move" to true by any other tilemap.
-    TODO
-    public bool canMoveLocked;
-    public GameObject tilemapWithLock;
-    //------------
+    public GameObject lockUp, lockDown;
+    //---
 
     private MovementInfo _moveInfo;
     private PlayerMove _playerMove;
-    private float projectedLanding;
+    private float _projectedLanding;
+    public float wallBuffer;
 
     void Start()
     {

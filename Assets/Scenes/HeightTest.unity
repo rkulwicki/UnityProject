@@ -4437,6 +4437,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   wallTilemapGameObjects: []
   y: 0
+  lockUp: {fileID: 0}
+  lockDown: {fileID: 0}
+  wallBuffer: -0.75
 --- !u!4 &3057343201987837652
 Transform:
   m_ObjectHideFlags: 0

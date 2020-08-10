@@ -40,6 +40,11 @@ public class PlayerMove : Move
 
         _jitterBuffer = 0.1f;
         _offset = new Vector3(_cap2D.offset.x, _cap2D.offset.y, 0);
+
+        canMoveDown = true;
+        canMoveLeft = true;
+        canMoveRight = true;
+        canMoveUp = true;
     }
 
     void Update()
