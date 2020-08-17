@@ -4,9 +4,9 @@ using UnityEngine.Tilemaps;
 
 public class WallTilemapScript : MonoBehaviour
 {
-    public float wallBuffer;
+    public float wallBufferUp, wallBufferDown, wallBufferMiddleDown;
 
-    public TileBase testUp, testDown;
+    public TileBase testUpTile, testDownTile, testDownMiddleTile;
 
     public bool canMoveUp, canMoveDown;
 
@@ -16,7 +16,7 @@ public class WallTilemapScript : MonoBehaviour
     private PlayerMove _playerMove;
     private WallTilemapsFunctionality _wallTilemapFunctionality;
 
-    public Vector3Int tileLocDownOneUnit, tileLocUpOneUnit;
+    public Vector3Int tileLocDownOneUnit, tileLocUpOneUnit, tileLocDownMidOneUnit;
 
     // Use this for initialization
     void Start()
@@ -27,18 +27,19 @@ public class WallTilemapScript : MonoBehaviour
         _playerMove = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMove>();
         _wallTilemapFunctionality = GameObject.FindGameObjectWithTag("Grid").GetComponent<WallTilemapsFunctionality>();
 
-        wallBuffer = _wallTilemapFunctionality.wallBuffer;
+        wallBufferUp = _wallTilemapFunctionality.wallBufferUp;
+        wallBufferDown = _wallTilemapFunctionality.wallBufferDown;
+        wallBufferMiddleDown = _wallTilemapFunctionality.wallBufferMiddleDown;
     }
 
     // Update is called once per frame
     void Update()
     {
         PreventPlayerMovement();
-        //_playerMove.canMoveUp = canMoveUp;
-        //_playerMove.canMoveDown = true;//canMoveDown; //TODO - Down needs work
-        //_playerMove.canMoveRight = true;
-        //_playerMove.canMoveLeft = true;
     }
+
+    
+    //NOTE: THE TILEMAPS ARE SET UP THE CENTER ARE INTEGERS!!!!
 
     //If a tilemap sets one of the "canMove" to false, then this tilemap is the only one that can set it to "true"
     private void PreventPlayerMovement()
@@ -48,22 +49,17 @@ public class WallTilemapScript : MonoBehaviour
         var tilemap = this.GetComponent<Tilemap>();
 
         //I add z to the y to get the tile appropriately.
-        var adjustedGlobalTilePosUp = _movementInfo.GetPlayerGlobalTileLocation(wallBuffer, Direction.UP);
-        var adjustedGlobalTilePosDown = _movementInfo.GetPlayerGlobalTileLocation(wallBuffer, Direction.DOWN);
+        var adjustedGlobalTilePosUp = _movementInfo.GetPlayerGlobalTileLocation(wallBufferUp, Direction.UP);
+        var adjustedGlobalTilePosDown = _movementInfo.GetPlayerGlobalTileLocation(wallBufferDown, Direction.DOWN);
+        var adjustedGlobalTilePosMidDown = _movementInfo.GetPlayerGlobalTileLocation(wallBufferMiddleDown, Direction.DOWN);
+
         tileLocUpOneUnit = new Vector3Int(adjustedGlobalTilePosUp.x, adjustedGlobalTilePosUp.y + adjustedGlobalTilePosUp.z, 0);
+        tileLocDownOneUnit = new Vector3Int(adjustedGlobalTilePosDown.x, adjustedGlobalTilePosDown.y + adjustedGlobalTilePosDown.z - 1, 0); //TODO  //fix how down logic works. Should look for no tilemap as the next tilemap down instead of a wall tile AND while being on a wall tile
+        tileLocDownMidOneUnit = new Vector3Int(adjustedGlobalTilePosMidDown.x, adjustedGlobalTilePosMidDown.y - adjustedGlobalTilePosMidDown.z + 1, 0);
 
-
-        TODO 
-            //fix how down logic works. Should look for no tilemap as the next tilemap down instead of a wall tile AND while being on a wall tile
-
-        tileLocDownOneUnit = new Vector3Int(adjustedGlobalTilePosDown.x, adjustedGlobalTilePosDown.y + adjustedGlobalTilePosDown.z - 1, 0);
-
-
-
-
-        testUp = tilemap.GetTile(tileLocUpOneUnit); //get tile one y unit above
-        testDown = tilemap.GetTile(tileLocDownOneUnit);
-
+        testUpTile = tilemap.GetTile(tileLocUpOneUnit); //get tile one y unit above
+        testDownTile = tilemap.GetTile(tileLocDownOneUnit);
+        testDownMiddleTile = tilemap.GetTile(tileLocDownMidOneUnit);
 
         //TODO
         //Add lock functionality
@@ -72,7 +68,7 @@ public class WallTilemapScript : MonoBehaviour
 
         if (_wallTilemapFunctionality.lockUp == this.gameObject || _wallTilemapFunctionality.lockUp == null) //Put a lock so other tilemaps don't mess with this.
         {
-            if (testUp != null && _sortingLayer == "Wall")
+            if (testUpTile != null && _sortingLayer == "Wall")
             {
                 _playerMove.canMoveUp = false; //lock
                 _wallTilemapFunctionality.lockUp = this.gameObject;
@@ -84,14 +80,19 @@ public class WallTilemapScript : MonoBehaviour
             }
         }
 
-        //if (testDown != null && _sortingLayer == "WallFront") //if on wallTile && next tile down is null
-        //{
-        //    canMoveDown = false;
-        //}
-        //else
-        //{
-        //    canMoveDown = true;
-        //}
-        
+        if (_wallTilemapFunctionality.lockDown == this.gameObject || _wallTilemapFunctionality.lockDown == null) //Put a lock so other tilemaps don't mess with this.
+        {
+            //if the next below tile is not a wall, but also you're on a wall and behind it, then you cannot move downward.
+            if (testDownMiddleTile != null && testDownTile == null && _sortingLayer == "WallFront")
+            {
+                _playerMove.canMoveDown = false;
+                _wallTilemapFunctionality.lockDown = this.gameObject;
+            }
+            else
+            {
+                _playerMove.canMoveDown = true;
+                _wallTilemapFunctionality.lockDown = null;
+            }
+        }
     }
 }

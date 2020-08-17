@@ -13,12 +13,11 @@ public class WallTilemapsFunctionality : MonoBehaviour
 
     // These locks are so we don't set to "can move" to true by any other tilemap.
     public GameObject lockUp, lockDown;
-    //---
+    public float wallBufferUp, wallBufferDown, wallBufferMiddleDown;
 
     private MovementInfo _moveInfo;
     private PlayerMove _playerMove;
     private float _projectedLanding;
-    public float wallBuffer;
 
     void Start()
     {
@@ -55,7 +54,8 @@ public class WallTilemapsFunctionality : MonoBehaviour
     private void ChangeWallTilemapLayerByPlayerY()
     {
         //TODO
-        y = _moveInfo.GlobalPosition.y + 0.5;
+        var zToSubtract = (_moveInfo.GlobalPosition.z - 1);
+        y = _moveInfo.GlobalPosition.y + 0.5 - zToSubtract;
 
         foreach (var tm in wallTilemapGameObjects)
         {
