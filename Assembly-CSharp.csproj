@@ -110,6 +110,9 @@
     <Compile Include="Assets\Scripts\SceneChangeTrigger.cs" />
     <Compile Include="Assets\Scripts\SceneChanger.cs" />
     <Compile Include="Assets\Scripts\Shadow.cs" />
+    <Compile Include="Assets\Scripts\Spike3DTilemaps\TestPlayer.cs" />
+    <Compile Include="Assets\Scripts\Spike3DTilemaps\TestPlayerMove.cs" />
+    <Compile Include="Assets\Scripts\Spike3DTilemaps\TestTilemapLogic.cs" />
     <Compile Include="Assets\Scripts\Text\TextBoxScript.cs" />
     <Compile Include="Assets\Scripts\Text\TextHolder.cs" />
     <Compile Include="Assets\Scripts\Text\TextReader.cs" />
