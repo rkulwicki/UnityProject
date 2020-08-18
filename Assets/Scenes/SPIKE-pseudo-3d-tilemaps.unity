@@ -1780,6 +1780,12 @@ MonoBehaviour:
   yNegativeKey: s
   zPositiveKey: e
   zNegativeKey: q
+  canMoveXPositive: 1
+  canMoveXNegative: 1
+  canMoveYPositive: 1
+  canMoveYNegative: 1
+  canMoveZPositive: 1
+  canMoveZNegative: 1
 --- !u!4 &1154803716
 Transform:
   m_ObjectHideFlags: 0
