@@ -11,6 +11,9 @@ public class TestTilemapLogic : MonoBehaviour
 {
     private GameObject[] tilemapGameObjects; 
     public Vector3 _pseudo3DPosition;
+    public Tile[,,] tilesTest;
+    public Vector3Int testTilePos;
+    public bool reset;
 
     void Start()
     {
@@ -26,6 +29,10 @@ public class TestTilemapLogic : MonoBehaviour
     {
         _pseudo3DPosition = GameObject.Find("TestPlayer").GetComponent<TestPlayer>().pseudo3DPosition;
         ChangeTilemapLayerByPlayerHeight();
+
+        var locs = GetCubePositionsGivenCenter(testTilePos);
+        tilesTest = GetSurroundingTilesIn3DSpace(testTilePos);
+        //DebugHighlightSurroundingTiles(tilesTest, reset);
     }
 
     private void ChangeTilemapLayerByPlayerHeight()
@@ -47,29 +54,51 @@ public class TestTilemapLogic : MonoBehaviour
     /// <returns>Tile[,,]</returns>
     private Tile[,,] GetSurroundingTilesIn3DSpace(Vector3Int tilePos)
     {
-
+        //IMPORTANT NOTE: Sorting order is z
+        var grid = this.gameObject.GetComponent<Grid>();
         var locs = GetCubePositionsGivenCenter(tilePos);
 
-        var tiles = new Dictionary<int, Tile[][]>();
-        for(int i = sortingOrder - 1; i <= sortingOrder + 1; i++) //calc for each z plane (or sorting order
+        var tiles = new Tile[locs.GetLength(0), locs.GetLength(1), locs.GetLength(2)];
+
+        for (int z = 0; z < locs.GetLength(2); z++) //go through sorting order (z) first then x, then y
         {
             Tilemap tilemap;
             try
             {
-                tilemap = tilemapGameObjects.Select(x => x.GetComponent<Tilemap>())
-                                                .Where(y => y.GetComponent<TilemapRenderer>().sortingOrder == i)
+                tilemap = tilemapGameObjects.Select(go => go.GetComponent<Tilemap>())
+                                                .Where(tm => tm.GetComponent<TilemapRenderer>().sortingOrder == z)
                                                 .FirstOrDefault();
             }
-            catch(Exception e)
+            catch (Exception e)
             {
-                Debug.Log("There is no tilemap with a sorting order of " + i);
+                Debug.Log("There is no tilemap with a sorting order of " + z);
+                continue;
             }
 
-            
-            tilemap.GetTile()
+            for (int x = 0; x < locs.GetLength(0); x++)
+            {
+                for (int y = 0; y < locs.GetLength(1); y++)
+                {
+                    if (tilemap != null)
+                    {
+                        //adjust y position based on 
+                        var pos = tilemap.WorldToCell(new Vector3Int(x, y + (z - 1), 0));
+                        Tile t = tilemap.GetTile<Tile>(pos);
+                        tiles[x, y, z] = t;
+                    }
+                }
+            }
         }
+
+        return tiles;
     }
 
+    /// <summary>
+    /// Given a center, returns the integer values  of the 8 tiles surrounding the center and including
+    /// the center.
+    /// </summary>
+    /// <param name="pos"></param>
+    /// <returns></returns>
     private Vector3Int[,,] GetCubePositionsGivenCenter(Vector3Int pos)
     {
         var locs = new Vector3Int[3, 3, 3];
@@ -86,5 +115,35 @@ public class TestTilemapLogic : MonoBehaviour
         }
 
         return locs;
+    }
+
+    /// <summary>
+    /// For testing. Highlights an array of tiles in pseudo 3d space.
+    /// </summary>
+    /// <param name="tiles"></param>
+    private void DebugHighlightSurroundingTiles(Tile[,,] tiles, bool reset)
+    {
+        for (int x = 0; x < 3; x++)
+        {
+            for (int y = 0; y < 3; y++)
+            {
+                for (int z = 0; z < 3; z++)
+                {
+                    if (tiles[x, y, z] != null)
+                    {
+                        if (reset)
+                        {
+                            tiles[x, y, z].color = new Color(1, 1, 1, 1);
+                        }
+                        if (z == 0)
+                            tiles[x, y, z].color = new Color(1, 0.92f, 0.016f, 0.5f); //lower
+                        else if (z == 1)
+                            tiles[x, y, z].color = new Color(1, 0.92f, 0.016f, 0.75f); //mid
+                        else
+                            tiles[x, y, z].color = new Color(1, 0.92f, 0.016f, 1); //higher
+                    }
+                }
+            }
+        }
     }
 }
