@@ -14,6 +14,7 @@ public class TestTilemapLogic : MonoBehaviour
     public Tile[,,] tilesTest;
     public Vector3Int testTilePos;
     public bool reset;
+    public TileBase tb;
 
     void Start()
     {
@@ -32,6 +33,7 @@ public class TestTilemapLogic : MonoBehaviour
 
         var locs = GetCubePositionsGivenCenter(testTilePos);
         tilesTest = GetSurroundingTilesIn3DSpace(testTilePos);
+        SetTilesHere(tb, locs);
         //DebugHighlightSurroundingTiles(tilesTest, reset);
     }
 
@@ -82,7 +84,7 @@ public class TestTilemapLogic : MonoBehaviour
                     if (tilemap != null)
                     {
                         //adjust y position based on 
-                        var pos = tilemap.WorldToCell(new Vector3Int(x, y + (z - 1), 0));
+                        var pos = tilemap.WorldToCell(new Vector3Int(x, y, 0));
                         Tile t = tilemap.GetTile<Tile>(pos);
                         tiles[x, y, z] = t;
                     }
@@ -109,7 +111,7 @@ public class TestTilemapLogic : MonoBehaviour
             {
                 for (int z = -1; z < 2; z++)
                 {
-                    locs[x+1, y+1, z+1] = new Vector3Int(pos.x + x, pos.y + y, pos.z + z);
+                    locs[x+1, y+1, z+1] = new Vector3Int(pos.x + x, pos.y + y + (z), pos.z + z);
                 }
             }
         }
@@ -146,4 +148,30 @@ public class TestTilemapLogic : MonoBehaviour
             }
         }
     }
+
+    private void SetTilesHere(TileBase tb, Vector3Int[,,] pos)
+    {
+        for (int x = 0; x < 3; x++)
+        {
+            for (int y = 0; y < 3; y++)
+            {
+                for (int z = 0; z < 3; z++)
+                {
+                    if (pos[x, y, z] != null)
+                    {
+                        foreach (var tm in tilemapGameObjects)
+                        { 
+                            if (tm.GetComponent<TilemapRenderer>().sortingOrder == pos[x, y, z].z)
+                            {
+                                tm.GetComponent<Tilemap>().SetTile(new Vector3Int(pos[x,y,z].x, pos[x, y, z].y, 0), tb);
+                            }
+                        
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+
 }
