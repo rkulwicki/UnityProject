@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine.Tilemaps;
 using System.Linq;
 using System;
+using UnityEditor;
 
 //To be attached to Grid game object
 
@@ -24,6 +25,7 @@ public class TestTilemapLogic : MonoBehaviour
             list.Add(child.gameObject);
         }
         tilemapGameObjects = list.ToArray();
+        SetUp3DTiles();
     }
 
     void Update()
@@ -138,6 +140,35 @@ public class TestTilemapLogic : MonoBehaviour
         }
 
         return locs;
+    }
+
+    /// <summary>
+    /// Sets up the tiles with the scriptable tile "Pseudo3DTile"
+    /// </summary>
+    public void SetUp3DTiles()
+    {
+        foreach(var tmgo in tilemapGameObjects)
+        {
+            var tm = tmgo.GetComponent<Tilemap>();
+            var bounds = tm.cellBounds;
+            var allTiles = tm.GetTilesBlock(bounds);
+
+            for (int x = 0; x < bounds.size.x; x++)
+            {
+                for (int y = 0; y < bounds.size.y; y++)
+                {
+                    TileBase tile = allTiles[x + y * bounds.size.x];
+                    if (tile != null)
+                    {
+                        Debug.Log("x:" + x + " y:" + y + " tile:" + tile.name);
+                    }
+                    else
+                    {
+                        Debug.Log("x:" + x + " y:" + y + " tile: (null)");
+                    }
+                }
+            }
+        }
     }
 
 }

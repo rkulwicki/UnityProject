@@ -20,7 +20,7 @@ public class TestPlayerMove : MonoBehaviour
         //x
         if (Input.GetKey(xPositiveKey) && canMoveXPositive)
             pseudo3DPosition = Vector3.MoveTowards(pseudo3DPosition, pseudo3DPosition + new Vector3(1, 0, 0), Time.deltaTime * speed);
-        else if (Input.GetKey(xNegativeKey) && canMoveXPositive)
+        else if (Input.GetKey(xNegativeKey) && canMoveXNegative)
             pseudo3DPosition = Vector3.MoveTowards(pseudo3DPosition, pseudo3DPosition + new Vector3(-1, 0, 0), Time.deltaTime * speed);
 
         //y
