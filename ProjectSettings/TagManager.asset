@@ -17,6 +17,7 @@ TagManager:
   - NPC
   - Floor
   - SceneChanger
+  - Tilemap
   layers:
   - Default
   - TransparentFX

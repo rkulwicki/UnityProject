@@ -110,6 +110,8 @@
     <Compile Include="Assets\Scripts\SceneChangeTrigger.cs" />
     <Compile Include="Assets\Scripts\SceneChanger.cs" />
     <Compile Include="Assets\Scripts\Shadow.cs" />
+    <Compile Include="Assets\Scripts\Spike3DTilemaps\Pseudo3DCubeCollider.cs" />
+    <Compile Include="Assets\Scripts\Spike3DTilemaps\Pseudo3DCubeColliderMaster.cs" />
     <Compile Include="Assets\Scripts\Spike3DTilemaps\Pseudo3DTile.cs" />
     <Compile Include="Assets\Scripts\Spike3DTilemaps\TestPlayer.cs" />
     <Compile Include="Assets\Scripts\Spike3DTilemaps\TestPlayerMove.cs" />

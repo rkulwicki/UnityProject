@@ -18,7 +18,7 @@ public class Pseudo3DTile : TileBase
     public override bool StartUp(Vector3Int position, ITilemap tilemap, GameObject go)
     {
         //get tile
-        var tm = GetThisTilemapGameObject(tilemap);
+        //var tm = GetThisTilemapGameObject(tilemap);
         //tm.GetComponent<Tilemap>().SetTile();
         return base.StartUp(position, tilemap, go);
     }
