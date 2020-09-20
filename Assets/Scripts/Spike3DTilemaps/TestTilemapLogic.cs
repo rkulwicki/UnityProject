@@ -33,8 +33,8 @@ public class TestTilemapLogic : MonoBehaviour
         _pseudo3DPosition = GameObject.Find("TestPlayer").GetComponent<TestPlayer>().pseudo3DPosition;
         ChangeTilemapLayerByPlayerHeight();
 
-        var locsWO = GetCubePositionsGivenCenterWithTiles(testTilePos);
-        SetTilesHere(tb, locsWO);
+        //var locsWO = GetCubePositionsGivenCenterWithTiles(testTilePos);
+        //SetTilesHere(tb, locsWO);
     }
 
     /// <summary>

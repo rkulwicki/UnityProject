@@ -10,6 +10,8 @@ public class Pseudo3DCubeColliderMaster : MonoBehaviour
     public GameObject xpLock, xnLock, ypLock, ynLock, zpLock, znLock;
     public Transform prefab;
 
+    public float buffer;
+
     public List<Vector3> tileWorldLocations;
 
     private GameObject[] tilemapGameObjects;
@@ -20,7 +22,8 @@ public class Pseudo3DCubeColliderMaster : MonoBehaviour
         var list = new List<GameObject>();
         foreach (Transform child in GameObject.FindGameObjectWithTag("Grid").transform)
         {
-            if(child.gameObject.tag == "Tilemap")
+            if(child.gameObject.tag == "Tilemap" && (child.gameObject.GetComponent<TilemapRenderer>().sortingLayerName == "FloorBelow" ||
+                                                     child.gameObject.GetComponent<TilemapRenderer>().sortingLayerName == "FloorAbove"))
                 list.Add(child.gameObject);
         }
         tilemapGameObjects = list.ToArray();
@@ -62,6 +65,7 @@ public class Pseudo3DCubeColliderMaster : MonoBehaviour
                 psuedo3DTileCollider.GetComponent<Pseudo3DCubeCollider>().sortingOrder = sortingOrder;
                 psuedo3DTileCollider.GetComponent<Pseudo3DCubeCollider>().tilePosition = new Vector2Int(Convert.ToInt32(place.x), Convert.ToInt32(place.y));
                 psuedo3DTileCollider.GetComponent<Pseudo3DCubeCollider>().CreatePseudo3DCubeCollider();
+                psuedo3DTileCollider.GetComponent<Pseudo3DCubeCollider>().buffer = buffer;
             }
         }
     }
