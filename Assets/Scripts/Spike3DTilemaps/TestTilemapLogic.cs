@@ -17,12 +17,19 @@ public class TestTilemapLogic : MonoBehaviour
     public bool reset;
     public TileBase tb;
 
+    // TODO - let's move this stuff to a config file or something
+    private static Vector3 DefaultPosition = new Vector3(-999, -999, 0);
+    private static string TilemapTag = "Tilemap";
+    private static string FloorAboveTag = "FloorAbove";
+    private static string FloorBelowTag = "FloorBelow";
+    private static string PlayerTag = "Player";
+
     void Start()
     {
         var list = new List<GameObject>();
         foreach (Transform child in transform)
         {
-            if(child.gameObject.tag == "Tilemap")
+            if(child.gameObject.tag == TilemapTag)
                 list.Add(child.gameObject);
         }
         tilemapGameObjects = list.ToArray();
@@ -30,7 +37,7 @@ public class TestTilemapLogic : MonoBehaviour
 
     void Update()
     {
-        _pseudo3DPosition = GameObject.Find("TestPlayer").GetComponent<TestPlayer>().pseudo3DPosition;
+        _pseudo3DPosition = GameObject.FindGameObjectWithTag(PlayerTag).GetComponent<TestPlayer>().pseudo3DPosition;
         ChangeTilemapLayerByPlayerHeight();
 
         //var locsWO = GetCubePositionsGivenCenterWithTiles(testTilePos);
@@ -44,11 +51,11 @@ public class TestTilemapLogic : MonoBehaviour
     {
         foreach (var tm in tilemapGameObjects)
         {
-            if (tm.GetComponent<TilemapRenderer>().sortingLayerName == "FloorBelow" && _pseudo3DPosition.z < tm.GetComponent<TilemapRenderer>().sortingOrder)
-                tm.GetComponent<TilemapRenderer>().sortingLayerName = "FloorAbove";
+            if (tm.GetComponent<TilemapRenderer>().sortingLayerName == FloorBelowTag && _pseudo3DPosition.z < tm.GetComponent<TilemapRenderer>().sortingOrder)
+                tm.GetComponent<TilemapRenderer>().sortingLayerName = FloorAboveTag;
 
-            if (tm.GetComponent<TilemapRenderer>().sortingLayerName == "FloorAbove" && _pseudo3DPosition.z >= tm.GetComponent<TilemapRenderer>().sortingOrder)
-                tm.GetComponent<TilemapRenderer>().sortingLayerName = "FloorBelow";
+            if (tm.GetComponent<TilemapRenderer>().sortingLayerName == FloorAboveTag && _pseudo3DPosition.z >= tm.GetComponent<TilemapRenderer>().sortingOrder)
+                tm.GetComponent<TilemapRenderer>().sortingLayerName = FloorBelowTag;
         }
     }
 
@@ -140,6 +147,60 @@ public class TestTilemapLogic : MonoBehaviour
         }
 
         return locs;
+    }
+
+    /// <summary>
+    /// Takes in a position (x, y) and the height (z) and determines what tilemap floor they directly above.
+    /// </summary>
+    /// <returns></returns>
+    public static Vector3 GetProjectedLandingFromPseudo3DPosition(Vector3 pseudo3DPos)
+    {
+        var floorsBelow = (int)Math.Truncate(pseudo3DPos.z);
+        for (var i = floorsBelow; i > 0; i--) //check each floor if it is the potential floor straight below. 
+        {                                     //starting with highest floor first 
+            var iLayerTilemaps = GetTilemapsByOrder(i);
+
+            if (iLayerTilemaps.Count() <= 0)
+                continue;
+
+            foreach (var tilemap in iLayerTilemaps)
+            {
+                //need to truncate because "HasTile" only takes V3Int
+                var tileLandedOn = new Vector3Int((int)Math.Floor(pseudo3DPos.x),
+                                                  (int)Math.Floor(pseudo3DPos.y + i),
+                                                  0);
+
+                var hasTile = tilemap.GetComponent<Tilemap>().HasTile(tileLandedOn);
+
+                //if found a tile at a certain tilemap at a given landing position then return the landing position
+                if (hasTile)
+                    return new Vector3(pseudo3DPos.x, pseudo3DPos.y, i);
+                //return new Vector3(pos.x, pos.y - distFromTilemap, pos.z);
+            }
+        }
+
+        //couldn't find a location
+        return DefaultPosition;
+    }
+
+    private static Tilemap[] GetTilemapsByOrder(int order)
+    {
+        var tilemaps = new List<Tilemap>();
+
+        var grid = GameObject.FindGameObjectWithTag("Grid");
+
+        //check each tilemap in grid to see if it is under the sorting layer sortingLayer
+        foreach (Transform child in grid.transform)
+        {
+
+            if (child.gameObject.tag == "Tilemap" &&
+                child.gameObject.GetComponent<TilemapRenderer>().sortingOrder == order)
+            {
+                tilemaps.Add(child.gameObject.GetComponent<Tilemap>());
+            }
+        }
+
+        return tilemaps.ToArray();
     }
 
 }

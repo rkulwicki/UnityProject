@@ -115,6 +115,7 @@
     <Compile Include="Assets\Scripts\Spike3DTilemaps\Pseudo3DTile.cs" />
     <Compile Include="Assets\Scripts\Spike3DTilemaps\TestPlayer.cs" />
     <Compile Include="Assets\Scripts\Spike3DTilemaps\TestPlayerMove.cs" />
+    <Compile Include="Assets\Scripts\Spike3DTilemaps\TestShadow.cs" />
     <Compile Include="Assets\Scripts\Spike3DTilemaps\TestTilemapLogic.cs" />
     <Compile Include="Assets\Scripts\Text\TextBoxScript.cs" />
     <Compile Include="Assets\Scripts\Text\TextHolder.cs" />
