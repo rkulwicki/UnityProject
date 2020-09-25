@@ -17,6 +17,7 @@ TagManager:
   - NPC
   - Floor
   - SceneChanger
+  - Tilemap
   layers:
   - Default
   - TransparentFX
@@ -66,11 +67,17 @@ TagManager:
   - name: Obstacles
     uniqueID: 3210658865
     locked: 0
+  - name: FloorBelow
+    uniqueID: 3401204887
+    locked: 0
   - name: Wall
     uniqueID: 4234220511
     locked: 0
   - name: Units
     uniqueID: 1835449111
+    locked: 0
+  - name: FloorAbove
+    uniqueID: 3658254427
     locked: 0
   - name: WallFront
     uniqueID: 3540274231
