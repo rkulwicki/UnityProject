@@ -184,9 +184,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _pseudo3DPosition: {x: 0, y: 0, z: 0}
-  testTilePos: {x: 0, y: 0, z: 2}
+  testTilePos: {x: 0, y: 0, z: 0}
   reset: 0
-  tb: {fileID: 11400000, guid: b5934e7f52466d64a8602cb580f7cb60, type: 2}
+  tb: {fileID: 0}
 --- !u!1 &351072127
 GameObject:
   m_ObjectHideFlags: 0
@@ -1388,7 +1388,7 @@ GameObject:
   - component: {fileID: 1015463720}
   - component: {fileID: 1015463721}
   m_Layer: 0
-  m_Name: TestShadow
+  m_Name: Shadow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1471,6 +1471,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   shadowPseudo3DPos: {x: 0, y: 0, z: 0}
+  distanceFromGround: 0
 --- !u!1 &1154803714
 GameObject:
   m_ObjectHideFlags: 0
@@ -1482,8 +1483,9 @@ GameObject:
   - component: {fileID: 1154803716}
   - component: {fileID: 1154803717}
   - component: {fileID: 1154803715}
+  - component: {fileID: 1154803718}
   m_Layer: 0
-  m_Name: TestPlayer
+  m_Name: Pseudo3DPlayer
   m_TagString: Player
   m_Icon: {fileID: 7174288486110832750, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
@@ -1502,7 +1504,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 10
-  pseudo3DPosition: {x: -4, y: -2, z: 0.5}
   xPositiveKey: d
   xNegativeKey: a
   yPositiveKey: w
@@ -1580,6 +1581,20 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &1154803718
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1154803714}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa2f9e372e49b244398e8e9d9c83b1bd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pseudo3DPosition: {x: 0, y: 0, z: 0}
+  distanceFromGround: 0
 --- !u!1 &1158651762
 GameObject:
   m_ObjectHideFlags: 0

@@ -5,6 +5,7 @@ using System.Collections.Generic;
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
+using static Globals;
 
 /// <summary>
 /// represents a single tile which has 3d properties
@@ -54,7 +55,7 @@ public class Pseudo3DTile : TileBase
 
     private GameObject GetThisTilemapGameObject(ITilemap tm)
     {
-        var grid = GameObject.FindGameObjectWithTag("Grid");
+        var grid = GameObject.FindGameObjectWithTag(GridTag);
         var tmList = new List<GameObject>();
         foreach (Transform child in grid.transform)
         {

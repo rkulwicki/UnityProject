@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System;
+using static Globals;
 
 public class Pseudo3DCubeCollider : MonoBehaviour
 {
@@ -17,13 +18,13 @@ public class Pseudo3DCubeCollider : MonoBehaviour
 
     private void Start()
     {
-        player = GameObject.FindGameObjectWithTag("Player");
+        player = GameObject.FindGameObjectWithTag(PlayerTag);
         colMaster = transform.parent.gameObject.GetComponent<Pseudo3DCubeColliderMaster>();
     }
 
     private void Update()
     {
-        CheckIfCanMove(player.GetComponent<TestPlayer>().pseudo3DPosition);
+        CheckIfCanMove(player.GetComponent<Pseudo3DPosition>().pseudo3DPosition);
         UpdateCanMoves();
     }
 

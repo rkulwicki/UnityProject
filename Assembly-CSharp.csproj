@@ -96,6 +96,7 @@
     <Compile Include="Assets\Scripts\Global\PlayerBattleGlobal.cs" />
     <Compile Include="Assets\Scripts\Global\TagsGlobal.cs" />
     <Compile Include="Assets\Scripts\Global\TextBoxGlobal.cs" />
+    <Compile Include="Assets\Scripts\Globals.cs" />
     <Compile Include="Assets\Scripts\Jump.cs" />
     <Compile Include="Assets\Scripts\Managers\BattleManager.cs" />
     <Compile Include="Assets\Scripts\Managers\HudsManager.cs" />
@@ -112,11 +113,12 @@
     <Compile Include="Assets\Scripts\Shadow.cs" />
     <Compile Include="Assets\Scripts\Spike3DTilemaps\Pseudo3DCubeCollider.cs" />
     <Compile Include="Assets\Scripts\Spike3DTilemaps\Pseudo3DCubeColliderMaster.cs" />
+    <Compile Include="Assets\Scripts\Spike3DTilemaps\Pseudo3DPlayer.cs" />
+    <Compile Include="Assets\Scripts\Spike3DTilemaps\Pseudo3DPlayerMove.cs" />
+    <Compile Include="Assets\Scripts\Spike3DTilemaps\Pseudo3DPosition.cs" />
+    <Compile Include="Assets\Scripts\Spike3DTilemaps\Pseudo3DShadow.cs" />
     <Compile Include="Assets\Scripts\Spike3DTilemaps\Pseudo3DTile.cs" />
-    <Compile Include="Assets\Scripts\Spike3DTilemaps\TestPlayer.cs" />
-    <Compile Include="Assets\Scripts\Spike3DTilemaps\TestPlayerMove.cs" />
-    <Compile Include="Assets\Scripts\Spike3DTilemaps\TestShadow.cs" />
-    <Compile Include="Assets\Scripts\Spike3DTilemaps\TestTilemapLogic.cs" />
+    <Compile Include="Assets\Scripts\Spike3DTilemaps\Pseudo3DTilemapLogic.cs" />
     <Compile Include="Assets\Scripts\Text\TextBoxScript.cs" />
     <Compile Include="Assets\Scripts\Text\TextHolder.cs" />
     <Compile Include="Assets\Scripts\Text\TextReader.cs" />

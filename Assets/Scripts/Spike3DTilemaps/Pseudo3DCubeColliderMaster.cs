@@ -3,6 +3,7 @@ using System.Collections;
 using UnityEngine.Tilemaps;
 using System.Collections.Generic;
 using System;
+using static Globals;
 
 public class Pseudo3DCubeColliderMaster : MonoBehaviour
 {
@@ -20,10 +21,10 @@ public class Pseudo3DCubeColliderMaster : MonoBehaviour
     void Start()
     {
         var list = new List<GameObject>();
-        foreach (Transform child in GameObject.FindGameObjectWithTag("Grid").transform)
+        foreach (Transform child in GameObject.FindGameObjectWithTag(GridTag).transform)
         {
-            if(child.gameObject.tag == "Tilemap" && (child.gameObject.GetComponent<TilemapRenderer>().sortingLayerName == "FloorBelow" ||
-                                                     child.gameObject.GetComponent<TilemapRenderer>().sortingLayerName == "FloorAbove"))
+            if(child.gameObject.tag == TilemapTag && (child.gameObject.GetComponent<TilemapRenderer>().sortingLayerName == FloorBelowTag ||
+                                                     child.gameObject.GetComponent<TilemapRenderer>().sortingLayerName == FloorAboveTag))
                 list.Add(child.gameObject);
         }
         tilemapGameObjects = list.ToArray();
@@ -34,7 +35,7 @@ public class Pseudo3DCubeColliderMaster : MonoBehaviour
             SetUp3DTiles(tmgo.GetComponent<Tilemap>(), tmgo.GetComponent<TilemapRenderer>().sortingOrder);
         }
 
-        player = GameObject.FindGameObjectWithTag("Player");
+        player = GameObject.FindGameObjectWithTag(PlayerTag);
     }
 
     private void Update()
@@ -72,11 +73,11 @@ public class Pseudo3DCubeColliderMaster : MonoBehaviour
 
     private void UpdatePlayerCanMove()
     {
-        player.GetComponent<TestPlayer>().canMoveXNegative = canMoveXNegative;
-        player.GetComponent<TestPlayer>().canMoveXPositive = canMoveXPositive;
-        player.GetComponent<TestPlayer>().canMoveYNegative = canMoveYNegative;
-        player.GetComponent<TestPlayer>().canMoveYPositive = canMoveYPositive;
-        player.GetComponent<TestPlayer>().canMoveZNegative = canMoveZNegative;
-        player.GetComponent<TestPlayer>().canMoveZPositive = canMoveZPositive;
+        player.GetComponent<Pseudo3DPlayer>().canMoveXNegative = canMoveXNegative;
+        player.GetComponent<Pseudo3DPlayer>().canMoveXPositive = canMoveXPositive;
+        player.GetComponent<Pseudo3DPlayer>().canMoveYNegative = canMoveYNegative;
+        player.GetComponent<Pseudo3DPlayer>().canMoveYPositive = canMoveYPositive;
+        player.GetComponent<Pseudo3DPlayer>().canMoveZNegative = canMoveZNegative;
+        player.GetComponent<Pseudo3DPlayer>().canMoveZPositive = canMoveZPositive;
     }
 }
