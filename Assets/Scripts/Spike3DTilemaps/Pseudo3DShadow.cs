@@ -6,7 +6,8 @@ using static Globals;
 public class Pseudo3DShadow : MonoBehaviour
 {
     public Vector3 shadowPseudo3DPos;
-    public float distanceFromGround;
+
+    private float _distanceFromGround;
     private GameObject _player;
 
     void Start()
@@ -25,7 +26,7 @@ public class Pseudo3DShadow : MonoBehaviour
     {
         var playerPos = _player.GetComponent<Pseudo3DPosition>().pseudo3DPosition;
         shadowPseudo3DPos = GetProjectedLandingFromPseudo3DPosition(playerPos);
-        distanceFromGround = GetDistanceFromGround(playerPos);
+        _distanceFromGround = _player.GetComponent<Pseudo3DPosition>().distanceFromGround;
         return new Vector3(shadowPseudo3DPos.x, shadowPseudo3DPos.y + shadowPseudo3DPos.z, 0);
     }
 
@@ -33,5 +34,7 @@ public class Pseudo3DShadow : MonoBehaviour
     private void UpdateSpriteRenderer()
     {
         //distanceFromGround
+        var scale = (1)/(1 + _distanceFromGround); //after every 1 unit up, we cut the size in half
+        this.transform.localScale = new Vector3(scale, scale, 1);
     }
 }

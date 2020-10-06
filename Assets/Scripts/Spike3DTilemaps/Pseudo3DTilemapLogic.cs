@@ -175,14 +175,17 @@ public class Pseudo3DTilemapLogic : MonoBehaviour
         return DefaultPosition;
     }
 
-    //TODO FINISH THIS!!!!!
-
+    /// <summary>
+    /// Gets the distance from the ground, ie. tilemaps
+    /// </summary>
+    /// <param name="pseudo3DPos"></param>
+    /// <returns></returns>
     public static float GetDistanceFromGround(Vector3 pseudo3DPos)
     {
         var distance = 0f;
         var floorsBelow = (int)Math.Truncate(pseudo3DPos.z);
-        for (var i = floorsBelow; i > 0; i--) //check each floor if it is the potential floor straight below. 
-        {                                     //starting with highest floor first 
+        for (var i = floorsBelow; i > 0; i--) 
+        {                                     
             var iLayerTilemaps = GetTilemapsByOrder(i);
 
             if (iLayerTilemaps.Count() <= 0)
@@ -190,21 +193,14 @@ public class Pseudo3DTilemapLogic : MonoBehaviour
 
             foreach (var tilemap in iLayerTilemaps)
             {
-                //need to truncate because "HasTile" only takes V3Int
-                var tileLandedOn = new Vector3Int((int)Math.Floor(pseudo3DPos.x),
-                                                  (int)Math.Floor(pseudo3DPos.y + i),
-                                                  0);
-
+                distance = pseudo3DPos.z - (float)i;
+                var tileLandedOn = new Vector3Int((int)Math.Floor(pseudo3DPos.x), (int)Math.Floor(pseudo3DPos.y + i), 0);
                 var hasTile = tilemap.GetComponent<Tilemap>().HasTile(tileLandedOn);
-
-                //if found a tile at a certain tilemap at a given landing position then return the landing position
+                
                 if (hasTile)
                     return distance;
-                //return new Vector3(pos.x, pos.y - distFromTilemap, pos.z);
             }
         }
-
-        //couldn't find a location
         return distance;
     }
 

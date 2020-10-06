@@ -1,14 +1,14 @@
 ﻿using UnityEngine;
 using System.Collections;
+using static Pseudo3DTilemapLogic;
+using static Globals;
 
 public class Pseudo3DPlayerMove : MonoBehaviour
 {
     public float speed;
-    public string xPositiveKey, xNegativeKey, yPositiveKey, yNegativeKey, zPositiveKey, zNegativeKey;
     public bool canMoveXPositive, canMoveXNegative, canMoveYPositive, canMoveYNegative, canMoveZPositive, canMoveZNegative;
 
-    private Vector3 _pseudo3DPosition;
-    private int _distanceFromGround;
+    public Vector3 _pseudo3DPosition;
 
     protected void JustMove()
     {
@@ -21,22 +21,22 @@ public class Pseudo3DPlayerMove : MonoBehaviour
     protected void MoveGlobalPosition()
     {
         //x
-        if (Input.GetKey(xPositiveKey) && canMoveXPositive)
-            _pseudo3DPosition = Vector3.MoveTowards(_pseudo3DPosition, _pseudo3DPosition + new Vector3(1, 0, 0), Time.deltaTime * speed);
-        else if (Input.GetKey(xNegativeKey) && canMoveXNegative)
-            _pseudo3DPosition = Vector3.MoveTowards(_pseudo3DPosition, _pseudo3DPosition + new Vector3(-1, 0, 0), Time.deltaTime * speed);
+        if (Input.GetKey(XPositiveKey) && canMoveXPositive)
+            MoveXPositive(speed);
+        else if (Input.GetKey(XNegativeKey) && canMoveXNegative)
+            MoveXNegative(speed);
 
         //y
-        if (Input.GetKey(yPositiveKey) && canMoveYPositive)
-            _pseudo3DPosition = Vector3.MoveTowards(_pseudo3DPosition, _pseudo3DPosition + new Vector3(0, 1, 0), Time.deltaTime * speed);
-        else if (Input.GetKey(yNegativeKey) && canMoveYNegative)
-            _pseudo3DPosition = Vector3.MoveTowards(_pseudo3DPosition, _pseudo3DPosition + new Vector3(0, -1, 0), Time.deltaTime * speed);
+        if (Input.GetKey(YPositiveKey) && canMoveYPositive)
+            MoveYPositive(speed);
+        else if (Input.GetKey(YNegativeKey) && canMoveYNegative)
+            MoveYNegative(speed);
 
         //z
-        if (Input.GetKey(zPositiveKey) && canMoveZPositive)
-            _pseudo3DPosition = Vector3.MoveTowards(_pseudo3DPosition, _pseudo3DPosition + new Vector3(0, 0, 1), Time.deltaTime * speed);
-        else if (Input.GetKey(zNegativeKey) && canMoveZNegative)
-            _pseudo3DPosition = Vector3.MoveTowards(_pseudo3DPosition, _pseudo3DPosition + new Vector3(0, 0, -1), Time.deltaTime * speed);
+        if (Input.GetKey(ZPositiveKey) && canMoveZPositive)
+            MoveZPositive(speed);
+        else if (Input.GetKey(ZNegativeKey) && canMoveZNegative)
+            MoveZNegative(speed);
     }
 
     protected void MoveTransformXandY()
@@ -52,6 +52,35 @@ public class Pseudo3DPlayerMove : MonoBehaviour
     protected void UpdatePseudo3DPosition()
     {
         GetComponent<Pseudo3DPosition>().pseudo3DPosition = _pseudo3DPosition;
-        GetComponent<Pseudo3DPosition>().distanceFromGround = _distanceFromGround;
+        GetComponent<Pseudo3DPosition>().distanceFromGround = GetDistanceFromGround(_pseudo3DPosition);
     }
+
+    #region Public Methods
+
+    public void MoveXPositive(float speed)
+    {
+        _pseudo3DPosition = Vector3.MoveTowards(_pseudo3DPosition, _pseudo3DPosition + new Vector3(1, 0, 0), Time.deltaTime * speed);
+    }
+    public void MoveXNegative(float speed)
+    {
+        _pseudo3DPosition = Vector3.MoveTowards(_pseudo3DPosition, _pseudo3DPosition + new Vector3(-1, 0, 0), Time.deltaTime * speed);
+    }
+    public void MoveYPositive(float speed)
+    {
+        _pseudo3DPosition = Vector3.MoveTowards(_pseudo3DPosition, _pseudo3DPosition + new Vector3(0, 1, 0), Time.deltaTime * speed);
+    }
+
+    public void MoveYNegative(float speed)
+    {
+        _pseudo3DPosition = Vector3.MoveTowards(_pseudo3DPosition, _pseudo3DPosition + new Vector3(0, -1, 0), Time.deltaTime * speed);
+    }
+    public void MoveZPositive(float speed)
+    {
+        _pseudo3DPosition = Vector3.MoveTowards(_pseudo3DPosition, _pseudo3DPosition + new Vector3(0, 0, 1), Time.deltaTime * speed);
+    }
+    public void MoveZNegative(float speed)
+    {
+        _pseudo3DPosition = Vector3.MoveTowards(_pseudo3DPosition, _pseudo3DPosition + new Vector3(0, 0, -1), Time.deltaTime * speed);
+    }
+    #endregion
 }

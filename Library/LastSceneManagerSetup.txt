@@ -1,5 +1,5 @@
 sceneSetups:
-- path: Assets/Scenes/SPIKE-pseudo-3d-tilemaps.unity
+- path: Assets/Scenes/BobombBattlefield.unity
   isLoaded: 1
   isActive: 1
   isSubScene: 0
