@@ -65,9 +65,9 @@ public class Pseudo3DCubeColliderMaster : MonoBehaviour
                 psuedo3DTileCollider.transform.position = new Vector3(place.x, place.y, 0f);
                 psuedo3DTileCollider.GetComponent<Pseudo3DCubeCollider>().sortingOrder = sortingOrder;
                 psuedo3DTileCollider.GetComponent<Pseudo3DCubeCollider>().tilePosition = new Vector2Int(Convert.ToInt32(place.x), Convert.ToInt32(place.y) - (sortingOrder - 1));
-                psuedo3DTileCollider.GetComponent<Pseudo3DCubeCollider>().CreatePseudo3DCubeCollider();
                 psuedo3DTileCollider.GetComponent<Pseudo3DCubeCollider>().playerBuffer = playerBuffer;
                 psuedo3DTileCollider.GetComponent<Pseudo3DCubeCollider>().colliderBuffer = colliderBuffer;
+                psuedo3DTileCollider.GetComponent<Pseudo3DCubeCollider>().CreatePseudo3DCubeCollider();
             }
         }
     }
