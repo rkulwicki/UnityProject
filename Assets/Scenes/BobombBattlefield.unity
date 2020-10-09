@@ -21958,8 +21958,8 @@ MonoBehaviour:
   zpLock: {fileID: 0}
   znLock: {fileID: 0}
   prefab: {fileID: 4414181239089939080, guid: 63bda784166465e479cae390399cc55b, type: 3}
-  playerBuffer: 0.1
-  colliderBuffer: 0.15
+  playerBuffer: 0.25
+  colliderBuffer: 0.25
   tileWorldLocations: []
 --- !u!1 &656389547
 GameObject:
@@ -36214,7 +36214,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 7
+  orthographic size: 6.98
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2

@@ -24,8 +24,14 @@ public class Pseudo3DCubeCollider : MonoBehaviour
 
     private void Update()
     {
+        //var rounded = RoundPosition(player.GetComponent<Pseudo3DPosition>().pseudo3DPosition, 0);
         CheckIfCanMove(player.GetComponent<Pseudo3DPosition>().pseudo3DPosition);
         UpdateCanMoves();
+    }
+
+    public Vector3 RoundPosition(Vector3 pos, int decimals)
+    {
+        return new Vector3((float)Math.Round(pos.x, decimals), (float)Math.Round(pos.y, decimals), (float)Math.Round(pos.z, decimals));
     }
 
     public void CreatePseudo3DCubeCollider()
