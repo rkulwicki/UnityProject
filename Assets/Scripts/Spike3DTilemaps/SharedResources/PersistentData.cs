@@ -13,8 +13,7 @@ public class PersistentData : MonoBehaviour
 
     public static PersistentData data;
 
-    #region Data That Persists
-
+    #region Save/Load Persistence
     //PlayerData
     public int level;
     public int experience;
@@ -24,9 +23,12 @@ public class PersistentData : MonoBehaviour
     public int speed;
     public int acceleration;
     public int jumpPower;
+    #endregion
 
+    #region Scene-To-Scene Persistence 
     //BattleStart
-    public List<Tuple<Enemy, Vector3Int>> battleEnemies; //enemies and their position
+    public Enemy[] battleEnemies;
+    public Vector2Int[] battleEnemiesSpawnPoints;
     public BattleArena battleArena;
 
     //BattleEnd

@@ -13,6 +13,7 @@ public static class Globals
     public static string GridTag = "Grid";
     public static string MainCameraTag = "MainCamera";
     public static string BattleGridTag = "BattleGrid";
+    public static string BattleTilemapTag = "BattleTilemap";
 
     //Input
     public static string XPositiveKey = "d";

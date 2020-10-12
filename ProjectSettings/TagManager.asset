@@ -19,6 +19,8 @@ TagManager:
   - SceneChanger
   - Tilemap
   - BattleGrid
+  - BattleTilemap
+  - BattlePlayer
   layers:
   - Default
   - TransparentFX
