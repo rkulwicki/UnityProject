@@ -18,6 +18,7 @@ TagManager:
   - Floor
   - SceneChanger
   - Tilemap
+  - BattleGrid
   layers:
   - Default
   - TransparentFX

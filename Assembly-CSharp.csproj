@@ -96,7 +96,6 @@
     <Compile Include="Assets\Scripts\Global\PlayerBattleGlobal.cs" />
     <Compile Include="Assets\Scripts\Global\TagsGlobal.cs" />
     <Compile Include="Assets\Scripts\Global\TextBoxGlobal.cs" />
-    <Compile Include="Assets\Scripts\Globals.cs" />
     <Compile Include="Assets\Scripts\Jump.cs" />
     <Compile Include="Assets\Scripts\Managers\BattleManager.cs" />
     <Compile Include="Assets\Scripts\Managers\HudsManager.cs" />
@@ -122,6 +121,8 @@
     <Compile Include="Assets\Scripts\Spike3DTilemaps\Pseudo3DShadow.cs" />
     <Compile Include="Assets\Scripts\Spike3DTilemaps\Pseudo3DTile.cs" />
     <Compile Include="Assets\Scripts\Spike3DTilemaps\Pseudo3DTilemapLogic.cs" />
+    <Compile Include="Assets\Scripts\Spike3DTilemaps\SharedResources\Globals.cs" />
+    <Compile Include="Assets\Scripts\Spike3DTilemaps\SharedResources\PersistentData.cs" />
     <Compile Include="Assets\Scripts\Text\TextBoxScript.cs" />
     <Compile Include="Assets\Scripts\Text\TextHolder.cs" />
     <Compile Include="Assets\Scripts\Text\TextReader.cs" />
