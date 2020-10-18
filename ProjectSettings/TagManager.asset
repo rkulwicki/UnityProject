@@ -18,6 +18,9 @@ TagManager:
   - Floor
   - SceneChanger
   - Tilemap
+  - BattleGrid
+  - BattleTilemap
+  - BattlePlayer
   layers:
   - Default
   - TransparentFX
@@ -54,6 +57,9 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Background
+    uniqueID: 3020534049
     locked: 0
   - name: Floor
     uniqueID: 3773527449

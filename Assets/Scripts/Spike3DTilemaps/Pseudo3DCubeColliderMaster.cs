@@ -3,6 +3,7 @@ using System.Collections;
 using UnityEngine.Tilemaps;
 using System.Collections.Generic;
 using System;
+using static Globals;
 
 public class Pseudo3DCubeColliderMaster : MonoBehaviour
 {
@@ -10,7 +11,7 @@ public class Pseudo3DCubeColliderMaster : MonoBehaviour
     public GameObject xpLock, xnLock, ypLock, ynLock, zpLock, znLock;
     public Transform prefab;
 
-    public float buffer;
+    public float playerBuffer, colliderBuffer;
 
     public List<Vector3> tileWorldLocations;
 
@@ -20,10 +21,10 @@ public class Pseudo3DCubeColliderMaster : MonoBehaviour
     void Start()
     {
         var list = new List<GameObject>();
-        foreach (Transform child in GameObject.FindGameObjectWithTag("Grid").transform)
+        foreach (Transform child in GameObject.FindGameObjectWithTag(GridTag).transform)
         {
-            if(child.gameObject.tag == "Tilemap" && (child.gameObject.GetComponent<TilemapRenderer>().sortingLayerName == "FloorBelow" ||
-                                                     child.gameObject.GetComponent<TilemapRenderer>().sortingLayerName == "FloorAbove"))
+            if(child.gameObject.tag == TilemapTag && (child.gameObject.GetComponent<TilemapRenderer>().sortingLayerName == FloorBelowTag ||
+                                                     child.gameObject.GetComponent<TilemapRenderer>().sortingLayerName == FloorAboveTag))
                 list.Add(child.gameObject);
         }
         tilemapGameObjects = list.ToArray();
@@ -34,7 +35,7 @@ public class Pseudo3DCubeColliderMaster : MonoBehaviour
             SetUp3DTiles(tmgo.GetComponent<Tilemap>(), tmgo.GetComponent<TilemapRenderer>().sortingOrder);
         }
 
-        player = GameObject.FindGameObjectWithTag("Player");
+        player = GameObject.FindGameObjectWithTag(PlayerTag);
     }
 
     private void Update()
@@ -64,19 +65,20 @@ public class Pseudo3DCubeColliderMaster : MonoBehaviour
                 psuedo3DTileCollider.transform.position = new Vector3(place.x, place.y, 0f);
                 psuedo3DTileCollider.GetComponent<Pseudo3DCubeCollider>().sortingOrder = sortingOrder;
                 psuedo3DTileCollider.GetComponent<Pseudo3DCubeCollider>().tilePosition = new Vector2Int(Convert.ToInt32(place.x), Convert.ToInt32(place.y) - (sortingOrder - 1));
+                psuedo3DTileCollider.GetComponent<Pseudo3DCubeCollider>().playerBuffer = playerBuffer;
+                psuedo3DTileCollider.GetComponent<Pseudo3DCubeCollider>().colliderBuffer = colliderBuffer;
                 psuedo3DTileCollider.GetComponent<Pseudo3DCubeCollider>().CreatePseudo3DCubeCollider();
-                psuedo3DTileCollider.GetComponent<Pseudo3DCubeCollider>().buffer = buffer;
             }
         }
     }
 
     private void UpdatePlayerCanMove()
     {
-        player.GetComponent<TestPlayer>().canMoveXNegative = canMoveXNegative;
-        player.GetComponent<TestPlayer>().canMoveXPositive = canMoveXPositive;
-        player.GetComponent<TestPlayer>().canMoveYNegative = canMoveYNegative;
-        player.GetComponent<TestPlayer>().canMoveYPositive = canMoveYPositive;
-        player.GetComponent<TestPlayer>().canMoveZNegative = canMoveZNegative;
-        player.GetComponent<TestPlayer>().canMoveZPositive = canMoveZPositive;
+        player.GetComponent<Pseudo3DPlayer>().canMoveXNegative = canMoveXNegative;
+        player.GetComponent<Pseudo3DPlayer>().canMoveXPositive = canMoveXPositive;
+        player.GetComponent<Pseudo3DPlayer>().canMoveYNegative = canMoveYNegative;
+        player.GetComponent<Pseudo3DPlayer>().canMoveYPositive = canMoveYPositive;
+        player.GetComponent<Pseudo3DPlayer>().canMoveZNegative = canMoveZNegative;
+        player.GetComponent<Pseudo3DPlayer>().canMoveZPositive = canMoveZPositive;
     }
 }

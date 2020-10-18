@@ -1,46 +1,53 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System;
+using static Globals;
 
 public class Pseudo3DCubeCollider : MonoBehaviour
 {
-    public float buffer;
+    public float playerBuffer, colliderBuffer;
     public bool canMoveXPositive, canMoveXNegative, canMoveYPositive, canMoveYNegative, canMoveZPositive, canMoveZNegative;
 
     // Tile position is the bottom left of the tile
     public Vector2Int tilePosition;
     public int sortingOrder;
 
-    public int xMin, xMax, yMin, yMax, zMin, zMax;
+    public float xMin, xMax, yMin, yMax, zMin, zMax;
     private GameObject player;
     private Pseudo3DCubeColliderMaster colMaster;
 
     private void Start()
     {
-        player = GameObject.FindGameObjectWithTag("Player");
+        player = GameObject.FindGameObjectWithTag(PlayerTag);
         colMaster = transform.parent.gameObject.GetComponent<Pseudo3DCubeColliderMaster>();
     }
 
     private void Update()
     {
-        CheckIfCanMove(player.GetComponent<TestPlayer>().pseudo3DPosition);
+        //var rounded = RoundPosition(player.GetComponent<Pseudo3DPosition>().pseudo3DPosition, 0);
+        CheckIfCanMove(player.GetComponent<Pseudo3DPosition>().pseudo3DPosition);
         UpdateCanMoves();
+    }
+
+    public Vector3 RoundPosition(Vector3 pos, int decimals)
+    {
+        return new Vector3((float)Math.Round(pos.x, decimals), (float)Math.Round(pos.y, decimals), (float)Math.Round(pos.z, decimals));
     }
 
     public void CreatePseudo3DCubeCollider()
     {
-        xMin = tilePosition.x;
-        xMax = tilePosition.x + 1;
-        yMin = tilePosition.y - 1;
-        yMax = tilePosition.y;
-        zMin = sortingOrder - 1;
-        zMax = sortingOrder;
+        xMin = tilePosition.x - colliderBuffer;
+        xMax = tilePosition.x + 1 + colliderBuffer;
+        yMin = tilePosition.y - 1 - colliderBuffer;
+        yMax = tilePosition.y + colliderBuffer;
+        zMin = sortingOrder - 1 - colliderBuffer;
+        zMax = sortingOrder + colliderBuffer;
     }
 
     public void CheckIfCanMove(Vector3 objectPosition)
     {
         //x direction
-        if ((objectPosition.x >= xMin - buffer && objectPosition.x <= xMin + buffer) && //or ==
+        if ((objectPosition.x >= xMin - playerBuffer && objectPosition.x <= xMin + playerBuffer) && //or ==
             objectPosition.y >= yMin && objectPosition.y < yMax &&
             objectPosition.z >= zMin && objectPosition.z < zMax)
         {
@@ -50,7 +57,7 @@ public class Pseudo3DCubeCollider : MonoBehaviour
         {
             canMoveXPositive = true;
         }
-        if ((objectPosition.x >= xMax - buffer && objectPosition.x <= xMax + buffer) && // or ==
+        if ((objectPosition.x >= xMax - playerBuffer && objectPosition.x <= xMax + playerBuffer) && // or ==
             objectPosition.y >= yMin && objectPosition.y < yMax &&
             objectPosition.z > zMin && objectPosition.z <= zMax)
         {
@@ -61,15 +68,12 @@ public class Pseudo3DCubeCollider : MonoBehaviour
             canMoveXNegative = true;
         }
 
-        //TODO
-        //There is a bug where the sorting order y direction gets pushed y + 1 unit for every sorting layer above 1.
-
         //Also! Look into why the wall tilemaps disappear before merging to master. Dunno what's up with that.
 
         //y direction
         if (objectPosition.x >= xMin && objectPosition.x < xMax &&
-            (objectPosition.y >= yMin - buffer && objectPosition.y <= yMin + buffer) && //or ==
-            objectPosition.z > zMin && objectPosition.z <= zMax)
+            (objectPosition.y >= yMin - playerBuffer && objectPosition.y <= yMin + playerBuffer) && //or ==
+            objectPosition.z > zMin && objectPosition.z <= zMax )
         {
             canMoveYPositive = false;
         }
@@ -77,9 +81,9 @@ public class Pseudo3DCubeCollider : MonoBehaviour
         {
             canMoveYPositive = true;
         }
-        if (objectPosition.x >= xMin && objectPosition.x < xMax &&
-            (objectPosition.y >= yMax - buffer && objectPosition.y <= yMax + buffer) && //or ==
-            objectPosition.z > zMin && objectPosition.z <= zMax)
+        if (objectPosition.x >= xMin && objectPosition.x < xMax  &&
+            (objectPosition.y >= yMax - playerBuffer && objectPosition.y <= yMax + playerBuffer) && //or ==
+            objectPosition.z > zMin && objectPosition.z <= zMax )
         {
             canMoveYNegative = false;
         }
@@ -91,7 +95,7 @@ public class Pseudo3DCubeCollider : MonoBehaviour
         //z direction
         if (objectPosition.x >= xMin && objectPosition.x < xMax &&
             objectPosition.y >= yMin && objectPosition.y < yMax &&
-            (objectPosition.z >= zMin - buffer && objectPosition.z <= zMin + buffer)) //or ==)
+            (objectPosition.z >= zMin - playerBuffer && objectPosition.z <= zMin + playerBuffer)) //or ==)
         {
             canMoveZPositive = false;
         }
@@ -99,9 +103,9 @@ public class Pseudo3DCubeCollider : MonoBehaviour
         {
             canMoveZPositive = true;
         }
-        if (objectPosition.x >= xMin && objectPosition.x < xMax &&
+        if (objectPosition.x >= xMin && objectPosition.x < xMax  &&
             objectPosition.y >= yMin && objectPosition.y < yMax &&
-            (objectPosition.z >= zMax - buffer && objectPosition.z <= zMax + buffer)) //or ==)
+            (objectPosition.z >= zMax - playerBuffer && objectPosition.z <= zMax + playerBuffer)) //or ==)
         {
             canMoveZNegative = false;
         }
