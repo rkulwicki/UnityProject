@@ -29,15 +29,25 @@ public static class Globals
     public static float AspectRatio = (16 / 9);
 
     //Enums
-    public enum Enemy
+    public enum EnemyName
     {
-        TestEnemy1
+        Pumpkin
     }
-    public enum BattleArena
+    public enum BattleArenaName
     {
-        TestArena1
+        GrassyBricks,
+        GrassyBricksTemple,
+        Default
     }
+
+    //Tile Resources
+    public static string GrassyBrickTilePath = "Tiles/GrassyBricksTile";
 
     //Application
     public static string PlayerFileName = "/playerInfo.dat";
+
+    //Scene Names
+    public static string BattleSceneName = "BattleScene";
+    public static string GrassyBricksScene1Name = "GrassyBricksScene1";
+    public static string GrassyBricksScene2Name = "GrassyBricksScene2";
 }

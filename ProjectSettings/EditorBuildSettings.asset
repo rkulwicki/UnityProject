@@ -5,13 +5,22 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/SampleScene.unity
     guid: 2cda990e2423bbf4892e6590ba056729
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/DemoScene1.unity
     guid: 9fb40b921635aab4c998795f60158c16
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/HeightTest.unity
     guid: 27007ed9775ac854d9c832eb15cae578
+  - enabled: 0
+    path: Assets/Scenes/PixelTestWorld.unity
+    guid: edbe06e2044e65346b4ff5044b594629
+  - enabled: 1
+    path: Assets/Scenes/BattleScene.unity
+    guid: b331fb4f216f9f44995acc01c41636a2
+  - enabled: 1
+    path: Assets/Scenes/GrassyBricksScene1.unity
+    guid: 97f43f5f9d85258489cf4a67a69e0007
   m_configObjects: {}

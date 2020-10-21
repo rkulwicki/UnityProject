@@ -5,11 +5,8 @@ using static Globals;
 
 public class BattleArena
 {
-    public Vector2Int size;
-    public TileBase tile;
-    public Enemy[] battleEnemies;
-    public Vector2Int[] battleEnemySpawnPoints;
-    public Vector2Int playerSpawnPoint;
+    public Vector2Int size { get; set; }
+    public TileBase tile { get; set; }
 }
 
 

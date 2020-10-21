@@ -27,9 +27,10 @@ public class PersistentData : MonoBehaviour
 
     #region Scene-To-Scene Persistence 
     //BattleStart
-    public Enemy[] battleEnemies;
+    public EnemyName[] battleEnemies;
     public Vector2Int[] battleEnemiesSpawnPoints;
-    public BattleArena battleArena;
+    public BattleArenaName battleArenaName;
+    public Vector2Int playerSpawnPoint;
 
     //BattleEnd
     public int battleExperienceAwarded;
@@ -125,7 +126,8 @@ class PlayerData
 
 class StartBattleInfo
 {
-    public List<Tuple<Enemy, Vector3Int>> battleEnemies; //enemies and their position
+    public EnemyName[] battleEnemies; //enemies and their position
+    public Vector2[] battleEnemiesLocations;
     public BattleArena battleArena;
 }
 

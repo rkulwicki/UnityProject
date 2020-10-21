@@ -114,9 +114,11 @@
     <Compile Include="Assets\Scripts\Spike3DTilemaps\Gravity.cs" />
     <Compile Include="Assets\Scripts\Spike3DTilemaps\JumpAbility.cs" />
     <Compile Include="Assets\Scripts\Spike3DTilemaps\NewBattle\BattleArena.cs" />
-    <Compile Include="Assets\Scripts\Spike3DTilemaps\NewBattle\BattleArenaRepository.cs" />
     <Compile Include="Assets\Scripts\Spike3DTilemaps\NewBattle\BattleArenaSetup.cs" />
+    <Compile Include="Assets\Scripts\Spike3DTilemaps\NewBattle\BattleArenaTrigger.cs" />
+    <Compile Include="Assets\Scripts\Spike3DTilemaps\NewBattle\BattleInitiator.cs" />
     <Compile Include="Assets\Scripts\Spike3DTilemaps\NewBattle\BattlePlayer.cs" />
+    <Compile Include="Assets\Scripts\Spike3DTilemaps\NewBattle\BattleRepository.cs" />
     <Compile Include="Assets\Scripts\Spike3DTilemaps\Pseudo3DCubeCollider.cs" />
     <Compile Include="Assets\Scripts\Spike3DTilemaps\Pseudo3DCubeColliderMaster.cs" />
     <Compile Include="Assets\Scripts\Spike3DTilemaps\Pseudo3DPlayer.cs" />

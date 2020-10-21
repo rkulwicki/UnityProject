@@ -2,15 +2,15 @@
 using System.Collections;
 using UnityEngine.Tilemaps;
 using static Globals;
-using System.Collections.Generic;
-using System;
+using static BattleRepository;
 
 public class BattleArenaSetup : MonoBehaviour
 {
+    public BattleArenaName battleArenaName;
 
     public Vector2Int size;
     public TileBase tile;
-    public Enemy[] battleEnemies;
+    public EnemyName[] battleEnemies;
     public Vector2Int[] battleEnemySpawnPoints;
     public Vector2Int playerSpawnPoint;
 
@@ -19,8 +19,17 @@ public class BattleArenaSetup : MonoBehaviour
     private GameObject _battlePlayer;
 
     // Use this for initialization
-    void Start()
+    private void Start()
     {
+        battleArenaName = PersistentData.data.battleArenaName;
+        battleEnemies = PersistentData.data.battleEnemies;
+        battleEnemySpawnPoints = PersistentData.data.battleEnemiesSpawnPoints;
+        playerSpawnPoint = PersistentData.data.playerSpawnPoint;
+
+        var ba = GetBattleInfoFromBattleArenaName(battleArenaName);
+        tile = ba.tile;
+        size = ba.size;
+
         _battleTilemap = GameObject.FindGameObjectWithTag(BattleTilemapTag);
         _mainCamera = GameObject.FindGameObjectWithTag(MainCameraTag);
 
