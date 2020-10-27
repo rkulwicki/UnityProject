@@ -26,6 +26,6 @@ public static class BattleInitiator
 
     private static void LoadBattleScene()
     {
-        SceneManager.LoadScene(BattleSceneName);
+        SceneManager.LoadScene(SceneNames.BattleScene.ToString());
     }
 }

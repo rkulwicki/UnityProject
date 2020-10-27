@@ -115,6 +115,10 @@ public class Pseudo3DCubeCollider : MonoBehaviour
         }
     }
 
+    //TODO - When you go from a locked state to an unlocked state, there is a breif period of time where
+    // the player can move and that can make you clip through shit.
+    // On Unlock - FIRST check if there's another Pseudo3DCubeCollider that can take the handoff.
+
     /// <summary>
     /// Updates the player's ability to move based on the player's position relative to this collider
     /// </summary>
@@ -123,12 +127,12 @@ public class Pseudo3DCubeCollider : MonoBehaviour
         //x
         if (colMaster.xpLock == null || colMaster.xpLock == this.gameObject)
         {
-            if (!canMoveXPositive)
+            if (!canMoveXPositive) //lock
             {
                 colMaster.canMoveXPositive = false;
                 colMaster.xpLock = this.gameObject;
             }
-            else
+            else //unlock
             {
                 colMaster.canMoveXPositive = true;
                 colMaster.xpLock = null;

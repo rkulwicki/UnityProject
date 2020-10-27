@@ -5,6 +5,7 @@ using System.IO;
 using System;
 using System.Collections.Generic;
 using static Globals;
+using UnityEngine.SceneManagement;
 
 //Acts as a singleton 
 
@@ -36,6 +37,9 @@ public class PersistentData : MonoBehaviour
     public int battleExperienceAwarded;
     public bool battleWin;
     #endregion
+
+    //SceneManagement
+    public SceneNames previousScene;
 
     void Awake()
     {

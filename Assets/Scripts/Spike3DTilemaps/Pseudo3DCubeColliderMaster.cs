@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System;
 using static Globals;
 
+
 public class Pseudo3DCubeColliderMaster : MonoBehaviour
 {
     public bool canMoveXPositive, canMoveXNegative, canMoveYPositive, canMoveYNegative, canMoveZPositive, canMoveZNegative;
@@ -80,5 +81,10 @@ public class Pseudo3DCubeColliderMaster : MonoBehaviour
         player.GetComponent<Pseudo3DPlayer>().canMoveYPositive = canMoveYPositive;
         player.GetComponent<Pseudo3DPlayer>().canMoveZNegative = canMoveZNegative;
         player.GetComponent<Pseudo3DPlayer>().canMoveZPositive = canMoveZPositive;
+    }
+
+    private void CheckSurroundingBlocksForCollision()
+    {
+
     }
 }
