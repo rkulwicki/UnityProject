@@ -9,6 +9,8 @@ public static class Globals
     public static string TilemapTag = "Tilemap";
     public static string FloorAboveTag = "FloorAbove";
     public static string FloorBelowTag = "FloorBelow";
+    public static string ObjectAboveTag = "ObjectAbove";
+    public static string ObjectBelowTag = "ObjectBelow";
     public static string PlayerTag = "Player";
     public static string GridTag = "Grid";
     public static string MainCameraTag = "MainCamera";
@@ -48,6 +50,7 @@ public static class Globals
         BattleScene,
         GrassyBricksScene1,
         GrassyBricksScene2,
+        GrassyBricksScene3,
         Default
     }
 

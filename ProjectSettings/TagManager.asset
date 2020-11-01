@@ -61,22 +61,10 @@ TagManager:
   - name: Background
     uniqueID: 3020534049
     locked: 0
-  - name: Floor
-    uniqueID: 3773527449
-    locked: 0
-  - name: Carpet
-    uniqueID: 3300794293
-    locked: 0
-  - name: Items
-    uniqueID: 448530851
-    locked: 0
-  - name: Obstacles
-    uniqueID: 3210658865
-    locked: 0
   - name: FloorBelow
     uniqueID: 3401204887
     locked: 0
-  - name: Wall
+  - name: ObjectBelow
     uniqueID: 4234220511
     locked: 0
   - name: Units
@@ -85,11 +73,8 @@ TagManager:
   - name: FloorAbove
     uniqueID: 3658254427
     locked: 0
-  - name: WallFront
+  - name: ObjectAbove
     uniqueID: 3540274231
-    locked: 0
-  - name: Front
-    uniqueID: 1192863805
     locked: 0
   - name: UI
     uniqueID: 584752905

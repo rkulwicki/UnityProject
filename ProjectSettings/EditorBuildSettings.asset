@@ -26,4 +26,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/GrassyBricksScene2.unity
     guid: c4fa61eb711ec3a40bf941e56f49e046
+  - enabled: 1
+    path: Assets/Scenes/GrassyBricksScene3.unity
+    guid: 077c792a2fc7b6243bde4a89d0b9fb6d
   m_configObjects: {}

@@ -36044,7 +36044,7 @@ MonoBehaviour:
   canMoveYNegative: 1
   canMoveZPositive: 1
   canMoveZNegative: 1
-  _pseudo3DPosition: {x: -4, y: -16, z: 1.5}
+  pseudo3DPosition: {x: 0, y: 0, z: 1.25}
 --- !u!4 &1154803716
 Transform:
   m_ObjectHideFlags: 0
