@@ -16,6 +16,7 @@ public static class Globals
     public static string MainCameraTag = "MainCamera";
     public static string BattleGridTag = "BattleGrid";
     public static string BattleTilemapTag = "BattleTilemap";
+    public static string ShadowTag = "Shadow";
 
     //Input
     public static string XPositiveKey = "d";
@@ -26,6 +27,11 @@ public static class Globals
     public static string ZNegativeKey = "q";
 
     public static string JumpKey1 = "space";
+
+    public static string Interact = "j";
+    public static string Menu = "i";
+    public static string Change = "k";
+    public static string Attack = "l";
 
     //UI
     public static float AspectRatio = (16 / 9);

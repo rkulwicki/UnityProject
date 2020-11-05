@@ -112,6 +112,8 @@
     <Compile Include="Assets\Scripts\Shadow.cs" />
     <Compile Include="Assets\Scripts\Spike3DTilemaps\Background.cs" />
     <Compile Include="Assets\Scripts\Spike3DTilemaps\Gravity.cs" />
+    <Compile Include="Assets\Scripts\Spike3DTilemaps\InteractiveObject.cs" />
+    <Compile Include="Assets\Scripts\Spike3DTilemaps\InteractiveObjectTypeRepository.cs" />
     <Compile Include="Assets\Scripts\Spike3DTilemaps\JumpAbility.cs" />
     <Compile Include="Assets\Scripts\Spike3DTilemaps\NewBattle\BattleArena.cs" />
     <Compile Include="Assets\Scripts\Spike3DTilemaps\NewBattle\BattleArenaSetup.cs" />

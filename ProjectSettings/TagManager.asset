@@ -21,6 +21,7 @@ TagManager:
   - BattleGrid
   - BattleTilemap
   - BattlePlayer
+  - Shadow
   layers:
   - Default
   - TransparentFX
