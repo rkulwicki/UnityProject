@@ -13746,6 +13746,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: EMark1
       objectReference: {fileID: 0}
+    - target: {fileID: 1255630346199837649, guid: 3432276f723b1284b91a6d535cb83659,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1255630346199837650, guid: 3432276f723b1284b91a6d535cb83659,
         type: 3}
       propertyPath: m_LocalPosition.x
