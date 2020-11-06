@@ -28,10 +28,7 @@ public static class Globals
 
     public static string JumpKey1 = "space";
 
-    public static string Interact = "j";
-    public static string Menu = "i";
-    public static string Change = "k";
-    public static string Attack = "l";
+    public static string InteractKey = "c";
 
     //UI
     public static float AspectRatio = (16 / 9);
@@ -65,4 +62,7 @@ public static class Globals
 
     //Application
     public static string PlayerFileName = "/playerInfo.dat";
+
+    //Icon Resources
+    public static string EMarkPath = "Prefabs/Icons/EMark1";
 }

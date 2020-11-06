@@ -121,6 +121,7 @@
     <Compile Include="Assets\Scripts\Spike3DTilemaps\NewBattle\BattleInitiator.cs" />
     <Compile Include="Assets\Scripts\Spike3DTilemaps\NewBattle\BattlePlayer.cs" />
     <Compile Include="Assets\Scripts\Spike3DTilemaps\NewBattle\BattleRepository.cs" />
+    <Compile Include="Assets\Scripts\Spike3DTilemaps\PlayerInteractionWithObjects.cs" />
     <Compile Include="Assets\Scripts\Spike3DTilemaps\Pseudo3DCubeCollider.cs" />
     <Compile Include="Assets\Scripts\Spike3DTilemaps\Pseudo3DCubeColliderMaster.cs" />
     <Compile Include="Assets\Scripts\Spike3DTilemaps\Pseudo3DObjectLayering.cs" />

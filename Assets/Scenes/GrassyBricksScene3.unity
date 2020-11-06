@@ -5838,10 +5838,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   interactionType: 0
-  speed: 1
-  isShaking: 0
-  distance: 0.05
-  timesToShake: 3
+  isActive: 0
 --- !u!1 &1154803714
 GameObject:
   m_ObjectHideFlags: 0
@@ -5858,6 +5855,7 @@ GameObject:
   - component: {fileID: 1154803720}
   - component: {fileID: 1154803721}
   - component: {fileID: 1154803722}
+  - component: {fileID: 1154803723}
   m_Layer: 0
   m_Name: Pseudo3DPlayer
   m_TagString: Player
@@ -6048,6 +6046,20 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 7
+--- !u!114 &1154803723
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1154803714}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e7c8e9b25034f8b44b9e3d6a2703d0c5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  InteractiveObject: {fileID: 0}
+  isActive: 0
 --- !u!1 &1155664607
 GameObject:
   m_ObjectHideFlags: 0
@@ -13749,7 +13761,7 @@ PrefabInstance:
     - target: {fileID: 1255630346199837649, guid: 3432276f723b1284b91a6d535cb83659,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1255630346199837650, guid: 3432276f723b1284b91a6d535cb83659,
         type: 3}
