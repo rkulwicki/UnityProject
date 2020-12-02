@@ -29,6 +29,7 @@ public static class Globals
     public static string JumpKey1 = "space";
 
     public static string InteractKey = "c";
+    public static string StatsKey = "v";
 
     //UI
     public static float AspectRatio = (16 / 9);

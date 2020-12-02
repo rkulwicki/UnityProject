@@ -62,6 +62,9 @@ TagManager:
   - name: Background
     uniqueID: 3020534049
     locked: 0
+  - name: BackgroundScenery
+    uniqueID: 3846180193
+    locked: 0
   - name: FloorBelow
     uniqueID: 3401204887
     locked: 0
