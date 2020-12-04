@@ -55,7 +55,11 @@ public static class Globals
         GrassyBricksScene1,
         GrassyBricksScene2,
         GrassyBricksScene3,
-        Default
+        Default,
+
+        EvergreenTempleTown,
+        EvergreenTempleBottomPath,
+        EvergreenTempleTownAqueduct
     }
 
     //Tile Resources
