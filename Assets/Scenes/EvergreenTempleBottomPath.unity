@@ -4278,17 +4278,17 @@ PrefabInstance:
     - target: {fileID: 2212043418228423025, guid: 870a74844f13fde4fa41fedcef9a0b35,
         type: 3}
       propertyPath: m_Name
-      value: SceneTrigger
+      value: SceneTriggerToBottomAcqueduct
       objectReference: {fileID: 0}
     - target: {fileID: 2212043418228423026, guid: 870a74844f13fde4fa41fedcef9a0b35,
         type: 3}
       propertyPath: sceneName
-      value: 4
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 2212043418228423036, guid: 870a74844f13fde4fa41fedcef9a0b35,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 19.62
+      value: 14
       objectReference: {fileID: 0}
     - target: {fileID: 2212043418228423036, guid: 870a74844f13fde4fa41fedcef9a0b35,
         type: 3}
@@ -4442,7 +4442,7 @@ PrefabInstance:
     - target: {fileID: 8315561694033050301, guid: 779b5c5aaba7a1145a7289ebafe482d0,
         type: 3}
       propertyPath: previousScenesLocations.Array.data[1].x
-      value: -17
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 8315561694033050301, guid: 779b5c5aaba7a1145a7289ebafe482d0,
         type: 3}
@@ -4457,7 +4457,7 @@ PrefabInstance:
     - target: {fileID: 8315561694033050301, guid: 779b5c5aaba7a1145a7289ebafe482d0,
         type: 3}
       propertyPath: previousScenes.Array.data[1]
-      value: 4
+      value: 8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 779b5c5aaba7a1145a7289ebafe482d0, type: 3}
