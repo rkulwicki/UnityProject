@@ -4,6 +4,7 @@ using static Globals;
 
 public class Background : MonoBehaviour
 {
+    public float zoom;
     public int zPosition;
     private GameObject _camera;
 
@@ -17,6 +18,6 @@ public class Background : MonoBehaviour
     void Update()
     {
         this.transform.position = new Vector3(_camera.transform.position.x, _camera.transform.position.y, zPosition);
-        this.transform.localScale = new Vector3(_camera.GetComponent<Camera>().orthographicSize * AspectRatio, _camera.GetComponent<Camera>().orthographicSize, 1);
+        this.transform.localScale = new Vector3(_camera.GetComponent<Camera>().orthographicSize * AspectRatio * zoom, _camera.GetComponent<Camera>().orthographicSize * zoom, 1);
     }
 }

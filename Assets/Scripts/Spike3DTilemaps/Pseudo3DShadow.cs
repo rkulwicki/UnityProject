@@ -5,6 +5,7 @@ using static Globals;
 
 public class Pseudo3DShadow : MonoBehaviour
 {
+    public float groundedScale;
     public Vector3 shadowPseudo3DPos;
 
     private float _distanceFromGround;
@@ -34,7 +35,7 @@ public class Pseudo3DShadow : MonoBehaviour
     private void UpdateSpriteRenderer()
     {
         //distanceFromGround
-        var scale = (1)/(1 + _distanceFromGround); //after every 1 unit up, we cut the size in half
+        var scale = (1)/(1 + _distanceFromGround) * groundedScale; //after every 1 unit up, we cut the size in half
         this.transform.localScale = new Vector3(scale, scale, 1);
     }
 }

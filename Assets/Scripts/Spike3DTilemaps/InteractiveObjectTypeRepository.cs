@@ -62,7 +62,7 @@ public static class InteractiveObjectTypeRepository
             yield return null;
         }
         go.transform.position = new Vector3(initialPos, go.transform.position.y);
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(0.1f);
 
         callback();
     }

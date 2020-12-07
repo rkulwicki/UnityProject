@@ -15,7 +15,7 @@ public class Pseudo3DTilemapLogic : MonoBehaviour
     public Vector3Int testTilePos;
     public bool reset;
     public TileBase tb;
-
+    public float playerHeightBuffer;
     void Start()
     {
         var list = new List<GameObject>();
@@ -43,10 +43,10 @@ public class Pseudo3DTilemapLogic : MonoBehaviour
     {
         foreach (var tm in tilemapGameObjects)
         {
-            if (tm.GetComponent<TilemapRenderer>().sortingLayerName == FloorBelowTag && _pseudo3DPosition.z < tm.GetComponent<TilemapRenderer>().sortingOrder)
+            if (tm.GetComponent<TilemapRenderer>().sortingLayerName == FloorBelowTag && _pseudo3DPosition.z + playerHeightBuffer < tm.GetComponent<TilemapRenderer>().sortingOrder)
                 tm.GetComponent<TilemapRenderer>().sortingLayerName = FloorAboveTag;
 
-            if (tm.GetComponent<TilemapRenderer>().sortingLayerName == FloorAboveTag && _pseudo3DPosition.z >= tm.GetComponent<TilemapRenderer>().sortingOrder)
+            else if (tm.GetComponent<TilemapRenderer>().sortingLayerName == FloorAboveTag && _pseudo3DPosition.z >= tm.GetComponent<TilemapRenderer>().sortingOrder)
                 tm.GetComponent<TilemapRenderer>().sortingLayerName = FloorBelowTag;
         }
     }
