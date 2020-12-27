@@ -44,4 +44,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/EvergreenTempleBottomPathAqueduct.unity
     guid: 24e9c0084cf4be349a1c4322b3361297
+  - enabled: 1
+    path: Assets/Scenes/FrankFranklbeeForestToTempleTown.unity
+    guid: 5e0eba9c69568864d98ef1855da20c36
+  - enabled: 1
+    path: Assets/Scenes/FrankFranklbeeForestDeepForest.unity
+    guid: 79eac76ef4f20ed48870436393271b4a
   m_configObjects: {}

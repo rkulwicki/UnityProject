@@ -62,7 +62,9 @@ public static class Globals
         EvergreenTempleTownAqueduct,
         EvergreenTempleBottomPathAqueduct,
         EvergreenTempleClimbToTemple,
-        EvergreenTempleExterior
+        EvergreenTempleExterior,
+        FrankFranklbeeForestToTempleTown,
+        FrankFranklbeeForestDeepForest
     }
 
     //Tile Resources

@@ -1,5 +1,5 @@
 sceneSetups:
-- path: Assets/Scenes/EvergreenTempleTown.unity
+- path: Assets/Scenes/FrankFranklbeeForestDeepForest.unity
   isLoaded: 1
   isActive: 1
   isSubScene: 0

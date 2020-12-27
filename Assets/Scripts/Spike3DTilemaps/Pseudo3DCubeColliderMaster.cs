@@ -12,7 +12,7 @@ public class Pseudo3DCubeColliderMaster : MonoBehaviour
     public GameObject xpLock, xnLock, ypLock, ynLock, zpLock, znLock;
     public Transform prefab;
 
-    public float playerBuffer, colliderBuffer;
+    public float playerBuffer, colliderBuffer, zNegPlayerBuffer;
 
     public List<Vector3> tileWorldLocations;
 
@@ -68,6 +68,7 @@ public class Pseudo3DCubeColliderMaster : MonoBehaviour
                 psuedo3DTileCollider.GetComponent<Pseudo3DCubeCollider>().tilePosition = new Vector2Int(Convert.ToInt32(place.x), Convert.ToInt32(place.y) - (sortingOrder - 1));
                 psuedo3DTileCollider.GetComponent<Pseudo3DCubeCollider>().playerBuffer = playerBuffer;
                 psuedo3DTileCollider.GetComponent<Pseudo3DCubeCollider>().colliderBuffer = colliderBuffer;
+                psuedo3DTileCollider.GetComponent<Pseudo3DCubeCollider>().zNegPlayerBuffer = zNegPlayerBuffer;
                 psuedo3DTileCollider.GetComponent<Pseudo3DCubeCollider>().CreatePseudo3DCubeCollider();
             }
         }
