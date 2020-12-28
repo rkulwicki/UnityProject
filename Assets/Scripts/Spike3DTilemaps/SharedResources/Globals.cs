@@ -33,6 +33,8 @@ public static class Globals
 
     //UI
     public static float AspectRatio = (16 / 9);
+    public static float FadeToBlackTime = 0.3f;
+    public static float BeforeFadeToBlackTime = 0.6f;
 
     //Enemies
     public enum EnemyName
@@ -75,4 +77,10 @@ public static class Globals
 
     //Icon Resources
     public static string EMarkPath = "Prefabs/Icons/EMark1";
+
+    //UI Resources
+    public static string BlackScreenPath = "Prefabs/UI/BlackScreen";
+
+    //Actor Resources
+    public static string PlayerPrefabPath = "Prefabs/Pseudo3DPlayer";
 }

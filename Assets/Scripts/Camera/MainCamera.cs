@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
-
+using static Globals;
 public class MainCamera : MonoBehaviour
 {
 
@@ -24,7 +24,7 @@ public class MainCamera : MonoBehaviour
 
     void Start()
     {
-
+        target = GameObject.FindGameObjectWithTag(PlayerTag).transform;
     }
 
     void Update()

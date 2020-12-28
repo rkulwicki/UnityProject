@@ -10,12 +10,17 @@ public class Pseudo3DPlayerMove : MonoBehaviour
 
     public Vector3 pseudo3DPosition;
 
+    public bool isPlayerMovementSuspended;
+
     protected void JustMove()
     {
-        MoveGlobalPosition();
-        MoveTransformXandY();
-        AdjustTransformYBasedOnPseudo3DZ();
-        UpdatePseudo3DPosition();
+        if (!isPlayerMovementSuspended)
+        {
+            MoveGlobalPosition();
+            MoveTransformXandY();
+            AdjustTransformYBasedOnPseudo3DZ();
+            UpdatePseudo3DPosition();
+        }
     }
 
     protected void MoveGlobalPosition()

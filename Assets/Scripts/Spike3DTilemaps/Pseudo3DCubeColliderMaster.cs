@@ -4,7 +4,7 @@ using UnityEngine.Tilemaps;
 using System.Collections.Generic;
 using System;
 using static Globals;
-
+using static PlayerStaticFunctions;
 
 public class Pseudo3DCubeColliderMaster : MonoBehaviour
 {
@@ -36,7 +36,7 @@ public class Pseudo3DCubeColliderMaster : MonoBehaviour
             SetUp3DTiles(tmgo.GetComponent<Tilemap>(), tmgo.GetComponent<TilemapRenderer>().sortingOrder);
         }
 
-        player = GameObject.FindGameObjectWithTag(PlayerTag);
+        player = GetOrInstantiatePlayer(new Vector3(0, 0, 0), new Quaternion());
     }
 
     private void Update()
