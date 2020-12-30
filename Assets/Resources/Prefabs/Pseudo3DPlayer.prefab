@@ -10,6 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 7040987132816024802}
   - component: {fileID: 7040987132816024801}
+  - component: {fileID: 8902909886760057704}
+  - component: {fileID: 7755835478698202094}
   m_Layer: 0
   m_Name: SpriteRenderer
   m_TagString: Untagged
@@ -81,6 +83,37 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &8902909886760057704
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7040987132816024803}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c2f746d3615fd46428bcde892f05831b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!95 &7755835478698202094
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7040987132816024803}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: c1d3b122eeb54834abcbf05e1a9bc1f2, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &7040987133111646477
 GameObject:
   m_ObjectHideFlags: 0
@@ -322,6 +355,7 @@ GameObject:
   - component: {fileID: 7040987133745923874}
   - component: {fileID: 7040987133745923873}
   - component: {fileID: 7040987133745923872}
+  - component: {fileID: 7030467240189298586}
   m_Layer: 0
   m_Name: Pseudo3DPlayer
   m_TagString: Player
@@ -416,6 +450,7 @@ MonoBehaviour:
   canMoveZPositive: 1
   canMoveZNegative: 1
   pseudo3DPosition: {x: -11, y: -18, z: 1.25}
+  isPlayerMovementSuspended: 0
 --- !u!114 &7040987133745923885
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -526,3 +561,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   InteractiveObject: {fileID: 0}
   isActive: 0
+--- !u!114 &7030467240189298586
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7040987133745923881}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e5cd1c4b984722248834bb8814e1c0a3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pseudo3DVelocity: {x: 0, y: 0, z: 0}
