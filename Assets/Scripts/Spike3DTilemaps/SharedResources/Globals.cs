@@ -66,7 +66,8 @@ public static class Globals
         EvergreenTempleClimbToTemple,
         EvergreenTempleExterior,
         FrankFranklbeeForestToTempleTown,
-        FrankFranklbeeForestDeepForest
+        FrankFranklbeeForestDeepForest,
+        FrankFranklbeeForestHouse
     }
 
     //Tile Resources
