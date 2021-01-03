@@ -2,6 +2,7 @@
 using System.Collections;
 using System;
 using static Globals;
+using UnityEngine.Tilemaps;
 
 public enum Directions3DEnum { XPOS, XNEG, YPOS, YNEG, ZPOS, ZNEG }
 
@@ -13,6 +14,8 @@ public class Pseudo3DCubeCollider : MonoBehaviour
     // Tile position is the bottom left of the tile
     public Vector2Int tilePosition;
     public int sortingOrder;
+    public Tilemap tilemap;
+    public int floorNumber;
 
     public float xMin, xMax, yMin, yMax, zMin, zMax;
     private GameObject player;
@@ -158,8 +161,23 @@ public class Pseudo3DCubeCollider : MonoBehaviour
             }
             else
             {
-                colMaster.canMoveXNegative = true;
-                colMaster.xnLock = null;
+                //before we unlock, we need to check if there is another block
+                //to hand the lock off to first to prevent clipping while briefly unlocked.
+
+                //NOTE: WE NEED TO CHECK THIS vvvvvvvv
+                //colMaster.xnLock == this.gameObject
+
+                var blockTakingHandoff = HandoffCollision(Directions3DEnum.XNEG);
+                if (blockTakingHandoff != null)
+                {
+                    colMaster.canMoveXNegative = false;
+                    colMaster.xnLock = blockTakingHandoff;
+                }
+                else //no block to hand-off to. You're free to move!
+                {
+                    colMaster.canMoveXNegative = true;
+                    colMaster.xnLock = null;
+                }
             }
         }
 
@@ -219,6 +237,52 @@ public class Pseudo3DCubeCollider : MonoBehaviour
                 colMaster.canMoveZNegative = true;
                 colMaster.znLock = null;
             }
+        }
+    }
+
+    //  We need this so that way we don't clip between two different blocks when there
+    //is a brief moment when releasing the movement lock.
+    //  When releasing the lock for a certain direction (ie. x positive), we need to first check
+    //and see if there
+    private GameObject HandoffCollision(Directions3DEnum dir)
+    {
+        TileBase t = null;
+        var loc = new Vector3(0, 0, 0);
+        //get z val by tilemap name
+        switch (dir)
+        {
+            case Directions3DEnum.XPOS:
+                break;
+            case Directions3DEnum.XNEG:
+                loc = new Vector3(tilePosition.x - 1, tilePosition.y, floorNumber);
+                t = this.tilemap.GetTile(tilemap.WorldToCell(loc));
+                break;
+            case Directions3DEnum.YPOS:
+                break;
+            case Directions3DEnum.YNEG:
+                break;
+            case Directions3DEnum.ZPOS:
+                break;
+            case Directions3DEnum.ZNEG:
+                break;
+        }
+
+        if(t != null) //then handoff to new pseudo3DCollider
+        {
+            //get pseudo3DCollider GameObject
+            var handoffPseudo3DColliderObject = transform.parent.Find($"({loc.x},{loc.y},{loc.z})");
+            if(handoffPseudo3DColliderObject != null)
+            {
+                return handoffPseudo3DColliderObject.gameObject;
+            }
+            else
+            {
+                return null;
+            }
+        }
+        else
+        {
+            return null;
         }
     }
 }

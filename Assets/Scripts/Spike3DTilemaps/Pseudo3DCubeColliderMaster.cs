@@ -52,6 +52,9 @@ public class Pseudo3DCubeColliderMaster : MonoBehaviour
     public void SetUp3DTiles(Tilemap tilemap, int sortingOrder)
     {
         tileWorldLocations = new List<Vector3>();
+        var floorNumberString = tilemap.name.Substring(5); //assumes name is like "Floor5"
+        var floorNumber = -999;
+        int.TryParse(floorNumberString, out floorNumber);
 
         foreach (var pos in tilemap.cellBounds.allPositionsWithin)
         {
@@ -70,6 +73,11 @@ public class Pseudo3DCubeColliderMaster : MonoBehaviour
                 psuedo3DTileCollider.GetComponent<Pseudo3DCubeCollider>().colliderBuffer = colliderBuffer;
                 psuedo3DTileCollider.GetComponent<Pseudo3DCubeCollider>().zNegPlayerBuffer = zNegPlayerBuffer;
                 psuedo3DTileCollider.GetComponent<Pseudo3DCubeCollider>().CreatePseudo3DCubeCollider();
+                psuedo3DTileCollider.GetComponent<Pseudo3DCubeCollider>().tilemap = tilemap;
+                psuedo3DTileCollider.GetComponent<Pseudo3DCubeCollider>().floorNumber = floorNumber;
+                //name the collider by position
+                psuedo3DTileCollider.name = $"({psuedo3DTileCollider.GetComponent<Pseudo3DCubeCollider>().tilePosition.x}," +
+                    $"{psuedo3DTileCollider.GetComponent<Pseudo3DCubeCollider>().tilePosition.y},{floorNumber})";
             }
         }
     }

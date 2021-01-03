@@ -11,7 +11,7 @@ public class PlayerAnimationController : MonoBehaviour
     private Vector3 _v3;
     private XYDirection _xyDir;
     private float _animationBuffer = 0.25f;
-    private float _jumpAnimationBuffer = 0.1f;
+    private float _jumpAnimationBuffer = 1f;
 
     void Start()
     {
