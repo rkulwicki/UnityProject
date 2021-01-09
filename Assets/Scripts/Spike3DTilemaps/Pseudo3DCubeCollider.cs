@@ -161,23 +161,8 @@ public class Pseudo3DCubeCollider : MonoBehaviour
             }
             else
             {
-                //before we unlock, we need to check if there is another block
-                //to hand the lock off to first to prevent clipping while briefly unlocked.
-
-                //NOTE: WE NEED TO CHECK THIS vvvvvvvv
-                //colMaster.xnLock == this.gameObject
-
-                var blockTakingHandoff = HandoffCollision(Directions3DEnum.XNEG);
-                if (blockTakingHandoff != null)
-                {
-                    colMaster.canMoveXNegative = false;
-                    colMaster.xnLock = blockTakingHandoff;
-                }
-                else //no block to hand-off to. You're free to move!
-                {
-                    colMaster.canMoveXNegative = true;
-                    colMaster.xnLock = null;
-                }
+                colMaster.canMoveXNegative = true;
+                colMaster.xnLock = null;
             }
         }
 
@@ -225,6 +210,8 @@ public class Pseudo3DCubeCollider : MonoBehaviour
             }
         }
 
+        //if there nobody holds the lock, or if this is the owner, then
+        //lock or let go
         if (colMaster.znLock == null || colMaster.znLock == this.gameObject)
         {
             if (!canMoveZNegative)
@@ -234,6 +221,7 @@ public class Pseudo3DCubeCollider : MonoBehaviour
             }
             else
             {
+                //if you're letting go
                 colMaster.canMoveZNegative = true;
                 colMaster.znLock = null;
             }
@@ -264,6 +252,8 @@ public class Pseudo3DCubeCollider : MonoBehaviour
             case Directions3DEnum.ZPOS:
                 break;
             case Directions3DEnum.ZNEG:
+                loc = new Vector3(tilePosition.x, tilePosition.y, floorNumber - 1);
+                t = this.tilemap.GetTile(tilemap.WorldToCell(loc));
                 break;
         }
 

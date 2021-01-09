@@ -84,4 +84,9 @@ public static class Globals
 
     //Actor Resources
     public static string PlayerPrefabPath = "Prefabs/Pseudo3DPlayer";
+
+    //Physics Configurations
+    public static float AmountOfTimeForGravityToPull = 1f;
+    public static float TimeBeforeGravityToPull = 0.1f;
+
 }

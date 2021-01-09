@@ -23,10 +23,11 @@ public class Gravity : MonoBehaviour
         if (canMoveZNegative)
         {
             isGravityActive = true;
-            if (timer < 2)
+            if (timer < AmountOfTimeForGravityToPull)
                 timer += Time.deltaTime;
             
-            this.gameObject.GetComponent<Pseudo3DPlayer>().MoveZNegative(speed*timer);
+            if(timer > TimeBeforeGravityToPull)
+                this.gameObject.GetComponent<Pseudo3DPlayer>().MoveZNegative(speed*timer);
         }
         else
         {
