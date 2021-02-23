@@ -21,7 +21,7 @@ public static class BattleInitiator
         PersistentData.data.battleArenaName = battleArenaName;
         PersistentData.data.battleEnemies = battleEnemies;
         PersistentData.data.battleEnemiesSpawnPoints = battleEnemySpawnPoints;
-        PersistentData.data.playerSpawnPoint = playerSpawnPoint;
+        PersistentData.data.playerSpawnPointInBattle = playerSpawnPoint;
     }
 
     private static void LoadBattleScene()

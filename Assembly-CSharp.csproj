@@ -113,6 +113,8 @@
     <Compile Include="Assets\Scripts\Shadow.cs" />
     <Compile Include="Assets\Scripts\Spike3DTilemaps\Background.cs" />
     <Compile Include="Assets\Scripts\Spike3DTilemaps\DirectionAndMovementInterface.cs" />
+    <Compile Include="Assets\Scripts\Spike3DTilemaps\EquipableUpgradesFolder\EquipableUpgrades.cs" />
+    <Compile Include="Assets\Scripts\Spike3DTilemaps\EquipableUpgradesFolder\EquipableUpgradesDirectionalSpecials.cs" />
     <Compile Include="Assets\Scripts\Spike3DTilemaps\Gravity.cs" />
     <Compile Include="Assets\Scripts\Spike3DTilemaps\InteractiveObject.cs" />
     <Compile Include="Assets\Scripts\Spike3DTilemaps\InteractiveObjectTypeRepository.cs" />
@@ -120,9 +122,14 @@
     <Compile Include="Assets\Scripts\Spike3DTilemaps\NewBattle\BattleArena.cs" />
     <Compile Include="Assets\Scripts\Spike3DTilemaps\NewBattle\BattleArenaSetup.cs" />
     <Compile Include="Assets\Scripts\Spike3DTilemaps\NewBattle\BattleArenaTrigger.cs" />
+    <Compile Include="Assets\Scripts\Spike3DTilemaps\NewBattle\BattleInformation.cs" />
     <Compile Include="Assets\Scripts\Spike3DTilemaps\NewBattle\BattleInitiator.cs" />
     <Compile Include="Assets\Scripts\Spike3DTilemaps\NewBattle\BattlePlayer.cs" />
     <Compile Include="Assets\Scripts\Spike3DTilemaps\NewBattle\BattleRepository.cs" />
+    <Compile Include="Assets\Scripts\Spike3DTilemaps\NewBattle\TESTTransitionOnEnterCollision.cs" />
+    <Compile Include="Assets\Scripts\Spike3DTilemaps\NewBattle\TESTTransitionToBattle.cs" />
+    <Compile Include="Assets\Scripts\Spike3DTilemaps\NewBattle\TransitionBattleToOverworld.cs" />
+    <Compile Include="Assets\Scripts\Spike3DTilemaps\NewBattle\TransitionOverworldToBattle.cs" />
     <Compile Include="Assets\Scripts\Spike3DTilemaps\PlayerAnimationController.cs" />
     <Compile Include="Assets\Scripts\Spike3DTilemaps\PlayerInteractionWithObjects.cs" />
     <Compile Include="Assets\Scripts\Spike3DTilemaps\PlayerStaticFunctions.cs" />

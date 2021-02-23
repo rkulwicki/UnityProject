@@ -211,16 +211,18 @@ public class Pseudo3DTilemapLogic : MonoBehaviour
         var grid = GameObject.FindGameObjectWithTag("Grid");
 
         //check each tilemap in grid to see if it is under the sorting layer sortingLayer
-        foreach (Transform child in grid.transform)
+        if (grid != null)
         {
-
-            if (child.gameObject.tag == "Tilemap" &&
-                child.gameObject.GetComponent<TilemapRenderer>().sortingOrder == order)
+            foreach (Transform child in grid.transform)
             {
-                tilemaps.Add(child.gameObject.GetComponent<Tilemap>());
+
+                if (child.gameObject.tag == "Tilemap" &&
+                    child.gameObject.GetComponent<TilemapRenderer>().sortingOrder == order)
+                {
+                    tilemaps.Add(child.gameObject.GetComponent<Tilemap>());
+                }
             }
         }
-
         return tilemaps.ToArray();
     }
 

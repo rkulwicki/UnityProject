@@ -31,7 +31,9 @@ public class PersistentData : MonoBehaviour
     public EnemyName[] battleEnemies;
     public Vector2Int[] battleEnemiesSpawnPoints;
     public BattleArenaName battleArenaName;
-    public Vector2Int playerSpawnPoint;
+
+    public Vector2 playerSpawnPointInBattle;
+    public Vector3 playerSpawnPointInOverworld;
 
     //BattleEnd
     public int battleExperienceAwarded;
@@ -40,6 +42,7 @@ public class PersistentData : MonoBehaviour
 
     //SceneManagement
     public SceneNames previousScene;
+    public BattleArenaName battleScene;
 
     void Awake()
     {

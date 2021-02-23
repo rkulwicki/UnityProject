@@ -12,7 +12,7 @@ public class BattleArenaSetup : MonoBehaviour
     public TileBase tile;
     public EnemyName[] battleEnemies;
     public Vector2Int[] battleEnemySpawnPoints;
-    public Vector2Int playerSpawnPoint;
+    public Vector2 playerSpawnPoint;
 
     private GameObject _battleTilemap;
     private GameObject _mainCamera;
@@ -24,7 +24,7 @@ public class BattleArenaSetup : MonoBehaviour
         battleArenaName = PersistentData.data.battleArenaName;
         battleEnemies = PersistentData.data.battleEnemies;
         battleEnemySpawnPoints = PersistentData.data.battleEnemiesSpawnPoints;
-        playerSpawnPoint = PersistentData.data.playerSpawnPoint;
+        playerSpawnPoint = PersistentData.data.playerSpawnPointInBattle;
 
         var ba = GetBattleInfoFromBattleArenaName(battleArenaName);
         tile = ba.tile;
@@ -80,7 +80,7 @@ public class BattleArenaSetup : MonoBehaviour
         //todo playerSpawnPoint
         _battlePlayer = Resources.Load("Prefabs/BattlePlayer") as GameObject;
         var go = Instantiate(_battlePlayer);
-        go.transform.position = new Vector3Int(playerSpawnPoint.x, playerSpawnPoint.y, 0);
+        go.transform.position = new Vector3(playerSpawnPoint.x, playerSpawnPoint.y, 0);
     }
 
     public void SpawnEnemies()
