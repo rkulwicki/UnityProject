@@ -19,6 +19,8 @@ public class PersistentData : MonoBehaviour
     public int level;
     public int experience;
     public int health;
+    public int maxHealth;
+    public int seeds;
     public int attackPower;
     public int defensePower;
     public int speed;
