@@ -17,7 +17,8 @@ public class BattlePlayer : MonoBehaviour
     private Rigidbody2D _body2d;
     private BoxCollider2D _box2d;
     private float _groundedDistance, _sideGroundedDistance;
-    private float _convertedJumpPower, _convertedAcceleration, _convertedSpeed; 
+    private float _convertedJumpPower, _convertedAcceleration, _convertedSpeed;
+    private Vector2 _pos;
     // Use this for initialization
     void Start()
     {
@@ -34,6 +35,7 @@ public class BattlePlayer : MonoBehaviour
         _box2d = this.gameObject.GetComponent<BoxCollider2D>();
         _groundedDistance = _box2d.size.y / 2 + 0.1f;
         _sideGroundedDistance = _box2d.size.x / 2;
+        _pos = this.gameObject.transform.position;
 
         ConfigurePlayerMovementStats();
     }
@@ -61,6 +63,7 @@ public class BattlePlayer : MonoBehaviour
             if (_body2d.velocity.x < speed)
             {
                 _body2d.AddForce(new Vector2(acceleration, 0));
+                //_pos = Vector2.MoveTowards(_pos, _pos + new Vector2(1, _pos.y), Time.deltaTime * speed);
             }
         }
         else if (Input.GetKey(XNegativeKey))
@@ -68,8 +71,12 @@ public class BattlePlayer : MonoBehaviour
             if (_body2d.velocity.x > -speed)
             {
                 _body2d.AddForce(new Vector2(-acceleration, 0));
+                //_pos = Vector2.MoveTowards(_pos, _pos + new Vector2(-1, _pos.y), Time.deltaTime * speed);
             }
         }
+
+        //apply movement
+        //transform.position = _pos;
     }
 
     private void JumpPlayerBattle()
