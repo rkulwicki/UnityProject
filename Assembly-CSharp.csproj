@@ -127,6 +127,7 @@
     <Compile Include="Assets\Scripts\Spike3DTilemaps\NewBattle\BattlePlayer.cs" />
     <Compile Include="Assets\Scripts\Spike3DTilemaps\NewBattle\BattlePlayerAnimationController.cs" />
     <Compile Include="Assets\Scripts\Spike3DTilemaps\NewBattle\BattleRepository.cs" />
+    <Compile Include="Assets\Scripts\Spike3DTilemaps\NewBattle\Enemies\BattleTrunkoAnimationController.cs" />
     <Compile Include="Assets\Scripts\Spike3DTilemaps\NewBattle\Enemies\TrunkoAI.cs" />
     <Compile Include="Assets\Scripts\Spike3DTilemaps\NewBattle\TESTTransitionOnEnterCollision.cs" />
     <Compile Include="Assets\Scripts\Spike3DTilemaps\NewBattle\TESTTransitionToBattle.cs" />
