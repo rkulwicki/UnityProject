@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using static Globals;
+
 public class BattlePlayer : MonoBehaviour
 {
 

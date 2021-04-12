@@ -128,7 +128,12 @@
     <Compile Include="Assets\Scripts\Spike3DTilemaps\NewBattle\BattlePlayerAnimationController.cs" />
     <Compile Include="Assets\Scripts\Spike3DTilemaps\NewBattle\BattleRepository.cs" />
     <Compile Include="Assets\Scripts\Spike3DTilemaps\NewBattle\Enemies\BattleTrunkoAnimationController.cs" />
+    <Compile Include="Assets\Scripts\Spike3DTilemaps\NewBattle\Enemies\HitBox.cs" />
+    <Compile Include="Assets\Scripts\Spike3DTilemaps\NewBattle\Enemies\HurtBox.cs" />
     <Compile Include="Assets\Scripts\Spike3DTilemaps\NewBattle\Enemies\TrunkoAI.cs" />
+    <Compile Include="Assets\Scripts\Spike3DTilemaps\NewBattle\Enemies\TrunkoInfo.cs" />
+    <Compile Include="Assets\Scripts\Spike3DTilemaps\NewBattle\PlayerBattle\BattlePlayerInvincible.cs" />
+    <Compile Include="Assets\Scripts\Spike3DTilemaps\NewBattle\PlayerBattle\BufferBetweenPlayerReceivingDamage.cs" />
     <Compile Include="Assets\Scripts\Spike3DTilemaps\NewBattle\TESTTransitionOnEnterCollision.cs" />
     <Compile Include="Assets\Scripts\Spike3DTilemaps\NewBattle\TESTTransitionToBattle.cs" />
     <Compile Include="Assets\Scripts\Spike3DTilemaps\NewBattle\TransitionBattleToOverworld.cs" />

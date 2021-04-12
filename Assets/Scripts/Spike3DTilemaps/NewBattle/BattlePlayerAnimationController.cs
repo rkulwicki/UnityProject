@@ -9,6 +9,7 @@ namespace Assets.Scripts.Spike3DTilemaps.NewBattle
         public bool isHurt;
         public float hurtDuration;
 
+        private bool _hurting;
         private SpriteRenderer _spriteRenderer;
         private Animator _animator;
         private Rigidbody2D _body2d;
@@ -21,6 +22,7 @@ namespace Assets.Scripts.Spike3DTilemaps.NewBattle
             _body2d = gameObject.GetComponent<Rigidbody2D>();
             _battlePlayer = gameObject.GetComponent<BattlePlayer>();
             isHurt = false;
+            _hurting = false;
         }
 
         // Update is called once per frame
@@ -29,9 +31,13 @@ namespace Assets.Scripts.Spike3DTilemaps.NewBattle
             FlipSprite();
 
             if (isHurt)
-                HurtForTime(hurtDuration);
+            {
+                isHurt = false;
+                _hurting = true;
+                StartCoroutine(HurtForTime(hurtDuration));
+            }
 
-            if (!isHurt)
+            if (!_hurting)
             {
                 //facing right
                 if (_spriteRenderer.flipX == true)
@@ -75,7 +81,7 @@ namespace Assets.Scripts.Spike3DTilemaps.NewBattle
         {
             HurtFront();
             yield return new WaitForSeconds(time);
-            isHurt = false;
+            _hurting = false;
         }
 
         private void IdleFront()
