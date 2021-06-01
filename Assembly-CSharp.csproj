@@ -148,6 +148,7 @@
     <Compile Include="Assets\Scripts\Spike3DTilemaps\Pseudo3DPosition.cs" />
     <Compile Include="Assets\Scripts\Spike3DTilemaps\Pseudo3DShadow.cs" />
     <Compile Include="Assets\Scripts\Spike3DTilemaps\Pseudo3DTile.cs" />
+    <Compile Include="Assets\Scripts\Spike3DTilemaps\Pseudo3DTilemapFog.cs" />
     <Compile Include="Assets\Scripts\Spike3DTilemaps\Pseudo3DTilemapLogic.cs" />
     <Compile Include="Assets\Scripts\Spike3DTilemaps\SceneChangingFunctions.cs" />
     <Compile Include="Assets\Scripts\Spike3DTilemaps\SceneTrigger.cs" />
