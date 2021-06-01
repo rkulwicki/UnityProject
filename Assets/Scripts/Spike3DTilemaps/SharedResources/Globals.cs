@@ -17,6 +17,8 @@ public static class Globals
     public static string BattleGridTag = "BattleGrid";
     public static string BattleTilemapTag = "BattleTilemap";
     public static string ShadowTag = "Shadow";
+    public static string PersistentDataTag = "PersistentData";
+    public static string BattlePlayerTag = "BattlePlayer";
 
     //Input
     public static string XPositiveKey = "d";
@@ -45,8 +47,7 @@ public static class Globals
     //Battle Arenas
     public enum BattleArenaName
     {
-        GrassyBricks,
-        GrassyBricksTemple,
+        BattleEvergreenTemple,
         Default
     }
 

@@ -50,4 +50,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/FrankFranklbeeForestDeepForest.unity
     guid: 79eac76ef4f20ed48870436393271b4a
+  - enabled: 1
+    path: Assets/Scenes/BattleEvergreenTemple.unity
+    guid: 02a3cde6be952d141bed05211d165bee
   m_configObjects: {}

@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 4815410645404055093}
   m_Layer: 0
   m_Name: PersistentData
-  m_TagString: Untagged
+  m_TagString: PersistentData
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -53,5 +53,9 @@ MonoBehaviour:
   jumpPower: 5
   battleEnemies: 
   battleEnemiesSpawnPoints: []
+  battleArenaName: 0
+  playerSpawnPointInBattle: {x: 0, y: 0}
+  playerSpawnPointInOverworld: {x: 0, y: 0, z: 0}
   battleExperienceAwarded: 0
   battleWin: 0
+  previousScene: 0

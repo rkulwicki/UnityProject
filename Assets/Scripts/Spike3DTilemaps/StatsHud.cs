@@ -1,17 +1,37 @@
 ﻿using UnityEngine;
 using System.Collections;
 using static Globals;
+
+//Acts as a singleton 
+
 public class StatsHud : MonoBehaviour
 {
+    public static StatsHud statsHud;
+
     public float distance;
     public bool canToggle;
     public bool isToggling;
 
     public bool isUp;
     private Vector2 panelPos;
+
+    void Awake()
+    {
+        if (statsHud == null)
+        {
+            DontDestroyOnLoad(gameObject);
+            statsHud = this;
+        }
+        else if (statsHud != this)
+        {
+            Destroy(gameObject);
+        }
+    }
+
     // Use this for initialization
     void Start()
     {
+
         panelPos = transform.GetChild(0).gameObject.GetComponent<RectTransform>().anchoredPosition;
         if (panelPos.y < 0.01 &&
            panelPos.y > -0.01)

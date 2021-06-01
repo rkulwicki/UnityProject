@@ -11,10 +11,8 @@ public static class BattleRepository
 
         switch (battleArenaName)
         {
-            case BattleArenaName.GrassyBricks:
+            case BattleArenaName.BattleEvergreenTemple:
                 return GetGrassyBricksBattleInfo();
-            case BattleArenaName.GrassyBricksTemple:
-                return GetGrassyBricksTempleBattleInfo();
             default:
                 return GetDefaultBattleInfo();
         }
